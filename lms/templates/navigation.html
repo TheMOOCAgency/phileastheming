@@ -1,0 +1,259 @@
+## mako
+<%page expression_filter="h" args="online_help_token"/>
+<%namespace name='static' file='static_content.html'/>
+<% style_overrides_file = static.get_value('css_overrides_file') %>
+<%namespace file='main.html' import="login_query"/>
+<%!
+from django.core.urlresolvers import reverse
+from django.utils.translation import ugettext as _
+
+from context_processors import doc_url
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from microsite_configuration import microsite
+from microsite_configuration.templatetags.microsite import platform_name
+from openedx.core.djangolib.markup import HTML, Text
+
+# App that handles subdomain specific branding
+from branding import api as branding_api
+# app that handles site status messages
+from status.status import get_site_status_msg
+%>
+
+## Provide a hook for themes to inject branding on top.
+<%block name="navigation_top" />
+
+## Add UI Toolkit components if using the Pattern Library
+% if uses_pattern_library:
+    <%block name="js_extra">
+    <%static:require_module module_name="js/header_factory" class_name="HeaderFactory">
+    HeaderFactory();
+    </%static:require_module>
+    </%block>
+% endif
+
+<%block>
+<%
+try:
+    course_id = course.id
+except:
+    # can't figure out a better way to get at a possibly-defined course var
+    course_id = None
+site_status_msg = get_site_status_msg(course_id)
+%>
+% if site_status_msg:
+<div class="site-status">
+  <div class="inner-wrapper">
+    <span class="white-error-icon"></span>
+    <p>${site_status_msg}</p>
+  </div>
+</div>
+% endif
+<style>
+  button {
+    border: none;
+    box-shadow: none;
+  }
+</style>
+<script>
+function rightMenuUser() {
+  var widthCorp = $('#nav-up-up').css('width');
+  var largeurEcran = $(window).width();
+  var marginCorp = parseInt(parseInt(largeurEcran) - parseInt(widthCorp)) / 2;
+  var Right = parseInt(marginCorp) - 2;
+  console.log(largeurEcran);
+  console.log(marginCorp);
+  if(parseInt(largeurEcran) > 1440) {
+    $('.menu-for-user').css('right',Right+'px');
+  }else {
+    $('.menu-for-user').css('right','0');
+  }
+}
+function languages() {
+  $('#show_languages').click(function(){
+    $('.language-selector').toggle();
+  })
+}
+function navAllIndex() {
+  $('#menu-top-off,#button-menu-low-rez').click(function(){
+    $('.menu-for-user').toggle();
+  });
+  $('#menu-table').click(function(){
+    var navHeight = parseInt($('#nav-up-up').height());
+    var navWidth = parseInt($('#nav-up-up').width());
+    var globalNav = parseInt($('#global-navigation').height());
+    var navSubHeight = parseInt($('#sous-menu-table').height());
+    $('#sous-menu-table').toggle();
+  })
+}
+  $(document).ready(function(){
+    navAllIndex();
+    languages();
+    rightMenuUser();
+  })
+  $(window).resize(function(){
+    rightMenuUser();
+    if(parseInt($('#nav-up-up').width()) > 981)
+    {
+      $('#sous-menu-table').hide();
+      if(parseInt($('#nav-up-up').width()) > 555)
+      {
+        $('#nav-up-up').css('height','104px');
+        $('#global-navigation').css('height','135px');
+        $('#menu-table').css('color','#000');
+        $('#menu-table').css('background-color','#F5F6F8');
+      }else{
+        $('#nav-up-up').css('height','104px');
+        $('#global-navigation').css('height','104px');
+        $('#menu-table').css('color','#000');
+        $('#menu-table').css('background-color','#F5F6F8');
+      }
+    }
+  })
+</script>
+</%block>
+
+% if style_overrides_file:
+  <link rel="stylesheet" type="text/css" href="${static.url(css/navigation.css)}" />
+% endif
+<!--
+<LINK href="/static/css/navigation.css" rel="stylesheet" type="text/css">
+-->
+% if user.is_authenticated():
+  <%
+  username = user.username
+  %>
+  <ol id="sous-menu-table">
+    <li>
+      <a href="/courses">${_("Courses")}</a>
+    </li>
+    <li>
+      <a href="/faq">${_("How and why ?")}"</a>
+    </li>
+    <li>
+      <a href="/honor">${_("News")}</a>
+    </li>
+  </ol>
+  <div class="menu-for-user">
+    <a href="/dashboard" />${_("Dashboard")}</a>
+    <a href="/u/${username}" />${_("Mon profil")}</a>
+    <button id="show_languages">${_("Language")}</button>
+    <% languages = static.get_released_languages() %>
+     % if len(languages) > 1:
+         <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
+           <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
+           <input title="preference api" type="hidden" class="url-endpoint" value="${reverse('preferences_api', kwargs={'username': user.username})}" data-user-is-authenticated="true">
+           <input title="session update url" type="hidden" class="url-endpoint" value="${reverse('session_language')}" data-user-is-authenticated="false">
+               <select class="input select language-selector" id="settings-language-value" name="language" multiple="multiple" size="2">
+                 % for language in languages:
+                   % if language[0] == LANGUAGE_CODE:
+                     <option value="${language[0]}" selected="selected">${language[1]}</option>
+                   % else:
+                     <option value="${language[0]}" >${language[1]}</option>
+                   % endif
+                 % endfor
+               </select>
+         </form>
+     % endif
+    <a href="/logout" />${_("Deconnexion")}</a>
+  </div>
+  </div>
+  <header id="global-navigation" class="global ${"slim" if course else ""}">
+    <div class="head-nav">
+      <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
+
+          <li>
+                <button id="menu-top-off">
+                  <img src="/static/images/btn_moncompte.png"/>
+                </button>
+          </li>
+      </ol>
+    </div>
+  % else:
+  <ol id="sous-menu-table">
+    <li>
+      <a href="/faq">${_("How and why ?")}</a>
+    </li>
+    <li>
+      <a href="/honor">${_("News")}</a>
+    </li>
+  </ol>
+    </div>
+    <header id="global-navigation" class="global ${"slim" if course else ""}">
+      <div class="head-nav">
+        <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
+
+            <li>
+                  <a href="/login">
+                    <img src="/static/images/btn_moncompte.png"/>
+                  </a>
+            </li>
+        </ol>
+      </div>
+  %endif
+
+    <div aria-label="${_('Global')}"id="nav-up-up">
+    <!-- menu responsive tablette -->
+  <ol id="menu-table">
+          <li class="nav-courseware-01">
+                <button id="button-menu-tablette"><span id="picto-hamburger"><img src="/static/images/hamburger.png" /></span><span id="text-menu">${_("menu")}</span></button>
+          </li>
+      </ol>
+    <!-- fin menu responsive tablette -->
+    <h1 class="logo">
+      <a href="${marketing_link('ROOT')}">
+            <img src="/static/images/logo_custom.png"/>
+      </a>
+    </h1>
+    % if user.is_authenticated():
+    <div class="picto-low-res">
+      <a href="#"><img src="/static/images/icon_search.png" /></a>
+      <%
+      username = user.username
+      %>
+      <button id="button-menu-low-rez"><img src="/static/images/pic_peo.png" /></button>
+    </div>
+<ol class="right nav-courseware nav-index-all2" id="menu_connect_hd">
+        <li class="nav-courseware-01">
+              <a href="/courses" style="
+    color: #3D4857;font-size: 18px; font-face:helvetica;">${_("Courses")}</a>
+        </li>
+        <li class="nav-courseware-01">
+              <a href="/faq">${_("How and why ?")}</a>
+        </li>
+        <li class="nav-courseware-01">
+              <a href="/honor">${_("News")}</a>
+        </li>
+        <li class="nav-courseware-01" style="margin-right: 20px;">
+        </li>
+    </ol>
+      % if should_display_shopping_cart_func() and not (course and static.is_request_in_themed_site()): # see shoppingcart.context_processor.user_has_cart_context_processor
+        <ol class="user">
+          <li class="primary">
+            <a class="shopping-cart" href="${reverse('shoppingcart.views.show_cart')}">
+              <i class="icon fa fa-shopping-cart"></i> ${_("Shopping Cart")}
+            </a>
+          </li>
+        </ol>
+      % endif
+    % else:
+    <div class="picto-low-res">
+      <a href="/login"><img src="/static/images/pic_peo.png" /></a>
+    </div>
+    <ol class="right nav-courseware nav-index-all" id="menu-guest-hd">
+        <li class="nav-courseware-01">
+              <a href="/faq">${_("How and why ?")}</a>
+        </li>
+        <li class="nav-courseware-01">
+              <a href="/honor">${_("News")}</a>
+        </li>
+    </ol>
+    % endif
+    </nav>
+</header>
+% if course:
+<!--[if lte IE 9]>
+<div class="ie-banner" aria-hidden="true">${_('<strong>Warning:</strong> Your browser is not fully supported. We strongly recommend using {chrome_link} or {ff_link}.').format(chrome_link='<a href="https://www.google.com/chrome" target="_blank">Chrome</a>', ff_link='<a href="http://www.mozilla.org/firefox" target="_blank">Firefox</a>')}</div>
+<![endif]-->
+% endif
+
+<%include file="help_modal.html"/>
