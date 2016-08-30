@@ -1,0 +1,302 @@
+<%inherit file="main.html" />
+<%namespace name='static' file='static_content.html'/>
+<% style_overrides_file = static.get_value('css_overrides_file') %>
+<%!
+
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+
+from context_processors import doc_url
+from lms.djangoapps.ccx.overrides import get_current_ccx
+from microsite_configuration import microsite
+from microsite_configuration.templatetags.microsite import platform_name
+from openedx.core.djangolib.markup import HTML, Text
+
+%>
+<!--
+<LINK href="/static/css/index.css"   rel="stylesheet" type="text/css">
+-->
+% if style_overrides_file:
+  <link rel="stylesheet" type="text/css" href="${static.url(css/index.css)}" />
+% endif
+  <section class="home">
+    <div class="baniere">
+  <!--
+    <header style="background-color:#C6C6C6;padding-bottom:50px;padding-top:50px;">
+      <div class="title" style="">
+      <div class="outer-wrapper">
+        <div class="title">
+          <div class="heading-group">
+            % if homepage_overlay_html:
+              ${homepage_overlay_html}
+            % else:
+                ## Translators: 'Open edX' is a brand, please keep this untranslated. See http://openedx.org for more information.
+                <h1>Welcome to Open edX!</h1>
+                ## Translators: 'Open edX' is a brand, please keep this untranslated. See http://openedx.org for more information.
+                <p>It works! This is the default homepage for this Open edX instance.</p>
+            % endif
+          </div>
+          % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
+            <div class="course-search">
+              <form method="get" action="/courses">
+                <label><span class="sr">Search for a course</span>
+                  <input class="search-input" name="search_query" type="text" placeholder="Search for a course"></input>
+                </label>
+                <button class="search-button" type="submit">
+                  <i class="icon fa fa-search" aria-hidden="true"></i><span class="sr">Search</span>
+   font-family         </button>
+              </form>
+            </div>
+          % endif
+
+        </div>
+
+        % if show_homepage_promo_video:
+          <a href="#video-modal" class="media" rel="leanModal">
+            <div class="hero">
+              <div class="play-intro"></div>
+            </div>
+          </a>
+        % endif
+      </div>
+
+    </header>
+  -->
+    <header class="baniere-img" style="">
+      <div class="title" style="">
+        <div class="heading-group">
+              <h1><span class="h1-span">Enhance your knowledge</span><span class="h1-span"><span class="espace"> </span>at your own pace</span></h1>
+        </div>
+      </div>
+      <div class="heading-group" style="text-align: center;">
+        % if user.is_authenticated():
+          <a href="/courses" class="btn btn-secondary">${_("Show courses")}</a>
+          <a href="/dashboard" class="btn btn-secondary">${_("My courses")}</a>
+        % else:
+          <a href="/login" class="btn btn-secondary">${_("connect")}</a>
+        % endif
+      </div>
+    </header>
+    <div class="pic-front-head">
+      <img src="/static/images/logo2.png" />
+    </div>
+  </div>
+  </section>
+        <section class="home">
+
+          % if user.is_authenticated():
+            <!-- caroucel -->
+            <div class="color-greys" style="padding-top: 0px; padding-bottom: 60px;">
+              <div class="titre_section3" style="margin-bottom: 10px; margin-left: calc(3.5% + 15px); padding-top: 70px;">
+                ${_("Top courses")}
+              </div>
+            <%include file="${courses_list}" />
+              <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite">
+                <a href="courses" style="margin-left:auto; margin-right: auto; display: block; width: 200px; color: #914d8e;">${_("More courses")}</a>
+              </div>
+            </div>
+          % else:
+            <div class="color-grey">
+              <!-- baniere -->
+              <div class="section1-up">
+                <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
+                  <div class="titre_section1">
+                    ${_("phileas, a Trainers' community ...")}
+                  </div>
+                  <div class="titre_section1 act-in">
+                    ${_("With Phileas, find an additional way of training to improve your professional life.")}
+                  </div>
+                  <!-- sous sec 1 -->
+                  <div class="section1_down col-xs-4 col-md-4 col-sm-4 col-lg-4">
+                    <div class="picto_section1_down" style="
+
+              ">
+                      <img src="/static/images/icon_medaille.png" style="
+                  display: block;
+                  width: 33px;
+                  height: 45px;
+                  margin-left: auto;
+                  margin-right: auto;
+              ">
+                    </div>
+                    <div class="text_section1_down">
+                      <div class="text_section1_down_up">
+                        Lorem ipsum dolor sit amet consectetur
+                      </div>
+                      <div class="text_section1_down_down">
+                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      </div>
+                    </div>
+                  </div>
+                  <!-- sous sec 2 -->
+                  <div class="section1_down col-xs-4 col-md-4 col-sm-4 col-lg-4">
+                    <div class="picto_section1_down">
+                      <img src="/static/images/icon_like.png" style="
+                  display: block;
+                  width: 43px;
+                  height: 44px;
+                  margin-left: auto;
+                  margin-right: auto;
+              ">
+                    </div>
+                    <div class="text_section1_down">
+                      <div class="text_section1_down_up">
+                        Lorem ipsum dolor sit amet consectetur
+                      </div>
+                      <div class="text_section1_down_down">
+                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      </div>
+                    </div>
+                  </div>
+                  <!-- sous sec 3 -->
+                  <div class="section1_down col-xs-4 col-md-4 col-sm-4 col-lg-4">
+                    <div class="picto_section1_down">
+                      <img src="/static/images/icon_people.png" style="
+                  display: block;
+                  width: 51px;
+                  height: 41px;
+                  margin-left: auto;
+                  margin-right: auto;
+              ">
+                    </div>
+                    <div class="text_section1_down">
+                      <div class="text_section1_down_up">
+                        Lorem ipsum dolor sit amet consectetur
+                      </div>
+                      <div class="text_section1_down_down">
+                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="bouton-decouverte">
+                    <a href="#">${_("discover phileas")}</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          % endif
+        <div class="no-grey">
+      <div class="index-actualite">
+            <div class="section3 col-xs-12 col-md-12 col-sm-12 col-lg-12 index-actualite-sous-section-1">
+              <div class="titre_section3">
+                ${_("news")}
+              </div>
+              <!-- sous sec 1 -->
+              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                <div class="picto_section3_down" style="
+              float: left;
+              width: 154px;
+          ">
+              <img src="/static/images/img2.png" style="
+          display: block;
+          width: 154px;
+          height: 120px;
+          ">
+                </div>
+                <div class="text_section3_down" style="
+              width: calc(100% - 154px);
+              height: 100%;
+              float: left;
+          ">
+                  <div class="text_section3_down_up">
+                    Lorem ipsum dolor sit amet consectetur
+                  </div>
+                  <div class="text_section3_down_down">
+                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
+                  </div>
+                </div>
+              </div>
+              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6">
+                <div class="picto_section3_down" style="
+              float: left;
+              width: 154px;
+          ">
+              <img src="/static/images/img2.png" id="index-img-img2">
+                </div>
+                <div class="text_section3_down">
+                  <div class="text_section3_down_up">
+                    Lorem ipsum dolor sit amet consectetur
+                  </div>
+                  <div class="text_section3_down_down">
+                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
+                  </div>
+                </div>
+              </div>
+              <!-- sous sec 3 -->
+              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;">
+                <div class="picto_section3_down">
+              <img src="/static/images/img2.png" style="
+          display: block;
+          width: 154px;
+          height: 120px;
+          ">
+                </div>
+                <div class="text_section3_down">
+                  <div class="text_section3_down_up">
+                    Lorem ipsum dolor sit amet consectetur
+                  </div>
+                  <div class="text_section3_down_down">
+                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite">
+                <a href="#">${_("all of news")}</a>
+              </div>
+            </div>
+            <div class="section3 img-post-actu">
+              <img src="/static/images/img3.png" />
+              <img src="/static/images/img4.png" />
+              <img src="/static/images/img5.png" />
+            </div>
+          </div>
+          <!-- Icones -->
+          <div class="section1-marge">
+            <!-- sous sec 1 -->
+            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+                <img src="/static/images/data1.png">
+            </div>
+            <!-- sous sec 2 -->
+            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+                <img src="/static/images/data2.png">
+            </div>
+            <!-- sous sec 3 -->
+            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+                <img src="/static/images/data3.png">
+            </div>
+            <!-- sous sec 4 -->
+            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+                <img src="/static/images/data4.png">
+            </div>
+          </div>
+
+      </div>
+    </section>
+
+</div>
+<!--
+% if show_homepage_promo_video:
+  <section id="video-modal" class="modal home-page-video-modal video-modal">
+    <div class="inner-wrapper">
+      <iframe title="YouTube Video" width="640" height="360" src="//www.youtube.com/embed/${homepage_promo_video_youtube_id}?showinfo=0" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </section>
+% endif
+-->
+<%block name="js_extra">
+   <script type="text/javascript">
+      $(window).load(function() {
+         if(getParameterByName('next')) {
+              $('#login').trigger("click");
+         }
+      })
+   </script>
+</%block>
+
+% if show_signup_immediately is not UNDEFINED:
+  ## NOTE: This won't work in production, because anonymous views are cached, so it will
+  ## show either with or without this extra js for 3 minutes at a time.
+<script type="text/javascript">
+  $(window).load(function() {$('#signup_action').trigger("click");});
+</script>
+% endif
