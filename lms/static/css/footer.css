@@ -1,0 +1,145 @@
+#footer-openedx {
+  height:115px;background-color:#363F4E;box-shadow:none;
+  width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.colophon {
+  width: 100%;
+  height: 115px;
+}
+.wrapper-logo {
+  width: 37px;
+  margin-left: 119px;
+  height: 115px;
+  line-height: 115px;
+  vertical-align:middle;
+  text-align: center;
+  float: left;
+}
+.nav {
+  width:calc(100% - 175px);
+  height: 115px;
+  line-height: 115px;
+  vertical-align: middle;
+  text-align: right;
+  float:left;
+  color: #fff;
+}
+.nav div {
+  display: inline-block;
+}
+.nav div div {
+  float:left;
+
+  margin-left: 15px;
+}
+.nav div div a {
+  color: #fff;
+  text-decoration: none;
+  display:inline-block;
+  margin-right: 38px;
+}
+.wrapper-footer {
+  margin-top: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding: 0;
+}
+.wrapper-logo img{
+  width:37px;
+  height:46px;
+  display: inline-block;
+}
+.footer-low-res {
+  display: none;
+}
+@media(max-width: 1440px) {
+  #footer-openedx {
+    width: 100vw;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+}
+@media(max-width:1076px) {
+  .nav div div a {
+    margin-right: 25px;
+  }
+}
+@media(max-width:1003px) {
+  .nav div div a {
+    margin-right: 22px;
+  }
+}
+@media(max-width:986px) {
+  .nav div div a {
+    margin-right: 20px;
+  }
+}
+@media(max-width:900px) {
+  #footer-openedx {
+    width: 100%;
+    margin: 0px;
+  }
+}
+@media(max-width:768px) {
+  .nav div div a {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+  .wrapper-logo {
+    margin-left: 5px;
+  }
+  .nav div {
+    margin-right: 0px;
+  }
+}
+@media(max-width:511px) {
+  #footer-openedx {
+    height: 150px;
+    padding-bottom: 25px;
+  }
+  .nav {
+    width: calc(100% - 45px);
+    line-height: 40px;
+    text-align: left;
+  }
+  #nav {
+    margin-top: 22px;
+  }
+  .nav div div{
+    display: block;
+    clear: left;
+    height: 25px;
+    margin-left: 15px;
+    width:calc(100% - 15px);
+  }
+  .nav div div a{
+    display: block;
+    height: 100%;
+  }
+  .colophon {
+    height: 175px;
+  }
+}
+@media(max-width: 391px) {
+  .nav {
+    width:calc(100% - 94px);
+  }
+  #nav {
+    height: 175px;
+    margin-*top: -22px;
+  }
+  .nav div {
+    margin-right: 0px;
+    margin: 0px;
+    margin-left: 20px;
+    width: calc(100% - 20px);
+  }
+  .wrapper-logo img,.wrapper-logo {
+    margin-top: 5px;
+    width:74px;
+    height:92px;
+    display: block
+  }
+}
