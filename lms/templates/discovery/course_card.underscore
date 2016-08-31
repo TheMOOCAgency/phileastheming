@@ -10,14 +10,14 @@
             <h2 class="course-name"><%- content.display_name %>
             </h2>
             <p style="text-align: center;width: 100%;" id="star-note">
-              <img src="/static/images/icon_star1.png">
-              <img src="/static/images/icon_star1.png">
-              <img src="/static/images/icon_star1.png">
-              <img src="/static/images/icon_star1.png">
-              <img src="/static/images/icon_star2.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+                <img src="/static/themes/phileastheming/images/icon_star2.png">
             </p>
             <p style="text-align: center;width: 100%;">
-              <img src="/static/images/icon_acceslibre.png">
+              <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
             </p>
         <a href="/courses/<%- course %>/about" class="learn-more liens_oust" style="
 

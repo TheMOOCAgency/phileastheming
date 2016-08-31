@@ -896,10 +896,10 @@ from openedx.core.lib.courses import course_image_url
           </header>
 
           <ol class="important-dates">
-            ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_clock.png" /> ${_('Duration')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
+            ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" /> ${_('Duration')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
 
             % if not course.start_date_is_still_default:
-              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
+              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
             % endif
             % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
               <li class="important-dates-item">
@@ -916,21 +916,21 @@ from openedx.core.lib.courses import course_image_url
               </li>
             % endif
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" />${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
                 <span class="important-dates-item-text">${_("French,English")}</span>
               </li>
 
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" />${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
                 <span class="important-dates-item-text">Français,Anglais</span>
               </li>
 
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" />${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
                 <span class="important-dates-item-text">Français,Anglais</span>
               </li>
               % if get_course_about_section(request, course, "effort"):
-                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
               % endif
               ## We plan to ditch end_date (which is not stored in course metadata),
               ## but for backwards compatibility, show about/end_date blob if it exists.
@@ -949,8 +949,8 @@ from openedx.core.lib.courses import course_image_url
               % endif
           </ol>
           <div class="picto-list-ol">
-            <a href="#"><img src="/static/themes/moocagency/images/icon_mail.png" /></a>
-            <a href="#"><img src="/static/themes/moocagency/images/icon_yammer.png" /></a>
+            <a href="#"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
+            <a href="#"><img src="/static/themes/phileastheming/images/icon_yammer.png" /></a>
           </div>
         </section>
 
@@ -1051,10 +1051,10 @@ from openedx.core.lib.courses import course_image_url
             </header>
 
           <ol class="important-dates">
-            ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_clock.png" /> ${_('Durée')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
+            ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" /> ${_('Durée')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
 
             % if not course.start_date_is_still_default:
-              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
+              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
             % endif
             % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
               <li class="important-dates-item">
@@ -1071,22 +1071,22 @@ from openedx.core.lib.courses import course_image_url
               </li>
             % endif
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" />${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
                 <span class="important-dates-item-text">${_("French, English")}</span>
               </li>
 
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" /> ${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" /> ${_("Languages")}</p>
                 <span class="important-dates-item-text">${_("French, English")}</span>
               </li>
 
               <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_langues.png" /> ${_("Languages")}</p>
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" /> ${_("Languages")}</p>
                 <span class="important-dates-item-text">${_("French, English")}</span>
               </li>
 
               % if get_course_about_section(request, course, "effort"):
-                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/moocagency/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
               % endif
               ## We plan to ditch end_date (which is not stored in course metadata),
               ## but for backwards compatibility, show about/end_date blob if it exists.
@@ -1105,8 +1105,8 @@ from openedx.core.lib.courses import course_image_url
               % endif
           </ol>
           <div class="picto-list-ol">
-            <a href="#"><img src="/static/themes/moocagency/images/icon_mail.png" /></a>
-            <a href="#"><img src="/static/themes/moocagency/images/icon_yammer.png" /></a>
+            <a href="#"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
+            <a href="#"><img src="/static/themes/phileastheming/images/icon_yammer.png" /></a>
           </div>
         </section>
 

@@ -124,7 +124,7 @@ $(window).resize(function(){
           <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
             <div class="social-sharing">
                 <a href="mailto:?subject=Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
-                  <img src="/static/themes/moocagency/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
+                  <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
                 </a>
             </div>
           % if is_paid_course and show_refund_option:
@@ -132,12 +132,12 @@ $(window).resize(function(){
             <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
                data-refund-info="${_("You will be refunded the amount you paid.")}">
-              <img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/> ${_("Unenroll")}
+              <img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/> ${_("Unenroll")}
             </a>
             % else:
             <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % endif
@@ -145,25 +145,25 @@ $(window).resize(function(){
             % if not is_course_blocked:
             <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % else:
             <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % endif
           % elif enrollment.mode != "verified":
             % if not is_course_blocked:
             <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
-               data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % else:
             <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
-               data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % endif
@@ -171,13 +171,13 @@ $(window).resize(function(){
             % if not is_course_blocked:
             <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % else:
             <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % endif
@@ -185,13 +185,13 @@ $(window).resize(function(){
             % if not is_course_blocked:
             <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % else:
             <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-               data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+               data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
               ${_("Unenroll")}
             </a>
             % endif
@@ -256,7 +256,7 @@ $(window).resize(function(){
             <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
               <div class="social-sharing">
                   <a href="mailto:?subject=Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
-                    <img src="/static/themes/moocagency/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
+                    <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
                   </a>
               </div>
             % if is_paid_course and show_refund_option:
@@ -264,12 +264,12 @@ $(window).resize(function(){
               <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                  data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
                  data-refund-info="${_("You will be refunded the amount you paid.")}">
-                <img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/> ${_("Unenroll")}
+                <img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/> ${_("Unenroll")}
               </a>
               % else:
               <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                  data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % endif
@@ -277,25 +277,25 @@ $(window).resize(function(){
               % if not is_course_blocked:
               <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                  data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % else:
               <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
                  data-track-info="${_("Are you sure you want to unenroll from the purchased course %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("You will not be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % endif
             % elif enrollment.mode != "verified":
               % if not is_course_blocked:
               <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
-                 data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % else:
               <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}"
-                 data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-track-info="${_("Are you sure you want to unenroll from %(course_name)s (%(course_number)s)?")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % endif
@@ -303,13 +303,13 @@ $(window).resize(function(){
               % if not is_course_blocked:
               <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                  data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % else:
               <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                  data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("You will be refunded the amount you paid.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % endif
@@ -317,13 +317,13 @@ $(window).resize(function(){
               % if not is_course_blocked:
               <a href="#unenroll-modal" class="action action-unenroll" rel="leanModal" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                  data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % else:
               <a class="action action-unenroll is-disabled" data-course-id="${course_overview.id}" data-course-number="${course_overview.number}" data-course-name="${course_overview.display_name_with_default}" data-dashboard-index="${dashboard_index}" data-cert-name-long="${cert_name_long}"
                  data-track-info="${_("Are you sure you want to unenroll from the verified %(cert_name_long)s track of %(course_name)s (%(course_number)s)?")}"
-                 data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/moocagency/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
+                 data-refund-info="${_("The refund deadline for this course has passed, so you will not receive a refund.")}"><img src="/static/themes/phileastheming/images/icon_desinscription.png" style="width:16px; height: auto; float:left; margin-right: 5px"/>
                 ${_("Unenroll")}
               </a>
               % endif
