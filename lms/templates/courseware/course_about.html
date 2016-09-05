@@ -1012,7 +1012,6 @@ from openedx.core.lib.courses import course_image_url
       ">${_("Asset management")}</a>
       <h2 class="titre-page">${course.display_name_with_default}</h2>
       <p>Comprenez les principes théoriques et identifiez les meilleurs pratiques sur la gestion des risques financiers.</p>
-          <p>${avg_ratings}</p>
     </div>
   </div>
   <section class="container grey">
@@ -1196,7 +1195,10 @@ from openedx.core.lib.courses import course_image_url
     $(document).ready(function(){
 
 
+      var is_read_only = false;
+      % if not can_rate:
         is_read_only = true;
+      % endif
 
 
       $("#course-rate").rateYo({
