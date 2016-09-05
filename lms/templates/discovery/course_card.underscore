@@ -1,0 +1,27 @@
+
+<link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
+<article class="course" role="region" aria-label="<%- content.display_name %>">
+    <a href="/courses/<%- course %>/about">
+        <header class="course-images">
+            <div class="cover-images">
+                <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
+            </div>
+        </header>
+        <section class="course-info" aria-hidden="true">
+            <h2 class="course-name"><%- content.display_name %>
+            </h2>
+            <p style="text-align: center;width: 100%;" id="star-note">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+              <img src="/static/themes/phileastheming/images/icon_star1.png">
+                <img src="/static/themes/phileastheming/images/icon_star2.png">
+            </p>
+            <p style="text-align: center;width: 100%;">
+              <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
+            </p>
+        <a href="/courses/<%- course %>/about" class="learn-more liens_oust" style="
+
+        "><%- gettext("SHOW MORE") %></a>
+    </a>
+</article>
