@@ -290,7 +290,7 @@ from openedx.core.lib.courses import course_image_url
     vertical-align: middle;
     background-color: #fff;
   }
-  .picto-list-ol a{
+  .picto-list-ol a,.picto-list-ol a:hover,.picto-list-ol a:focus{
     float: left;
     background-color: transparent;
     width: 67.9px;
@@ -1194,12 +1194,10 @@ from openedx.core.lib.courses import course_image_url
   <script>
     $(document).ready(function(){
 
-
-      var is_read_only = false;
-      % if not can_rate:
-        is_read_only = true;
-      % endif
-
+	var is_read_only =  false;
+	% if not can_rate:
+       	 is_read_only = true;
+	% endif
 
       $("#course-rate").rateYo({
 
