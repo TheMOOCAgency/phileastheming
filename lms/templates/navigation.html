@@ -136,7 +136,7 @@ function navAllIndex() {
   </ol>
   <div class="menu-for-user">
     <a href="/dashboard" />${_("Dashboard")}</a>
-    <a href="/u/${username}" />${_("Mon profil")}</a>
+    <a href="/u/${username}" />${_("My profil")}</a>
     <button id="show_languages">${_("Language")}</button>
     <% languages = static.get_released_languages() %>
      % if len(languages) > 1:
@@ -161,10 +161,39 @@ function navAllIndex() {
   <header id="global-navigation" class="global ${"slim" if course else ""}">
     <div class="head-nav">
       <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
-
+      <style>
+      #menu-top-off {
+        background-color: #D8D8D8;
+        background-image: none;
+        color: #000;
+        border: none;
+        padding: 0px;
+        text-shadow: none;
+        border-radius: 0px;
+        box-shadow: none;
+        width: 180px;
+        height: 31px;
+        line-height: 31px;
+        vertical-align: middle;
+        text-align: center;
+        font-family: 'helveticaneue';
+        text-transform: none;
+      }
+      #menu-top-off span {
+        display: inline-block;
+        height: 15px;
+        line-height: 15px;
+        vertical-align: middle;
+        width: 90px;
+        font-size: 15px;
+        font-family: 'helveticaneue';
+      }
+      </style>
           <li>
                 <button id="menu-top-off">
-                  <img src="/static/themes/phileastheming/images/btn_moncompte.png"/>
+                  <img src="/static/themes/phileastheming/images/picto_new.png"/>
+                  <span>${_("My acount")}</span>
+                  <img src="/static/themes/phileastheming/images/arrow.png"/>
                 </button>
           </li>
       </ol>
@@ -182,10 +211,41 @@ function navAllIndex() {
     <header id="global-navigation" class="global ${"slim" if course else ""}">
       <div class="head-nav">
         <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
-
+            <style>
+            #menu-top-off-a,#menu-top-off-a:hover {
+              background-color: #D8D8D8;
+              background-image: none;
+              color: #000;
+              border: none;
+              padding: 0px;
+              text-shadow: none;
+              border-radius: 0px;
+              box-shadow: none;
+              width: 180px;
+              height: 31px;
+              line-height: 31px;
+              vertical-align: middle;
+              text-align: center;
+              font-family: 'helveticaneue';
+              text-transform: none;
+              text-decoration: none;
+              display: inline-block;
+            }
+            #menu-top-off-a span {
+              display: inline-block;
+              height: 15px;
+              line-height: 15px;
+              vertical-align: middle;
+              width: 90px;
+              font-size: 15px;
+              font-family: 'helveticaneue';
+            }
+            </style>
             <li>
-                  <a href="/login">
-                    <img src="/static/themes/phileastheming/images/btn_moncompte.png"/>
+                  <a href="/login" id="menu-top-off-a" style="display: inline-block; color:#000;">
+                    <img src="/static/themes/phileastheming/images/picto_new.png"/>
+                    <span>${_("My acount")}</span>
+                    <img src="/static/themes/phileastheming/images/arrow.png"/>
                   </a>
             </li>
         </ol>
