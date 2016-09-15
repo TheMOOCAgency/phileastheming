@@ -1,8 +1,27 @@
 
+<%
+if(org == 'Vodeclic') {
+      href = href_sso+'&vodeclic_id='+content.number;
+   }
+   else {
+      href = '/courses/'+course+'/about'
+   }
+   VodeclicClass = '';
+   if(org == "Vodeclic"){
+    VodeclicClass = ' VodeclicClass';
+   }
+%>
 <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
+<style>
+  .VodeclicClass img{
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+  }
+</style>
 <article class="course" role="region" aria-label="<%- content.display_name %>">
-    <a href="/courses/<%- course %>/about">
-        <header class="course-images">
+    <a href="<%- href %>">
+        <header class="course-images<%- VodeclicClass %>">
             <div class="cover-images">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
             </div>
@@ -20,8 +39,8 @@
             <p style="text-align: center;width: 100%;">
               <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
             </p>
-        <a href="/courses/<%- course %>/about" class="learn-more liens_oust" style="
+        <a href="<%- href %>" class="learn-more liens_oust" style="
 
-        "><%- gettext("SHOW MORE") %></a>
+        ">SHOW MORE</a>
     </a>
 </article>

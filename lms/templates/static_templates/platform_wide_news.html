@@ -1,0 +1,15 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from openedx.core.djangolib.markup import HTML
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("NEWS")}</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about">
+        <h1>${_(title)}</h1>
+        ${HTML(content)}
+    </section>
+</main>

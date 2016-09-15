@@ -12,27 +12,20 @@
   position: fixed;
   bottom: 10px;
   right: 10px;
-  width: 100px;
   padding: 5px;
   font-size: x-large;
-  border-radius:30px;
-  height: 35px;
-  width: 35px;
+  border-radius: 50%;
+  height: 28px;
+  line-height: 24px;
+  width: 28px;
   color: #333;
   text-align: center;
   cursor: pointer;
-
-  i {
-  color : white;
-  }
+  background-color: #009EE0;
 }
 
 .pass {
-  background : #4FE696 no-repeat;
-}
-
-.fail{
-  background : #009DE0 no-repeat;
+  background-color: #004A99 !important;
 }
 
 .tutor{ background:#25b85a !important; }

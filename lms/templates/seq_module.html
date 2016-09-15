@@ -1,0 +1,69 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from seq_nav.views import is_unit_visited
+%>
+
+<div id="sequence_${element_id}" class="sequence" data-id="${item_id}" data-position="${position}" data-ajax-url="${ajax_url}" data-next-url="${next_url}" data-prev-url="${prev_url}">
+  <div class="path"></div>
+  <div class="sequence-nav">
+    <span class="sequence-nav-button button-previous">
+        <img src="" />
+    </span>
+    <ul id="sequence-list">
+      % for idx, item in enumerate(items):
+      ## TODO (vshnayder): add item.progress_detail either to the title or somewhere else.
+      ## Make sure it gets updated after ajax calls.
+      ## implementation note: will need to figure out how to handle combining detail
+      ## statuses of multiple modules in js.
+      <%
+      seen = is_unit_visited(request.user.id, item['id'])
+      %>
+      <li>
+        <img class="seq_${item['type']} inactive progress-${item['progress_status']} nav-item ${'seen' if seen else ''}"
+           data-id="${item['id']}"
+           data-element="${idx+1}"
+           data-page-title="${item['page_title']}"
+           data-path="${item['path']}"
+           id="tab_${idx}"
+           src="" />
+        <div class="sequence-tooltip sr">${item['page_title']}</div>
+      </li>
+      % endfor
+    </ul>
+    <span class="sequence-nav-button button-next">
+        <img src="" />
+    </span>
+  </div>
+
+  <div class="sr-is-focusable" tabindex="-1"></div>
+
+  % for idx, item in enumerate(items):
+  <div id="seq_contents_${idx}"
+    aria-labelledby="tab_${idx}"
+    aria-hidden="true"
+    class="seq_contents tex2jax_ignore asciimath2jax_ignore">
+    ${item['content']}
+  </div>
+  % endfor
+  <div id="seq_content"></div>
+
+  <nav class="sequence-bottom" aria-label="${_('Section')}">
+    <span class="sequence-nav-button button-previous">
+        <img src="" />
+    </span>
+    <span class="sequence-nav-button button-next">
+        <img src="" />
+    </span>
+  </nav>
+</div>
+
+<script type="text/javascript">
+  var sequenceNav;
+  $(document).ready(function() {
+    sequenceNav = new SequenceNav($('.sequence-nav'));
+    $("#sequence-list li").hover(function(){
+      $( this ).children(".sequence-tooltip").toggleClass( "sr" );
+    });
+  });
+</script>

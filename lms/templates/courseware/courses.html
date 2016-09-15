@@ -25,7 +25,41 @@
   </%static:require_module>
 </%block>
 % endif
+<%
+#import SSO test
+import json
+import requests
+import hashlib
+import datetime
 
+now = datetime.datetime.now()
+
+date = now.strftime("%d%m%Y")
+
+api = 'xGXMdnyltTAHZMSHPZHg'
+partenaire = 'CgFVrWdhuSVccijkVVwF'
+email = 'amundi3.admin@vodeclic.com'
+id_membre = 'amundi3.admin'
+day = '08'
+month = '09'
+year = '2016'
+
+crypt = hashlib.sha256(id_membre+api).hexdigest()
+
+d = hashlib.sha256(date+api).hexdigest()
+
+url = 'https://lms.vodeclic.com/api/sso?'
+
+data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&email='+email+'&d='+d+''
+
+href_sso = url+data_fr
+#fin import SSo
+%>
+<!-- GEOFFREY -->
+<script>
+var href_sso =' ${href_sso}';
+</script>
+<!-- GEOFFREY -->
 <%block name="pagetitle">${_("Courses")}</%block>
 <!--
 <LINK href="/static/css/courses.css" rel="stylesheet" type="text/css">
@@ -98,3 +132,44 @@ All courses
 
   </section>
 </section>
+<script>
+function TailleImage(){
+  $('.course-image').each(function(){
+    var This = $(this).children().children('img');
+    Taille = $(this)
+    var Src = $(this).children().children('img').attr('src');
+    var img = new Image();
+    var tailleWidth = $(this).width();
+    var tailleHeight = $(this).height();
+
+    img.src = Src;
+    var imgWidth = img.width;
+    var imgHeight = img.height;
+    var Org = Taille.data('org');
+    console.log(Org);
+    if(imgWidth < tailleWidth && imgHeight < tailleHeight && Org == 'Vodeclic')
+    {
+      marginTop = (tailleHeight - imgHeight)/2;
+      marginLeft = (tailleWidth - imgWidth)/2;
+      console.log(marginTop);
+      This.css('width',imgWidth+'px');
+      This.css('height',imgHeight+'px');
+      This.css('padding-top',marginTop+'px');
+      This.css('padding-bottom',marginTop+'px');
+      This.css('padding-left',marginLeft+'px');
+      This.css('padding-right',marginLeft+'px');
+      This.css('background-color','#fff');
+      Taille.css('background-color','#fff');
+    }
+  })
+}
+$(document).ready(function(){
+  TailleImage();
+})
+$(window).resize(function(){
+  TailleImage();
+})
+var functionImage = function() {
+  console.log('$(this)');
+}
+</script>

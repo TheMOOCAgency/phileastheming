@@ -18,7 +18,40 @@ from student.helpers import (
   DISABLE_UNENROLL_CERT_STATES,
 )
 %>
+<!-- GEOFFREY -->
+<%
+#import SSO test
+import json
+import requests
+import hashlib
+import datetime
 
+now = datetime.datetime.now()
+
+date = now.strftime("%d%m%Y")
+
+api = 'xGXMdnyltTAHZMSHPZHg'
+partenaire = 'CgFVrWdhuSVccijkVVwF'
+email = 'amundi3.admin@vodeclic.com'
+id_membre = 'amundi3.admin'
+day = '08'
+month = '09'
+year = '2016'
+
+crypt = hashlib.sha256(id_membre+api).hexdigest()
+
+d = hashlib.sha256(date+api).hexdigest()
+
+url = 'https://lms.vodeclic.com/api/sso?'
+
+data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&email='+email+'&d='+d+''
+
+href_sso = url+data_fr
+#fin import SSo
+course_number = course_overview.number
+course_org = course_overview.org
+%>
+<!-- GEOFFREY -->
 <%
   cert_name_short = course_overview.cert_name_short
   if cert_name_short == "":
@@ -55,6 +88,41 @@ $(window).resize(function(){
   gestionDisplayOption();
 })
 </script>
+<script>
+
+$(document).ready(function(){
+  $('.course-actions').each(function(){
+        var Url = '${href_sso}'+'&vodeclic_id=';
+        var num = $(this).data('number');
+        var org = $(this).data('org');
+       if(org == 'Vodeclic') {
+        var Urls = Url+num;
+        $(this).find('a').attr('href', Urls);
+      }else{
+        var Urls = $(this).attr('data-link');
+        $(this).find('a').attr('href', Urls);
+      }
+  })
+
+  $('.wrapper-course-image').each(function(){
+        var Url = '${href_sso}'+'&vodeclic_id=';
+        var num = $(this).data('number');
+        var org = $(this).data('org');
+       if(org == 'Vodeclic') {
+        var Urls = Url+num;
+        $(this).find('.dash-img').attr('href', Urls);
+        $(this).find('.dash-img').children('img').css('width','120px');
+        $(this).find('.dash-img').children('img').css('height','120px');
+        $(this).find('.dash-img').children('img').css('margin-left','auto');
+        $(this).find('.dash-img').children('img').css('margin-right','auto');
+      }else{
+        var Urls = $(this).attr('data-link');
+        $(this).find('.dash-img').attr('href', Urls);
+      }
+  })
+
+})
+</script>
 <LINK href="/static/css/dashboard-courses.css" rel="stylesheet" type="text/css">
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
@@ -88,7 +156,7 @@ $(window).resize(function(){
     course_target = reverse(course_root, args=[unicode(course_overview.id)])
   %>
   <section class="details">
-    <div class="wrapper-course-image" aria-hidden="true">
+    <div class="wrapper-course-image" aria-hidden="true"  data-number="${course_number}" data-org="${course_org}">
       % if show_courseware_link:
         % if not is_course_blocked:
             <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover dash-img">
@@ -341,7 +409,7 @@ $(window).resize(function(){
           </div>
         </div>
         <div class="wrapper-course-actions"  id="counsulter1">
-          <div class="course-actions">
+          <div class="course-actions" data-number="${course_number}" data-org="${course_org}">
             % if show_courseware_link:
               % if course_overview.has_ended():
                 % if not is_course_blocked:
@@ -408,7 +476,7 @@ $(window).resize(function(){
           </div>
         </div>
         <div class="wrapper-course-actions" id="counsulter2">
-          <div class="course-actions">
+          <div class="course-actions" data-number="${course_number}" data-org="${course_org}">
             % if show_courseware_link:
               % if course_overview.has_ended():
                 % if not is_course_blocked:
@@ -581,7 +649,7 @@ $(window).resize(function(){
               contact_link_end=HTML('</a>'),
               unenroll_link_start=HTML(
                 '<a id="unregister_block_course" rel="leanModal" '
-                'data-course-id="{course_id}" data-course-number="{course_number}" data-course-name="{course_name}" '
+                'data-course-id="{course_id}" data-course-number="${course_number}" data-course-name="{course_name}" '
                 'href="#unenroll-modal">'
               ).format(
                 course_id=course_overview.id,
@@ -709,10 +777,10 @@ $(window).resize(function(){
     var Verif1 = Link1.find('a');
     var Verif2 = Link2.find('a');
     if(Verif2.length == 0) {
-      Link2.html('<div class="course-actions"><a href="#" class="enter-course show-dash" data-course-key="course-v1:edX+DemoX+Demo_Course" style="">Course Closed<span class="sr">&nbsp;edX Demonstration Course</span></a></div>');
+      Link2.html('<div class="course-actions" data-number="${course_number}" data-org="${course_org}"><a href="#" class="enter-course show-dash" data-course-key="course-v1:edX+DemoX+Demo_Course" style="">Course Closed<span class="sr">&nbsp;edX Demonstration Course</span></a></div>');
     }
     if(Verif1.length == 0 ) {
-      Link1.html('<div class="course-actions"><a href="#" class="enter-course show-dash" data-course-key="course-v1:edX+DemoX+Demo_Course" style="">Course closed<span class="sr">&nbsp;edX Demonstration Course</span></a></div>');
+      Link1.html('<div class="course-actions" data-course-number="${course_number}" data-org="${course_org}"><a href="#" class="enter-course show-dash" data-course-key="course-v1:edX+DemoX+Demo_Course" style="">Course closed<span class="sr">&nbsp;edX Demonstration Course</span></a></div>');
     }
   }
   $(document).ready(function(){
