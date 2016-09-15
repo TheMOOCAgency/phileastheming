@@ -29,6 +29,8 @@ ${static.get_page_title_breadcrumbs(course_name())}
 
 <%block name="header_extras">
 <link rel="stylesheet" type="text/css" href="${static.url('css/tma_courseware.css')}" />
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_seq.css')}" />
+<link rel="stylesheet" type="text/css" href="${static.url('css/discussion.css')}" />
 
 % for template_name in ["image-modal"]:
 <script type="text/template" id="${template_name}-tpl">
@@ -108,13 +110,11 @@ ${HTML(fragment.foot_html())}
 % endif
 
 <div class="container">
-  <div class="button-phone-menu">
-    <button id="active_menu"><span class="icon fa fa-caret-right" aria-hidden="true"></span>${_(' course content')}</button>
-  </div>
   <div class="course-wrapper" role="presentation">
 
 % if disable_accordion is UNDEFINED or not disable_accordion:
     <div class="course-index">
+
       <div class="wrapper-course-modes">
 
           <div class="courseware-bookmarks-button" data-bookmarks-api-url="${bookmarks_api_url}">
@@ -187,8 +187,8 @@ ${HTML(fragment.foot_html())}
         % endif
 
           ${HTML(fragment.body_html())}
-          <a id="floating_button" class="fail" style="display:none">
-            <i class="fa fa-comments-o"></i>
+          <a id="floating_button" class="" style="display:none">
+            <img src="${static.url('images/discussionicon.png')}" />
           </a>
         </main>
     </section>
@@ -229,6 +229,9 @@ ${HTML(fragment.foot_html())}
 <%include file="../modal/accessible_confirm.html" />
 <script type="text/javascript">
   mPrepareTrackAjax = function(){
+    % if not settings.FEATURES.get('TMA_ENABLE_COMPLETION_TRACKING'):
+    return;
+    % endif
     var mUsageIds = [];
     var mCourseId = "${course.id}";
 
@@ -250,6 +253,9 @@ ${HTML(fragment.foot_html())}
   }
 
   getCompletionStatus = function(){
+    % if not settings.FEATURES.get('TMA_SHOW_COMPLETION_ON_COURSEWARE_NAVIGATION'):
+    return;
+    % endif
     var mCourseId = "${course.id}";
     var circleGreen = '<div class="completed green"></div>';
     var circleGray = '<div class="completed gray"></div>';
@@ -288,100 +294,149 @@ ${HTML(fragment.foot_html())}
 
   }
 
-floatingButton = function(){
-
-    var floating_button = $('#floating_button')
-    var discussion_block = $('*[data-block-type=discussion]')
-    if (discussion_block.length > 0)
-    {
-    discussion_block_id = discussion_block.attr('data-usage-id');
-    discussion_block.attr('id',discussion_block_id);
-    floating_button.attr('href','#'+discussion_block_id);
-    path = window.location.pathname;
-    path_array = path.split("/");
-    course_id = "${course.id}";
-    section_id = path_array[5];
-    $.get({
-
-    url: "/pass_fail/"+course_id+"/"+section_id,
-    dataType: "json",
-    success: function(data) {
-      var studentPassed = data['passed']
-      if (studentPassed == true){
-        floating_button.attr('class','pass');
-        floating_button.css('display','block');
+  // set seq nav
+  saveUnitVisitStatus = function(unit_id){
+    $.post({
+      url: "/save_unit_visit/",
+      data: {
+        'unit_id': unit_id
       }
-      else{
-       floating_button.css('display','block');
-      }
-    },
-    failure: function(data) {
-        console.log(data)
-    }
-    })
+    }); // post
   }
-  else{
-    floating_button.css('display','none');
-  }
-}
-
-// Add by chintan to get the tutor mark in the discussion
-callForAllUser = function(){
-    var course_id = "${course.id.to_deprecated_string()}";
-    var discussion_block = $('*[data-block-type=discussion]')
-    discussion_id = discussion_block.find($("div[class='discussion-module']")).attr('data-discussion-id')
-    users = $('.username')
-    user_list = []
-    for (i=0; i< users.length; i++)
-    {
-        user_list.push(users[i].text)
-    }
-    unique_users_list = $.unique(user_list)
-
-    $.get({
-
-        url: "/tutor_tag/"+course_id+"/"+discussion_id,
-        data: {'users':unique_users_list},
-        success: function(data) {
-            data = data['data']
-            var tag = '<span class="user-label-staff tutor">TUTOR</span>'
-            $(".tutor").remove();
-            for (index=0; index < data.length; index++) {
-                var passed = data[index]['passed'];
-                if(passed == true){
-                    var uName = data[index]['username'];
-                    var authorTags = $(".username:contains('"+uName+"')");
-                    authorTags.each(function(index){
-                        if($(this).parent().parent().hasClass('discussion-comment')){
-                            $(this).next('span.box').after(tag);
-                        } else {
-                            $(this).after(tag);
-                        }
-                    });
-                }
-            };
-
-        },
-        failure: function(data) {
-            console.log(data)
+  setVisitStatusOfUnits = function(){
+    $("ul#sequence-list li img").each(function(){   
+        if ($(this).hasClass('active')){
+          $(this).attr('src', "${static.url('images/nav/blue-red.png')}");
+          if (! $(this).hasClass('seen')){
+            $(this).addClass('seen');
+            saveUnitVisitStatus($(this).data('id'));
+          }
+        } else if ($(this).hasClass('seen')){
+          $(this).attr('src', "${static.url('images/nav/filled.png')}");
+        } else {
+          $(this).attr('src', "${static.url('images/nav/empty.png')}");
         }
-    })
-}
-// End of Tutor Mark
+    });
+  }
+  $(".nav-item").ajaxSend(function(event, xhr, settings){
+      if( settings.url.endsWith('goto_position') ) {
+        setTimeout(function(){
+          setVisitStatusOfUnits();
+        }, 1000);
+      }
+  });
+  // set seq nav
+
+  floatingButton = function() {
+    % if not settings.FEATURES.get('TMA_ENABLE_FORUM_FLOATING_BUTTON'):
+      return;
+    % endif
+    var floating_button = $('#floating_button');
+    var discussion_block = $('*[data-block-type=discussion]');
+    if (discussion_block.length > 0) {
+      discussion_block_id = discussion_block.attr('data-usage-id');
+      discussion_block.attr('id',discussion_block_id);
+      floating_button.attr('href','#'+discussion_block_id);
+      path = window.location.pathname;
+      path_array = path.split("/");
+      course_id = "${course.id}";
+      section_id = path_array[5];
+
+      $.get({   
+        url: "/assignment_passing_status/" + course_id + "/" + section_id,
+        dataType: "json",
+        success: function(data) {
+          if (data.passed == true){
+            $('#floating_button').addClass('pass');
+            $('#floating_button').attr('title', 'Answer a question');
+            $('#floating_button').children('img').attr('src', "${static.url('images/graduateicon.png')}");
+            floating_button.css('display','block');
+          } else {
+            $('#floating_button').removeClass('pass');
+            $('#floating_button').attr('title', 'Ask a question');
+            $('#floating_button').children('img').attr('src', "${static.url('images/discussionicon.png')}");
+            floating_button.css('display','block'); 
+          }
+        }
+      });
+    } else {
+      floating_button.css('display','none');
+    }
+  }
+
+  // Add by chintan to get the tutor mark in the discussion
+  callForAllUser = function(){
+    % if not settings.FEATURES.get('TMA_TUTOR_FLAG'):
+      return;
+    % endif
+    var course_id = "${course.id.to_deprecated_string()}";
+    var discussion_block = $('*[data-block-type=discussion]');
+    discussion_id = discussion_block.find($("div[class='discussion-module']")).attr('data-discussion-id');
+    var forum_users = [];
+    $('.username').each(function(){
+      forum_users.push($(this).text());
+    });
+
+    $.get({    
+      url: "/tutor_tag/"+course_id+"/"+discussion_id + "/",
+      data: {
+        'users': JSON.stringify($.unique(forum_users))
+      },
+      success: function(data) {
+        data = data['data']
+        var tag = '<span class="user-label-staff tutor">TUTOR</span>'
+        $(".tutor").remove();
+        for (index=0; index < data.length; index++) {
+          var passed = data[index]['passed'];
+          if(passed == true){
+            var uName = data[index]['username'];
+            var authorTags = $(".username:contains('"+uName+"')");
+            authorTags.each(function(index){
+                if($(this).parent().parent().hasClass('discussion-comment')){
+                    $(this).next('span.box').after(tag);
+                } else {
+                    $(this).after(tag);
+                }
+            });
+          }
+        }       
+      }
+    });
+  }
+  // End of Tutor Mark
+
+  // calculating li padding and span length in #sequencelist
+  sequenceListCalculation = function(numberOfChild,sequenceList){
+      sequenceListWidth = sequenceList.width();
+      toBeSequenceListWidth = sequenceListWidth - 36;
+      random = toBeSequenceListWidth/ (sequenceList[0].children.length -1);
+      spanWidth = random -36;
+      liPadding = spanWidth - 18;
+      return {'liPadding':liPadding,'spanWidth':spanWidth}
+  }
+  //End
 
   $(document).ready(function(){
     mPrepareTrackAjax();
-    % if settings.FEATURES.get('TMA_ENABLE_COMPLETION_TRACKING'):
-      getCompletionStatus();
-    % endif
+    getCompletionStatus();
     floatingButton();
+    setVisitStatusOfUnits();
+    $("span.button-previous img").attr('src', "${static.url('images/nav/previous-button.png')}");
+    $("span.button-next img").attr('src', "${static.url('images/nav/next-button.png')}");
+
+    sequenceList = $('#sequence-list');
+    numberOfChild = sequenceList[0].children.length
+    calculations = sequenceListCalculation(numberOfChild,sequenceList)
+    
+    $('.b4').css('width',calculations['spanWidth']);
+    $('#sequence-list li').css('padding-left',calculations['liPadding']);
   });
+  
   $(document).ajaxSuccess(function(event, xhr, settings){
     if( settings.url.endsWith('goto_position') ) {
       mPrepareTrackAjax();
       floatingButton();
     } else {
-      % if settings.FEATURES.get('TMA_ENABLE_COMPLETION_TRACKING'):
         var seen_video = settings.url.endsWith('save_user_state');
         var attended_problem = settings.url.endsWith('problem_check');
         var seen_hint = settings.url.endsWith('hint_button');
@@ -391,252 +446,20 @@ callForAllUser = function(){
         var seen_html = settings.url.endsWith('track_html_component');
         if (seen_video || attended_problem || seen_hint || graded_lti_v2 || got_grade || rendered_grade || seen_html) {
           getCompletionStatus();
-          floatingButton();
         }
-      % endif
     }
-    % if settings.FEATURES.get('TMA_TUTOR_FLAG'):
-      var resp_limit = settings.url.endsWith('resp_limit=25')
-      var reply = settings.url.endsWith('reply?ajax=1')
-      var inline = settings.url.endsWith('inline?page=1&ajax=1')
-      var create = settings.url.endsWith('create?ajax=1')
-      if ( resp_limit || reply || inline || create )
-        {
-            callForAllUser();
-        }
-    % endif
+    if (settings.url.endsWith('problem_check')){
+      floatingButton();
+      callForAllUser();
+    }
+    var resp_limit = settings.url.endsWith('resp_limit=25')
+    var reply = settings.url.endsWith('reply?ajax=1')
+    var inline = settings.url.endsWith('inline?page=1&ajax=1')
+    var create = settings.url.endsWith('create?ajax=1')
+    if ( resp_limit || reply || inline || create ) {
+      callForAllUser();
+    }
 
   });
 
 </script>
-<script>
-function menuPhone() {
-    $('#active_menu').click(function(){
-            if($('.course-index').css('display') == 'none') {
-              $('.course-index').show();
-              console.log('putain de display de mes couilles');
-            }else{
-              $('.course-index').hide();
-            }
-    })
-  }
-
-function sizeMenu() {
-    if(parseInt($(window).width()) > 667) {
-            $('.course-index').attr('style','');
-      }
-}
-function customRadioLabel(){
-  var Cible = $('fieldset').attr('role','radiogroup').children('label');
-  Cible.css('background-color','#fff');
-  Cible.css('margin-bottom','3px');
-  Cible.each(function(){
-  var LocateRadio = $(this).attr('for');
-  console.log($('input[name="LocateRadio"]'));
-
-  })
-  Cible.click(function(){
-    $(this).parent().children('label').css('background-color','#fff');
-    $(this).parent().children('label').css('color','#000');
-    $(this).parent().children('label').css('border-color','transparent');
-    $(this).css('color','#fff');
-    $(this).css('background-color','#A2C126');
-    $(this).css('border-color','#A2C126');
-  })
-}
-$('fieldset').ready(function(){
-  customRadioLabel();
-  $('.check').click(function(){
-    customRadioLabel();
-  })
-})
-$(document).ready(function(){
-  menuPhone();
-})
-$(window).resize(function(){
-  sizeMenu();
-})
-</script>
-<style>
-.xmodule_display.xmodule_SequenceModule .sequence-nav,.xmodule_display.xmodule_SequenceModule nav.sequence-bottom {
-  display : none;
-}
-input[type="radio"] {
-  display: none;
-}
-body.view-in-course .wrapper-footer {
-  padding: 0;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct {
-  border: 2px solid transparent;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect:hover {
-  border: 2px solid transparent;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect {
-  border: 2px solid transparent;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label:hover {
-  border: 2px solid transparent;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label {
-  border: 2px solid transparent;
-}
-.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct:hover{
-  border: 2px solid transparent;
-}
-.content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
-  width: calc(68% - 50px);
-  padding-right: 25px;
-  padding-left: 25px;
-  background-color: #FAFAFA;
-}
-body, h1, h2, h3, h4, h5, h6, p, label,.xmodule_display.xmodule_HtmlModule p {
-  color: #363F4D;
-  font-size: 16px;
-  font-family: 'helveticaneue';
-}
-.action button,.action button:hover, .action button:focus {
-  background-color: #fff;
-  background-image: none;
-  color: #8a4185;
-  border: 2px solid #8a4185;
-  box-shadow: none;
-}
-.xblock .xblock h3,.xmodule_display.xmodule_HtmlModule h2 {
-  color: #8a4185;
-  font-family: 'gothamrounded-bold';
-}
-.xmodule_display.xmodule_HtmlModule h2 {
-  font-size: 30px;
-}
-body.view-in-course .wrapper-course-material .course-material .course-tabs {
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.container>div {
-  border: none;
-  width: 1440px;
-  margin-left: auto;
-  margin-right: auto;
-}
-body.view-in-course .container {
-  padding: 0;
-}
-.course-index {
-  border: none;
-  width: 32%;
-}
-.wrapper-course-modes {
-  display: none;
-}
-.group-heading {
-  padding: 0;
-  background-color: #009DE0;
-  color: #fff;
-}
-.course-index .accordion .course-navigation .button-chapter.active .group-heading {
-  color: #fff;
-  font-size: 18px;
-  font-family: 'helveticaneue-medium';
-  font-weight: normal;
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav-button:hover {
-  width: 40px;
-  height: 46px;
-  box-shadow: none;
-}
-
-.course-index .accordion .course-navigation .chapter-content-container .chapter-menu .menu-item.active a p{
-  height: 20px;
-  line-height: 20px;
-  vertical-align: middle;
-}
-
-.menu-item {
-  padding-bottom: 0;
-  padding-top: 15px;
-  padding-bottom: 15px;
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-next,.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-previous,#active_menu {
-  border-radius: 0px;
-  background-color: #009DE0;
-  background-image: none;
-  color: #fff;
-}
-#active_menu {
-  width: calc(100%);
-  height: 42px;
-  padding: 0;
-  padding-left: 15px;
-  margin: 0;
-  box-shadow: none;
-  border: none;
-  line-height: 42px;
-  vertical-align: middle;
-  text-align: left;
-  font-size: 18px;
-  font-family: 'helveticaneue-medium';
-  font-weight: normal;
-  text-shadow: none;
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav .sequence-list-wrapper {
-  border: 1px solid #009DE0;
-  background-color: #fff;
-  background-image: none;
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav ol li {
-  padding: 0;
-  padding-top: 1px;
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav ol li button, {
-  background-color: rgba(0,0,0,0.1);
-}
-.xmodule_display.xmodule_SequenceModule .sequence-nav ol {
-  background-color: rgba(0,0,0,0.1);
-}
-.xmodule_display.xmodule_CapaModule div.problem p {
-  font-size: 20px;
-  font-weight: bold;
-}
-.button-phone-menu {
-  display : none;
-  width: 100vw;
-  height: 30px;
-}
-#active_menu {
-  display: none;
-}
-@media(max-width:1440px) {
-  .container>div {
-    border: none;
-    width: 100vw;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-@media(max-width:667px) {
-  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
-    width: calc(100vw - 20px);
-    padding: 10px;
-    clear: left;
-    display: block;
-  }
-  .button-phone-menu {
-    display: block;
-  }
-  #active_menu {
-    display: block;
-  }
-  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
-    box-sizing: content-box;
-  }
-
-  .course-index {
-    width: calc(100vw);
-    margin: 0;
-    clear: left;
-    display: none;
-  }
-}
-</style>

@@ -1,5 +1,4 @@
 <%namespace name='static' file='../static_content.html'/>
-<% style_overrides_file = static.get_value('css_overrides_file') %>
 <%!
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
@@ -10,7 +9,6 @@ from openedx.core.lib.courses import course_image_url
 %>
 
 <%inherit file="../main.html" />
-
 <%block name="headextra">
   ## OG (Open Graph) title and description added below to give social media info to display
   ## (https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#tags)
@@ -70,11 +68,7 @@ from openedx.core.lib.courses import course_image_url
       %>
     $('#class_enroll_form').on('ajax:complete', function(event, xhr) {
       if(xhr.status == 200) {
-          <%
-            course_welcome_mod = course_target.replace('info','')
-            course_welcome = course_welcome_mod+'welcome'
-          %>
-        location.href = "${course_welcome}";
+        location.href = "${reverse('dashboard')}";
       } else if (xhr.status == 403) {
         location.href = "${reverse('course-specific-register', args=[course.id.to_deprecated_string()])}?course_id=${course.id | u}&enrollment_action=enroll";
       } else if (xhr.status == 400) { //This means the user did not have permission
@@ -87,14 +81,11 @@ from openedx.core.lib.courses import course_image_url
     });
 
     %else:
-      <%
-        course_welcome_mod = course_target.replace('info','')
-        course_welcome = course_welcome_mod+'welcome'
-      %>
+
     $('#class_enroll_form').on('ajax:complete', function(event, xhr) {
       if(xhr.status == 200) {
         if (xhr.responseText == "") {
-          location.href = "${course_welcome}";
+          location.href = "${reverse('dashboard')}";
         }
         else {
           location.href = xhr.responseText;
@@ -111,1061 +102,292 @@ from openedx.core.lib.courses import course_image_url
     %endif
 
   })(this)
-  function equilibre_div() {
-    var hauteurVoulu = $('.prerequisites').height();
-    if(parseInt(hauteurVoulu) < 270)
-    {
-      var marginvoulu = parseInt(270 - parseInt(hauteurVoulu));
-      $('.prerequisites').css('margin-bottom',marginvoulu+'px');
-    }else{
-      $('.prerequisites').css('margin-bottom','0px');
-    }
-  }
-  function upWhiteUp() {
-    heightUp = $('.white-up').height();
-    nombLi = $('.faq').height();
-    difheight = parseInt(nombLi) - 130;
-    marginTotal = 130 + (parseInt(difheight) / 2);
-    $('.white-up').css('margin-top','-'+marginTotal+'px');
-    console.log(marginTotal);
-  }
-
-  function confirmSubscribe() {
-    $('.registers').click(function(){
-      $('.pop-up').show();
-      $('#voile').css('background-color','rgba(0,0,0,0.5)');
-      $('#voile').show();
-    })
-   $('#voile').click(function(){
-     $('.pop-up').hide();
-     $('#voile').hide();
-   })
-   $('#close-popup').click(function(){
-     $('.pop-up').hide();
-     $('#voile').hide();
-   })
-  }
-  function positionSubscribe() {
-    var PopUp = $('.pop-up');
-    var HeightPopUp = PopUp.height();
-    var WidthPopUp = PopUp.width();
-    var DocWidth = $(document).width();
-    if(parseInt(DocWidth) > 500) {
-      PopUp.css('width','auto');
-      var MarginTopPopUP = (parseInt(HeightPopUp) + 30) / 2;
-      var MarginLeftPopUP = (parseInt(WidthPopUp) + 30) / 2;
-      PopUp.css('margin-top','-'+MarginTopPopUP+'px');
-      PopUp.css('margin-left','-'+MarginLeftPopUP+'px');
-      PopUp.css('left','50%');
-    }else{
-      PopUp.css('width','100%');
-      var MarginTopPopUP = (parseInt(HeightPopUp) + 30) / 2;
-      PopUp.css('margin-top','-'+MarginTopPopUP+'px');
-      PopUp.css('margin-left','0px');
-      PopUp.css('left','0px');
-    }
-  }
-  $(document).ready(function(){
-    //equilibre_div();
-    $('.course-staff').children('h2').html('LES FORMATEURS');
-    $('.faq').css('margin-bottom','50px');
-    upWhiteUp();
-    confirmSubscribe();
-    positionSubscribe();
-  })
-  $(window).resize(function(){
-    positionSubscribe();
-  })
   </script>
 
   <script src="${static.url('js/course_info.js')}"></script>
 </%block>
 
-<%block name="pagetitle">${course.display_name_with_default}</%block>
-<style>
-  .intro-inner-wrapper {
-    width: 400px;
-  }
-  .up_dashboard {
-    width: 1180px;
-    height: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 20px;
-    padding-bottom: 10px;
-  }
-  .up_dashboard p {
-    font-size: 20px;
-    color: #445561;
-    font-family: 'helveticaneue-light';
-  }
-   .titre-page {
-    margin-top: 20px;
-    max-width: 778px;
-    color: #8A4185;
-    font-family:"gothamrounded-bold";
-    font-size: 30px;
-    text-transform: uppercase;
-  }
-  .up_dashboard p {
-   width: 60%;
-   line-height: 25px;
- }
-  .course-info header.course-profile {
-    padding-top: 0px;
-    margin-top: 130px;
-  }
-  .grey {
-    background-color: #F5F5F5;
-    max-width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
-  .grey_inside {
-  }
-  .course-summary {
-    background-color: #fff;
-  }
-  .course-info .course-sidebar>section.course-summary {
-    padding: 0px;
-    border: none;
-    box-shadow: none;
-    position: absolute;
-    top: 190px ;
-    width: 370px;
-  }
-  .course-summary img {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 0px;
-    margin: 0px;
-    border: none;
-    box-shadow: none;
-  }
-  .course-summary button,.course-summary button:hover,.course-summary button:focus,.course-summary a,.course-summary a:hover,.course-summary a:focus{
-    display: block;
-    width: 100%;
-    background-color: #009DE0;
-    background-image: none;
-    border-radius: 0;
-    box-shadow: none;
-    border: none;
-    text-shadow: none;
-    padding: 0;
-    color: #fff;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-  }
-  .details h2,.course-staff h2,.avis-formation h2 {
-    font-size: 20px;
-    color: #445561;
-    font-family: 'helveticaneue-medium';
-  }
-.course-info .details p, .course-staff p,.avis-formation p {
-    font-size: 18px;
-    color: #445561;
-    font-family: 'helveticaneue-light';
-    margin-top: 0px;
-    margin-bottom: 0;
-  }
-  .course-info .course-sidebar header::after {
-    display:none;
-  }
-  .important-dates-item-title img {
-    width: 21px;
-    height: auto;
-    float: left;
-    margin-right: 5px;
-    margin-top: -2px;
-  }
-  .picto-list-ol {
-    width: 100%;
-    height: 134px;
-    line-height: 134px;
-    vertical-align: middle;
-    background-color: #fff;
-  }
-  .picto-list-ol a,.picto-list-ol a:hover,.picto-list-ol a:focus{
-    float: left;
-    background-color: transparent;
-    width: 67.9px;
-    height: 67.9px;
-    margin-top: 30px;
-    margin-bottom: 32px;
-    margin-left: 3.8%;
-    margin-right: 27.8%;
-  }
-  .picto-list-ol a:first-child {
-    margin-left: 27.8%;
-    margin-right: 3.8%;
-  }
-  .picto-list-ol a img {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-  .course-info .container {
-    padding-bottom: 0px;
-  }
-  .wrapper-footer {
-    margin-top: 0px;
-  }
-  .faq {
-    width: 100%;
-    background-color: #009de0;
-    color: #fff;
-    position: relative;
-    z-index: 1000;
-  }
-  .about,.faq,.prerequisites {
-    padding-left: 130px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    width: calc(100% - 130px);
-  }
-  .faq h2 {
-    color: #fff;
-  }
-  .details {
-    margin-right: 15px;
-  }
-.white {
-    width: 1440px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #fff;
-  }
-  .white-up {
-      width: 1440px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: -130px;
-      height:600px;
-      background-color: #fff;
-    }
-.window-wrap {
-  background-color: #fff;
-}
-/* teacher side */
-.course-staff {
-  padding-left: 130px;
-  padding-top: 25px;
-  width: calc(60% - 130px);
-  background-color: #fff;
-  margin-top: 95.5px;
-  clear: left;
-}
-.teacher {
-  width: 48%;
-  margin: 1%;
-  float: left;
-  background-color: #fff;
-}
-.teacher-image {
-  width: 126px;
-  height: 126px;
-  float: left;
-}
-.teacher-image img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-}
-.teacher-up {
-  width: calc(100% - 134px);
-  height: 126px;
-  float: left;
-}
-.teacher h3,.teacher p {
-  height: 63px;
-  line-height: 63px;
-  margin-left: 20px;
-  vertical-align: bottom;
-  width: calc(100% - 20px);
-}
-.teacher p {
-  vertical-align: top;
-}
-/*avis formation */
-.avis-formation {
-  padding-left: 130px;
-  width: calc(60% - 130px);
-  background-color: #fff;
-  clear: left;
-}
-.avis-formation h2 {
-  padding-top: 40px;
-}
-#note {
-  display: inline-block;
-  font-size: 60px;
-  height: 60px;
-  line-height: 60px;
-  vertical-align: middle;
-  color: #8A4185;
-  font-family: 'gothamrounded-light';
-  margin-left: 15px;
-  margin-top: 15px;
-}
-#star {
-  display: inline-block;
-  height: 60px;
-  line-height: 60px;
-  vertical-align: bottom;
-  margin-left: 15px;
-  margin-top: 15px;
-}
-#avis {
-  display: inline-block;
-  font-size: 14px;
-  vertical-align: bottom;
-  height: 60px;
-  line-height: 85px;
-  color: #8A4185;
-  font-family: 'helveticaneue';
-  margin-left: 15px;
-  margin-top: 15px;
-}
-.commentaires {
-  width: 100%;
-}
-.commentaires span {
-  width: calc(100% - 30px);
-  display: block;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 30px;
-}
-.liens {
-  width: 450px;
-  height: 42px;
-  margin-left:auto;
-  margin-right:auto;
-  margin-top: 30px;
-  margin-bottom: 40px;
-}
-.liens a {
-  text-decoration: none;
-  width: 448px;
-  height: 40px;
-  line-height: 40px;
-  vertical-align: middle;
-  display: block;
-  border: 1px solid #8A4185;
-  color: #8A4185;
-  font-family: 'helveticaneue-medium';
-  text-transform: uppercase;
-  text-align: center;
-  border-radius: 1px;
-}
-.course-sidebar-low-res,.course-summary-low-res {
-  display: none;
-}
-.grey {
-  width: 1440px;
-}
-@media(max-width: 1440px) {
-  .grey,.white,.grey_inside,.white-up {
-    width: 100vw;
-  }
-  .course-info .course-sidebar{
-    height: 500px;
-    width: calc(100% - 900px);
-  }
-  .course-info .details {
-    width:900px;
-    margin-right: 0px;
-  }
-  .course-info .course-sidebar>section.course-summary {
-    width: 375px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .picto-list-ol {
-    width: 100%;
-    height: 80px;
-    line-height: 80px;
-    vertical-align: middle;
-    background-color: #fff;
-  }
-}
-@media(max-width:1354px) {
-  .picto-list-ol a,.picto-list-ol a:first-child,.picto-list-ol a:last-child {
-    width: 45px;
-    height: 45px;
-    margin-left: 36px;
-    margin-right: 36px;
-  }
-  .picto-list-ol {
-    width: 234px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-@media(max-width:1278px) {
-  .course-info .course-sidebar>section.course-summary {
-    width: 300px;
-  }
-  .course-info .course-sidebar{
-    width: calc(100% - 880px);
-  }
-  .course-info .details {
-    width:700px;
-    padding-right: 100px;
-    margin-right: 0px;
-  }
-  .about,.prerequisites,.faq {
-    padding-left: 50px;
-  }
-  .course-staff {
-    width: calc(100vw - 50px);
-    padding-left: 50px;
-  }
-  .teacher {
-    width: 90%;
-    margin-left: 5%;
-    margin-right: 5%;
-    margin-top: 1%;
-    margin-bottom: 1%;
-  }
-  .white-up {
-    height: 930px;
-  }
-}
-@media(max-width: 1180px) {
-  .up_dashboard {
-    width: 95%;
-    margin-left: 5%;
-  }
-}
-@media(max-width: 1100px) {
-  .course-info .course-sidebar>section.course-summary {
-    width: 250px;
-  }
-  .course-info .course-sidebar{
-    width: calc(100% - 805px);
-  }
-  .course-info .details {
-    width:700px;
-    padding-right: 25px;
-  }
-  .important-dates-item-title {
-    font-size: 13px;
-  }
-  .important-dates-item-text {
-    font-size: 14px;
-  }
-}
-@media(max-width:1050px) {
-  .course-info .course-sidebar{
-    width: calc(100% - 780px);
-  }
-  .course-info .details {
-    width:650px;
-    padding-right: 50px;
-  }
-  .up_dashboard p {
-    font-size: 18px;
-  }
-   .titre-page {
-    margin-top: 20px;
-    width: 80%;
-    font-size: 25px;
-  }
-}
-@media(max-width:950px) {
-  .course-info .course-sidebar{
-    width: calc(100% - 600px);
-  }
-  .course-info .details {
-    width:550px;
-    padding-right: 50px;
-  }
-  .titre-page {
-   margin-top: 20px;
-   width: 70%;
-   font-size: 22px;
- }
- .up_dashboard p {
-   font-size: 17px;
- }
-}
-@media(max-width:850px) {
-  .course-info .course-sidebar{
-    width: calc(100% - 500px);
-  }
-  .course-info .details {
-    width:450px;
-    padding-right: 50px;
-  }
-  .container {
-    min-width: 0px;
-  }
-  .titre-page {
-   margin-top: 20px;
-   width: 50%;
-   font-size: 20px;
- }
- .up_dashboard p {
-   font-size: 16px;
- }
-}
-@media(max-width: 768px) {
-  .course-sidebar {
-    width: 234px;
-  }
-  .course-info .course-sidebar>section.course-summary {
-    padding: 0px;
-    border: none;
-    box-shadow: none;
-    position: absolute;
-    top: 190px;
-    width: 234px;
-  }
-  .course-summary img {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 0px;
-    margin: 0px;
-    border: none;
-    box-shadow: none;
-  }
-  .important-dates-item-title {
-    font-size: 12px;
-  }
-  .important-dates-item-text {
-    font-size: 13px;
-  }
-  .important-dates-item-title img {
-    width: 18px;
-    height: 18px;
-    margin-right: 3px;
-  }
-  .teacher-image {
-    width: 126px;
-    height: 126px;
-    float: left;
-  }
-  .teacher-image img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-  .course-summary button,.course-summary a {
-    display: block;
-    width: 100%;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-  }
-  .picto-list-ol a,.picto-list-ol a:first-child {
-    width: 45px;
-    height: 45px;
-    margin-left: 36px;
-    margin-right: 36px;
-  }
-}
-@media(max-width:767px) {
-  .course-sidebar {
-    display: none;
-  }
-  .grey_inside {
-    height: 1100px;
-  }
-  .course-sidebar-low-res,.course-summary {
-    width: 100%;
-    max-height: 77  0px;
-    display: block;
-  }
-  .up_dashboard {
-    height: 180px;
-    width: calc(100vw - 10px);
-    text-align: center;
-    margin-left: 10px;
-  }
-  .titre-page {
-    width: 100%;
-  }
-  .course-info .details {
-    width: 100%;
-    padding-right: 0px;
-  }
-  .about,.prerequisites,.faq {
-    margin-right: 0px;
-    padding-left: 1%;
-    padding-right: 1%;
-    width: 98%;
-  }
-  .img-about-top {
-    min-width: 200px
-  }
-  .img-about-top img {
-    width: 100%;
-    height: auto;
-  }
-  .register {
-    display: block;
-    width: 300px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-    color:#fff;
-    background-color: #009DE0;
-  }
-  .course-summary button {
-    display: block;
-    width: 300px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-  }
-  .course-summary button, .course-summary button:visited,.course-summary a, .course-summary a:visited  {
-      color: #fff;
-      text-decoration: none;
- }
-  .course-summary ol {
-    padding: 0px;
-    margin: 0px;
-    height: 200px;
-  }
-  .course-summary ol li {
-    padding: 0px;
-    margin: 0px;
-    display: block;
-    width: 94%;
-    margin-left: 3%;
-    margin-right: 3%;
-    float: left;
-    margin-top: 8px;
-    padding-bottom: 5px;
-    margin-bottom: 8px;
-    border-bottom: 1px solid #445561;
-    height: 19px;
-  }
-  .important-dates-item-title {
-    height: 18px;
-    width: 50%;
-    float: left;
-    padding: 0px;
-    margin: 0px;
-  }
-  .important-dates-item span {
-    height: 18px;
-    width: 30%;
-    margin-right: 20%;
-    float: left;
-    padding: 0px;
-    margin: 0px;
-    font-weight: bold;
-  }
-  .avis-formation {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    padding: 0px;
-  }
-  .liens {
-    width: 100%;
-  }
-  .liens a {
-    width: 300px;
-    font-size: 12px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-@media(max-width:543px) {
-  .important-dates-item-title {
-    font-size: 10px;
-  }
-  .important-dates-item span {
-    width: 40%;
-    margin-right: 10%;
-    font-size: 12px;
-  }
-}
-@media(max-width:391px) {
-  .important-dates-item-title {
-    font-size: 9px;
-  }
-  .teacher-up h3,.teacher-up p {
-    font-size: 14px;
-    line-height: 20px;
-  }
-  .important-dates-item span {
-    width: 35%;
-    margin-right: 15%;
-    font-size: 10px;
-  }
-}
-@media(max-width:370px) {
+<%block name="pagetitle">${course.display_name_with_default_escaped}</%block>
 
-}
-/*
-@media(max-width:1368px) {
-  .course-sidebar {
-    display: none;
-  }
-  .course-summary {
-    display: none
-  }
-  .course-sidebar-low-res,.course-summary-low-res {
-    width: 100%;
-    height: 500px;
-    display: block;
-  }
-  .course-summary-low-res img {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 0px;
-    margin: 0px;
-    border: none;
-    box-shadow: none;
-  }
-  .course-summary-low-res a {
-    display: block;
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #009DE0;
-    color: #fff;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-  }
-   .course-summary-low-res .important-dates-item {
-     width: 46%;
-     margin-left: 1%;
-     margin-right: 1%;
-     display: block;
-     float: left;
-     padding: 1%;
-   }
-   .course-summary-low-res .important-dates-item img {
-     width: 18px;
-     height: auto;
-   }
-}
-*/
-.pop-up {
-  display: none;
-  position: fixed;
-  z-index: 100000;
-  width: auto;
-  background-color : #fff;
-  height: auto;
-  left: 50%;
-  top: 50%;
-  margin-left: -25vw;
-}
-.link {
-  width: calc(100% -30px);
-  height: auto;
-  text-align: center;
-  padding: 15px;
-}
-.pop-up a {
-  background: none;
-  box-shadow: none;
-  text-shadow: none;
-  border: none;
-  border-radius: 0px;
-  color: #8a4186;
-  border: 2px solid #8a4186;
-  width: auto;
-  font-family: 'helveticaneue-medium';
-  padding: 10px;
-  display: inline-block;
-}
-.pop-up h2 {
-  width: calc(100% -30px);
-  padding: 15px;
-  text-align: center;
-  height: auto;
-  color: #8a4186;
-  font-family: 'gothamrounded-medium';
-  font-size: 24px;
-  border-bottom: none;
-}
-.button-close {
-  width: 100%;
-  height: auto;
-  text-align: right
-}
-#close-popup {
-  margin: 0;
-  padding: 0;
-  background-image: none;
-  background-color: transparent;
-  border: none;
-  border-radius: none;
-  text-shadow: none;
-  box-shadow: none;
-  margin-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  width: 30px;
-  height: 31px;
-}
-#close-popup img {
-  display: block;
-  width: 30px;
-  height: 31px;
-}
-.jq-ry-container{
-  position:relative;
-  padding:5px;
-  line-height:0;
-  display:block;
-  cursor:pointer;
-  -webkit-box-sizing:content-box;
-  -moz-box-sizing:content-box;
-  box-sizing:content-box
-}
-
-.jq-ry-container[readonly="readonly"]{
-  cursor:default
-}
-
-.jq-ry-container>.jq-ry-group-wrapper{
-  position:relative;
-  width:100%;
-}
-
-.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group{
-  position:relative;
-  line-height:0;
-  z-index:10;
-  white-space:nowrap;
-}
-
-.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group>svg{
-  display:inline-block;
-}
-
-.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group.jq-ry-normal-group{
-  width:100%;
-}
-
-.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group.jq-ry-rated-group{
-  width:0;
-  z-index:11;
-  position:absolute;
-  top:0;
-  left:0;
-  overflow:hidden;
-}
-</style>
-<div class="pop-up">
-  <div class="button-close">
-    <button id="close-popup"><img src="/static/themes/phileastheming/images/icon_close.png" /></button>
-  </div>
-  <h2>${_("Your enroll in  {course_name} is subject to validation").format(course_name=course.display_number_with_default) | h}</h2>
-  <div class="link">
-    <a href="#" class="register">
-      ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
-    </a>
-  </div>
-</div>
 <section class="course-info">
-  <div class="up_dashboard">
-    <div style="
-    padding-bottom: 20px;
-    height: 14px;
-    width: 100%;
-    text-align: left;
-    ">
-      <a href="/" style="
-      color: #3D4857;
-      font-size: 14px;
-      font-family: helveticaneue;
-      text-decoration:none;
-      ">${_("Home")}</a> &gt;<a href="/courses" style="
-            color: #3D4857;
-            font-size: 14px;
-            font-family: helveticaneue;
-            text-decoration:none;
-            ">${_("Courses")}</a> &gt;<a href="/dashboard" style="
-        color: #3D4857;
-        font-size: 14px;
-        font-family: helveticaneue;
-        text-decoration: none;
-      ">${_("Asset management")}</a>
-      <h2 class="titre-page">${course.display_name_with_default}</h2>
-      <p>Comprenez les principes théoriques et identifiez les meilleurs pratiques sur la gestion des risques financiers.</p>
-    </div>
-  </div>
-  <section class="container grey">
-    <div class="grey_inside">
-
-      <section class="details">
-        % if staff_access and studio_url is not None:
-          <div class="wrap-instructor-info studio-view">
-            <a class="instructor-info-action" href="${studio_url}">${_("View About Page in studio")}</a>
-          </div>
-        % endif
-
-        <div class="inner-wrapper">
-          ${get_course_about_section(request, course, "overview")}
+  <header class="course-profile">
+    <div class="intro-inner-wrapper">
+      <div class="table">
+      <section class="intro">
+        <div class="heading-group">
+          <h1>
+            ${course.display_name_with_default_escaped}
+            <a href="#">${course.display_org_with_default | h}</a>
+          </h1>
         </div>
 
-      </section>
-      <section class="course-sidebar">
-        <section class="course-summary">
-          <section class="course-summary">
-            <header>
-              <div class="img-about-top">
-                <img src="${course_image_url(course)}" alt="" />
-              </div>
-              <div>
-                %if user.is_authenticated() and registered:
-                  %if show_courseware_link:
-                    ## GEOFFREY
-                    <%
-                        course_welcome_mod = course_target.replace('info','')
-                        course_welcome = course_welcome_mod+'welcome'
-                     %>
-                    <a href="${course_welcome}">
-                  %endif
-                  %if show_courseware_link:
-                    <strong>${_("View Courseware")}</strong>
-                    </a>
-                  %endif
+        <div class="main-cta">
+        %if user.is_authenticated() and registered:
+          %if show_courseware_link:
+            <a href="${course_target}">
+          %endif
 
-                %elif in_cart:
-                  <span class="add-to-cart">
-                    ${_('This course is in your <a href="{cart_link}">cart</a>.').format(cart_link=cart_link)}
-                  </span>
-                % elif is_course_full:
-                  <span class="register disabled">
-                    ${_("Course is full")}
-                  </span>
-                % elif invitation_only and not can_enroll:
-                  <span class="register disabled">${_("Enrollment in this course is by invitation only")}</span>
-                ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
-                ## because AnonymousUsers cause can_enroll for shib courses to be False, but we need them to be able to click
-                ## so that they can register and become a real user that can enroll.
-                % elif not is_shib_course and not can_enroll:
-                  <span class="register disabled">${_("Enrollment is Closed")}</span>
-                %elif can_add_course_to_cart:
-                  <%
-                  if user.is_authenticated():
-                    reg_href = "#"
-                    reg_element_id = "add_to_cart_post"
-                  else:
-                    reg_href = reg_then_add_to_cart_link
-                    reg_element_id = "reg_then_add_to_cart"
-                  %>
-                  <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
-                    ${_("Add {course_name} to Cart <span>({price} USD)</span>")\
-                      .format(course_name=course.display_number_with_default, price=course_price)}
+          <span class="register disabled">${_("You are enrolled in this course")}</span>
 
-                  </a>
-                  <div id="register_error"></div>
-                %else:
-                  <button href="#" class="registers">
-                    ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
-                  </button>
-                  <div id="register_error"></div>
-                %endif
-              </div>
-            </header>
+          %if show_courseware_link:
+            <strong>${_("View Course")}</strong>
+            </a>
+          %endif
 
-          <ol class="important-dates">
-            ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" /> ${_('Durée')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
-
-            % if not course.start_date_is_still_default:
-              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
+        %elif in_cart:
+          <span class="add-to-cart">
+            ${_('This course is in your <a href="{cart_link}">cart</a>.').format(cart_link=cart_link)}
+          </span>
+        % elif is_course_full:
+          <span class="register disabled">
+            ${_("Course is full")}
+          </span>
+        % elif invitation_only and not can_enroll:
+          <span class="register disabled">${_("Enrollment in this course is by invitation only")}</span>
+        ## Shib courses need the enrollment button to be displayed even when can_enroll is False,
+        ## because AnonymousUsers cause can_enroll for shib courses to be False, but we need them to be able to click
+        ## so that they can register and become a real user that can enroll.
+        % elif not is_shib_course and not can_enroll:
+          <span class="register disabled">${_("Enrollment is Closed")}</span>
+        %elif can_add_course_to_cart:
+          <%
+          if user.is_authenticated():
+            reg_href = "#"
+            reg_element_id = "add_to_cart_post"
+          else:
+            reg_href = reg_then_add_to_cart_link
+            reg_element_id = "reg_then_add_to_cart"
+          %>
+          <% if ecommerce_checkout:
+              reg_href = ecommerce_checkout_link
+              reg_element_id = ""
+          %>
+          <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
+            ${_("Add {course_name} to Cart <span>({price} USD)</span>")\
+              .format(course_name=course.display_number_with_default, price=course_price)}
+          </a>
+          <div id="register_error"></div>
+        %else:
+          <% 
+            if ecommerce_checkout:
+              reg_href = ecommerce_checkout_link
+            else:
+              reg_href="#"
+            if professional_mode:
+              href_class = "add-to-cart"
+            else:
+              href_class = "register"
+          %>
+          % if enrollment_workflow == "nre":
+            <a href="${reg_href}" class="${href_class}">
+              ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
+            </a>
+          % elif enrollment_workflow == "estv":
+            % if enrollment_status == 'requested':
+              <span class="register disabled">${_("Your Request For Enrollment Has Been Sent")}</span>
+            % elif enrollment_status == 'rejected':
+              <span class="register disabled">${_("Your Request For Enrollment Has Been Rejected")}</span>
+            % else:
+              <a href="#" id="enroll-button" onclick="return false">
+                ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
+              </a>
             % endif
-            % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
-              <li class="important-dates-item">
-                <span id="total-reviews" style="float: left;">
-                  ${total_reviews}
-                  % if total_reviews > 1:
-                    Reviews
-                  % else:
-                    Review
-                  % endif
-                </span>
-                <span id="avg-rating-number" class="important-dates-item-text">${avg_ratings}/5</span>
-                <span id="course-rate" style="float: left; margin-top: -5px; margin-left: 25px;"></span>
-              </li>
-            % endif
-              <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
-                <span class="important-dates-item-text">${_("French, English")}</span>
-              </li>
-
-              % if get_course_about_section(request, course, "effort"):
-                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
-              % endif
-              ## We plan to ditch end_date (which is not stored in course metadata),
-              ## but for backwards compatibility, show about/end_date blob if it exists.
-              % if get_course_about_section(request, course, "end_date") or course.end:
-              <li class="important-dates-item">
-                  <i class="icon fa fa-calendar"></i>
-                  <p class="important-dates-item-title">${_("Classes End")}</p>
-                  <span class="important-dates-item-text final-date">
-                      % if get_course_about_section(request, course, "end_date"):
-                          ${get_course_about_section(request, course, "end_date")}
-                      % else:
-                          ${course.end_datetime_text()}
-                      % endif
-                  </span>
-              </li>
-              % endif
-          </ol>
-          <div class="picto-list-ol">
-            <a href="#"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
-            <a href="#"><img src="/static/themes/phileastheming/images/icon_yammer.png" /></a>
-          </div>
-        </section>
-
-        ## CourseTalk widget
-        % if show_coursetalk_widget:
-        <div class="coursetalk-read-reviews">
-            <div id="ct-custom-read-review-widget" data-provider="${platform_key}" data-course="${course_review_key}"></div>
-        </div>
-        % endif
-
-        ## For now, ocw links are the only thing that goes in additional resources
-        % if get_course_about_section(request, course, "ocw_links"):
-        <section class="additional-resources">
-          <header>
-            <h1>${_("Additional Resources")}</h1>
-          </header>
-
-          <section>
-            ## "MITOpenCourseware" should *not* be translated
-            <h2 class="opencourseware">MITOpenCourseware</h2>
-               ${get_course_about_section(request, course, "ocw_links")}
-          </section>
-        </section>
+          % endif
+          <div id="register_error"></div>
         %endif
+        </div>
 
       </section>
+      % if get_course_about_section(request, course, "video"):
+      <a href="#video-modal" class="media" rel="leanModal">
+        <div class="hero">
+          <img src="${course_image_urls['large']}" alt="" />
+          <div class="play-intro"></div>
+        </div>
+      </a>
+      %else:
+      <div class="media">
+        <div class="hero">
+          <img src="${course_image_urls['large']}" alt="" />
+        </div>
+      </div>
+      % endif
     </div>
+      </div>
+  </header>
+  <section class="container">
+    <section class="details">
+      % if staff_access and studio_url is not None:
+        <div class="wrap-instructor-info studio-view">
+          <a class="instructor-info-action" href="${studio_url}">${_("View About Page in studio")}</a>
+        </div>
+      % endif
+
+      <div class="inner-wrapper">
+        ${get_course_about_section(request, course, "overview")}
+      </div>
+    </section>
+
+    <section class="course-sidebar">
+      <section class="course-summary">
+
+        <%include file="course_about_sidebar_header.html" />
+
+        <ol class="important-dates">
+          <li class="important-dates-item"><span class="icon fa fa-info-circle" aria-hidden="true"></span><p class="important-dates-item-title">${_("Course Number")}</p><span class="important-dates-item-text course-number">${course.display_number_with_default | h}</span></li>
+          % if not course.start_date_is_still_default:
+            <li class="important-dates-item"><span class="icon fa fa-calendar" aria-hidden="true"></span><p class="important-dates-item-title">${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
+          % endif
+            ## We plan to ditch end_date (which is not stored in course metadata),
+            ## but for backwards compatibility, show about/end_date blob if it exists.
+            % if get_course_about_section(request, course, "end_date") or course.end:
+            <li class="important-dates-item">
+                <span class="icon fa fa-calendar" aria-hidden="true"></span>
+                <p class="important-dates-item-title">${_("Classes End")}</p>
+                <span class="important-dates-item-text final-date">
+                    % if get_course_about_section(request, course, "end_date"):
+                        ${get_course_about_section(request, course, "end_date")}
+                    % else:
+                        ${course.end_datetime_text()}
+                    % endif
+                </span>
+            </li>
+            % endif
+
+          % if get_course_about_section(request, course, "effort"):
+            <li class="important-dates-item"><span class="icon fa fa-pencil" aria-hidden="true"></span><p class="important-dates-item-title">${_("Estimated Effort")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+          % endif
+
+          ##<li class="important-dates-item"><span class="icon fa fa-clock-o" aria-hidden="true"></span><p class="important-dates-item-title">${_('Course Length')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
+
+          %if course_price and (can_add_course_to_cart or is_cosmetic_price_enabled):
+            <li class="important-dates-item">
+              <span class="icon fa fa-money" aria-hidden="true"></span>
+              <p class="important-dates-item-title">${_("Price")}</p>
+              <span class="important-dates-item-text">${course_price}</span>
+            </li>
+          %endif
+
+          % if pre_requisite_courses:
+          <% prc_target = reverse('about_course', args=[unicode(pre_requisite_courses[0]['key'])]) %>
+          <li class="prerequisite-course important-dates-item">
+            <span class="icon fa fa-list-ul" aria-hidden="true"></span>
+            <p class="important-dates-item-title">${_("Prerequisites")}</p>
+            ## Multiple pre-requisite courses are not supported on frontend that's why we are pulling first element
+            <span class="important-dates-item-text pre-requisite"><a href="${prc_target}">${pre_requisite_courses[0]['display']}</a></span>
+            <p class="tip">
+            ${_("You must successfully complete {link_start}{prc_display}{link_end} before you begin this course.").format(
+              link_start='<a href="{}">'.format(prc_target),
+              link_end='</a>',
+              prc_display=pre_requisite_courses[0]['display'],
+            )}
+            </p>
+          </li>
+          % endif
+          % if get_course_about_section(request, course, "prerequisites"):
+            <li class="important-dates-item"><span class="icon fa fa-book" aria-hidden="true"></span><p class="important-dates-item-title">${_("Requirements")}</p><span class="important-dates-item-text prerequisites">${get_course_about_section(request, course, "prerequisites")}</span></li>
+          % endif
+          % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
+            <li class="important-dates-item">
+              <span id="total-reviews" style="float: left;">
+                ${total_reviews}
+                % if total_reviews > 1:
+                  Reviews
+                % else:
+                  Review
+                % endif
+              </span>
+              <span id="avg-rating-number" class="important-dates-item-text">${avg_ratings}/5</span>
+              <span id="course-rate" style="float: left; margin-top: -5px; margin-left: 25px;"></span>
+            </li>
+          % endif
+        </ol>
+      </section>
+
+      ## CourseTalk widget
+      % if show_coursetalk_widget:
+      <div class="coursetalk-read-reviews">
+          <div id="ct-custom-read-review-widget" data-provider="${platform_key}" data-course="${course_review_key}"></div>
+      </div>
+      % endif
+
+      ## For now, ocw links are the only thing that goes in additional resources
+      % if get_course_about_section(request, course, "ocw_links"):
+      <section class="additional-resources">
+        <header>
+          <h1>${_("Additional Resources")}</h1>
+        </header>
+
+        <section>
+          ## "MITOpenCourseware" should *not* be translated
+          <h2 class="opencourseware">MITOpenCourseware</h2>
+             ${get_course_about_section(request, course, "ocw_links")}
+        </section>
+      </section>
+      %endif
+
+    </section>
+
   </section>
 </section>
+
+<!-- Added by chintan for the enroll-modal which sends email to given id in settings -->
+<section id="enroll-modal" class="modal unenroll-modal" aria-hidden="true">
+  <div class="inner-wrapper" role="dialog" aria-labelledby="unenrollment-modal-title">
+    <button class="close-modal">
+      <span class="icon fa fa-remove" aria-hidden="true"></span>
+      <span class="sr">
+        ## Translators: this is a control to allow users to exit out of this modal interface (a menu or piece of UI that takes the full focus of the screen)
+        ${_("Close")}
+      </span>
+    </button>
+
+    <header>
+    <h2>Are you Sure <br/> You want to enroll in "${course.display_name}"?</h2>
+    </header>
+    <div id="enroll_error" class="modal-form-error"></div>
+      <div class="submit" style=" margin-bottom: 12px; padding: 0 40px 20px; position: relative; z-index: 2;">
+        <input id="enroll_submit" type="submit" value='${_("Enroll")}' style="width:100%;"/>
+      </div>
+
+  </div>
+</section>
+
+<script>
+    $(document).ready(function(){
+        $('#enroll-button').click(function(){
+            %if user.is_authenticated():
+                $('#enroll-modal').css('display','block');
+
+                $('#enroll_submit').click(function(){
+                    $.post({
+                        url:'/enrollment_workflow',
+                        data:{'course_id':"${course.id}",'course_name':"${course.display_name}"},
+                        success: function(data){
+                            if (data['Error'] != null){
+                              console.log(data['Error'])
+                            }
+                            else if (data['Success']){
+                              location.reload()
+                            }
+                        },
+                        failure: function(data){
+                            console.log(data)
+                        }
+                    });
+                });
+
+            %else:
+                window.location.href ='/login';
+            %endif
+            });
+
+        $('.close-modal').click(function(){
+            $('#enroll-modal').css('display','none');
+        });
+    });
+</script>
+<!-- enroll-modal finished-->
 
 ## Need to put this hidden form on the page so that the registration button works.
 ## Since it's no harm to display a hidden form, we display it with the most permissive conditional
@@ -1183,21 +405,19 @@ from openedx.core.lib.courses import course_image_url
       </div>
     </form>
   </div>
-
 %endif
 
 <%include file="../video_modal.html" />
-
 
 % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
   <script src="${static.url('js/jquery.rateyo.js')}"></script>
   <script>
     $(document).ready(function(){
 
-	var is_read_only =  false;
-	% if not can_rate:
-       	 is_read_only = true;
-	% endif
+      var is_read_only = false;
+      % if not can_rate:
+        is_read_only = true;
+      % endif
 
       $("#course-rate").rateYo({
 

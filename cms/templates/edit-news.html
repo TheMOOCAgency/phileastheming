@@ -1,0 +1,164 @@
+<%page expression_filter="h"/>
+<%inherit file="base.html" />
+<%def name="online_help_token()"><% return "news" %></%def>
+<%namespace name='static' file='static_content.html'/>
+<%!
+  from django.utils.translation import ugettext as _
+  from openedx.core.djangolib.js_utils import js_escaped_string
+%>
+<%block name="title">${_("News")}</%block>
+<%block name="bodyclass">is-signedin course view-static-pages</%block>
+
+<%block name="header_extras">
+<script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_news_editor.css')}">
+</%block>
+
+<%block name="requirejs">
+    require(["${static.url('js/news.js')}"], function (news) {});
+</%block>
+
+<%block name="content">
+<div class="wrapper-mast wrapper">
+  <header class="mast has-actions has-subtitle">
+    <h1 class="page-header">
+      <small class="subtitle">${_("Content")}</small>
+      <span class="sr"> > </span>${_("News")}
+    </h1>
+
+    <nav class="nav-actions" aria-label="${_('Page Actions')}">
+      <h3 class="sr">${_("Page Actions")}</h3>
+      <ul>
+        <li class="nav-item">
+          <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("Add News")}</a>
+        </li>
+        <li class="nav-item">
+          <a href="${lms_link}" rel="external" class="button view-button view-live-button">${_("View Live")}</a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+</div>
+
+<div class="wrapper-content wrapper">
+  <section class="content">
+    <article class="content-primary" role="main">
+
+      <div class="notice-incontext">
+        <p class="copy">${_("Note: News are platform wide and hence publicly visible regardless of the course. If users know the URL, they can view the news if they are logged in to the LMS.")}</p>
+      </div>
+
+
+      <div class="inner-wrapper">
+        <article class="unit-body">
+
+          <div class="news-list">
+            <ol class="course-nav-list course components">
+
+              % for page in pages_to_render:
+
+              <li class="course-nav-item news-page component" data-page-id="${page.id}">
+                <div class="course-nav-item-header">
+                  <h3 class="title">${_(page.title)}</h3>
+                </div>
+
+                <div class="course-nav-item-actions wrapper-actions-list">
+                  <ul class="actions-list">
+
+                    <li class="action-item action-edit">
+                      <a rel="modal" href="#edit-news-modal" class="edit-button action-button">
+                        <span class="icon fa fa-pencil" aria-hidden="true"></span>
+                        <span class="action-button-text">Edit</span>
+                      </a>
+                    </li>
+                    <li class="action-item action-visible">
+                      <label><span class="sr">${_("Show this page")}</span></label>
+                      % if not page.visible:
+                        <input type="checkbox" class="toggle-checkbox" data-tooltip="${_('Show/hide page')}" checked />
+                      % else:
+                        <input type="checkbox" class="toggle-checkbox" data-tooltip="${_('Show/hide page')}" />
+                      % endif
+                      <div class="action-button"><span class="icon fa fa-eye" aria-hidden="true"></span><span class="icon fa fa-eye-slash"></span></div>
+                    </li>
+                    <li class="action-item action-delete">
+                      <a href="javascript: void(0)" data-tooltip="Delete" class="delete-button action-button">
+                        <span class="icon fa fa-trash-o" aria-hidden="true"></span>
+                        <span class="sr">Delete this component</span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </div>
+              </li>
+
+              % endfor
+
+              <li class="new-component-item"></li>
+            </ol>
+          </div>
+
+          <div class="add-pages">
+              <p>${_("You can share additional information by adding news.")} <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span>${_("Add News")}</a></p>
+          </div>
+        </article>
+      </div>
+    </article>
+
+    <aside class="content-supplementary" role="complementary">
+      <div class="bit">
+        <h3 class="title-3">${_("What are news?")}</h3>
+        <p>${_("News are listed at LMS. It is to share the information platform wide. The students can only view the news content.")}</p>
+      </div>
+      <div class="bit">
+        <h3 class="title-3">${_("News visibility")}</h3>
+        <p>${_("You can create and edit content of the news to provide students with additional information regardless of the course. You can set news visibility to hide or show the news from the students.")} </p>
+      </div>
+      <div class="bit">
+        <h3 class="title-3">${_("How do news look to students at LMS?")}</h3>
+        <p>${_("Students see the news whose visibility is set to visible. But anyone with staff access can still view the news regardless of the visibility settings.")} <br /> <a rel="modal" href="#preview-lms-staticpages">${_("See an example")}</a></p>
+      </div>
+    </aside>
+
+  </section>
+</div>
+
+<div class="content-modal" id="preview-lms-staticpages">
+  <h3 class="title">${_("News at LMS")}</h3>
+  <figure>
+    <img src="${static.url("images/preview-lms-news.png")}" alt="${_('Preview of news at LMS')}" />
+    <figcaption class="description">${_("News appear at LMS sorted by date of creation, latest first.")}</figcaption>
+  </figure>
+
+  <a href="#" rel="view" class="action action-modal-close">
+    <span class="icon fa fa-times-circle" aria-hidden="true"></span>
+    <span class="label">${_("close modal")}</span>
+  </a>
+</div>
+
+<div class="wrapper wrapper-modal-window wrapper-modal-window-mock">
+    <div class="modal-window confirm modal-editor modal-lg" id="edit-news-modal">
+        <div class="edit-page-modal" action="#">
+            <div class="modal-header">
+                <h2 class="title modal-window-title">Editing: News</h2>
+            </div>
+            <div class="modal-content">
+              <div class="title-editor">
+                <label class="label setting-label" for="title">News Title</label>
+                <input class="input setting-input" type="text" id="title" value="Empty" maxlength="255" />
+              </div>
+              <textarea name="page-content" class="edit-box"></textarea>
+            </div>
+            <div class="modal-actions">
+                <ul>
+                    <li class="action-item">
+                        <a href="javascript: void(0)" class="button action-primary action-save">Save</a>
+                    </li>
+                    <li class="action-item">
+                        <a href="javascript: void(0)" class="button action-secondary action-cancel">Cancel</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</%block>

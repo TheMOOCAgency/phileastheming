@@ -67,18 +67,15 @@ from django.core.urlresolvers import reverse
         discussion_id = path_array[5];
 
         callForAllUser = function(){
-            users = $('.username')
-            user_list = []
-            for (i=0; i< users.length; i++)
-            {
-                user_list.push(users[i].text)
-            }
-            unique_users_list = $.unique(user_list)
+            var forum_users = [];
+            $('.username').each(function(){
+                forum_users.push($(this).text());
+            });
 
             $.get({
             
-                url: "/tutor_tag/"+course_id+"/"+discussion_id,
-                data: {'users':unique_users_list},
+                url: "/tutor_tag/"+course_id+"/"+discussion_id+"/",
+                data: {'users': JSON.stringify($.unique(forum_users))},
                 success: function(data) {
                     data = data['data']
                     var tag = '<span class="user-label-staff tutor">TUTOR</span>'
