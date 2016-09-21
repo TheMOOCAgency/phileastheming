@@ -1,0 +1,59 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML
+%>
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+
+<%block name="pagetitle">${_("News")}</%block>
+
+<%block name="header_extras">
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_news.css')}">
+</%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <div class="container">
+        <div class="news-list">
+            % for news in news_list:
+            <div class="news">
+                <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
+                <p class="news-content">${HTML(news.content)}</p>
+                <p class="news-info">
+                    <span><a href="#"><img src="${static.url('images/yammar.png')}" /></a></span>
+                    <span>
+                        ${_("On {publish_date} by {author}").format(
+                            publish_date=news.created.strftime("%d %B %Y"),
+                            author=news.author
+                        )}
+                    </span>
+                </p>
+            </div>
+            <hr />
+            % endfor
+            <div class="news-pagination">
+                % if news_list.has_previous():
+                <div class="news-prev">
+                    <span class="icon fa fa-angle-left"></span>
+                    <a href="?page=${ news_list.previous_page_number() }" class="nav-link">${_("PREVIOUS")}</a>
+                </div>
+                % endif
+
+                % if news_list.has_next():
+                <div class="news-next">
+                    <a href="?page=${ news_list.next_page_number() }" class="nav-link">${_("NEXT")}</a>
+                    <span class="icon fa fa-angle-right"></span>
+                </div>
+                % endif
+            </div>
+        </div>
+        <div class="social-share">
+            <p class="follow">${_("Follow on")}</p>
+            <p>
+                <span><a href="#"><img src="${static.url('images/mail.png')}" /></a></span>
+                <span><a href="#"><img src="${static.url('images/yammar.png')}" /></a></span>
+            </p>
+        </div>
+    </div>
+</main>

@@ -1,0 +1,24 @@
+main#main { background-color: #F5F6F8; }
+main#main .news-list { width: 65%; float: left; margin-left: 5%; }
+main#main .social-share { width: 30%; float: left; text-align: center; }
+main#main .social-share img { height: 60px; }
+main#main .social-share p.follow { font-weight: 900; font-size: 25px; color: #8A4186; text-transform: uppercase; }
+
+main#main .news-list .news h3 { margin-bottom: 10px; overflow: hidden; text-overflow: ellipsis; }
+main#main .news-list .news h3 a,
+main#main .news-list .news h3 a:hover,
+main#main .news-list .news h3 a:visited
+{ font-size: 24px; color: #363F4E; font-weight: bold; text-decoration: none; }
+main#main .news-list .news p.news-content { font-size: 16px; color: #363F4E; line-height: 26px; }
+main#main .news-list .news p.news-info { font-size: 16px; color: #77848D; }
+
+main#main .news-list .news-pagination { width: 100%; color: #8A4186; margin-top: 35px; margin-bottom: 60px; }
+main#main .news-list .news-pagination a,
+main#main .news-list .news-pagination a:hover,
+main#main .news-list .news-pagination a:visited
+{ color: #8A4186; font-weight: 600; text-decoration: none; }
+main#main .news-list .news-pagination .news-prev { float: left; }
+main#main .news-list .news-pagination .news-next { float: right; }
+main#main .news-list .news-pagination  .fa { font-size: 18px;  }
+main#main .news-list .news-pagination  .fa-angle-left {  margin-right: 15px; }
+main#main .news-list .news-pagination  .fa-angle-right {  margin-left: 15px; }

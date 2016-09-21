@@ -1,0 +1,141 @@
+<%page expression_filter="h"/>
+<%inherit file="../main.html" />
+<%def name="online_help_token()"><% return "coursewelcome" %></%def>
+<%namespace name='static' file='../static_content.html'/>
+<%!
+from django.utils.translation import ugettext as _
+from openedx.core.djangolib.markup import HTML, Text
+%>
+
+<%block name="pagetitle">${_("{course_number} Course Welcome").format(course_number=course.display_number_with_default)}</%block>
+
+<%block name="headextra">
+<%static:css group='style-course-vendor'/>
+<%static:css group='style-course'/>
+<link rel="stylesheet" type="text/css" href="${static.url('css/dots.css')}">
+</%block>
+
+<%include file="/courseware/course_navigation.html" args="active_page='welcome'" />
+
+<%block name="js_extra">
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("ul.units li").click(function(){
+      var coursewareUrl = $(this).data('coursewareUrl');
+      if (coursewareUrl) {
+        window.location = coursewareUrl;
+      }
+    });
+    $("ul.units li").hover(function(){
+      $( this ).children(".sequence-tooltip").toggleClass( "sr" );
+    });
+  });
+</script> 
+</%block>
+<style>
+.welcome-wrapper .section ul.units li:first-child::before {
+ width: 20px;
+ left: -20px;
+}
+.welcome-wrapper .section ul.units li:last-child::after {
+ width: 20px;
+ left: 25px;
+}
+</style>
+<%block name="bodyclass"></%block>
+
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container">
+      <section class="welcome-wrapper">
+      % if not sections:
+        <p>No content has been added to this course</p>
+      % endif
+      <!-- Legend -->
+      <div class="section">
+       <!--  <img class="legend-img" src="${static.url('images/dots/legend.png')}" /> -->
+	<img class="legend-img" src="/static/themes/moocagency/images/legend.png" style="padding-top:15px; padding-bottom: 15px;" />
+      </div>
+      % for section in sections:
+        % if section['hidden']:
+          <div class="section">
+            <div class="section-head disabled">
+              <div class="section-line"></div>
+              <div class="section-title"><!-- ${_(section['week'])} - --></div>
+              <div class="section-line"></div>
+            </div>
+            <div class="section-numbers">
+              <span class="rank disabled">
+                <img class="" src="${static.url('images/dots/rank-disabled.png')}" />
+                <span class="text-disabled">Défis: 0/1500</span>
+              </span>
+              <span class="achievement disabled">
+                <img class="" src="${static.url('images/dots/podium-disabled-gray.png')}" />
+                <img class="" src="${static.url('images/dots/graduation-cap-disabled-gray.png')}" />
+              </span>
+              <span class="points disabled">
+                <span class="${section['points']['css_class']}">
+                  Score: ${section['points']['earned']}/${section['points']['total']} pts
+                </span>
+              </span>
+            </div>
+            <div class="courseware">
+              <ul class="units disabled">
+                % for count in range(10):
+                  <li class="disabled" data-courseware-url="">
+                    <span class="bg-disabled dot"></span>
+                  </li>
+                % endfor
+              </ul>
+            </div>
+          </div>
+        % else:
+          <div class="section">
+            <div class="section-head">
+              <div class="section-line"></div>
+              <div class="section-title"><!-- ${_(section['week'])} --> ${_(section['display_name'])}</div>
+              <div class="section-line"></div>
+            </div>
+            <div class="section-numbers">
+              <%
+              enlarge = 'enlarge' if section['participation'] is None and section['competency'] is None else ''
+              %>
+              <span class="rank ${enlarge}">
+                <img class="" src="${static.url('images/dots/rank.png')}" />
+                <span class="text-blue">Défis: 150</span>/1500
+              </span>
+              % if not enlarge:
+              <span class="achievement">
+                % if section['participation'] is True:
+                <img class="" src="${static.url('images/dots/podium.png')}" />
+                % elif section['participation'] is False:
+                <img class="" src="${static.url('images/dots/podium-disabled.png')}" />
+                % endif
+
+                % if section['competency'] is True:
+                <img class="" src="${static.url('images/dots/graduation-cap.png')}" />
+                % elif section['competency'] is False:
+                <img class="" src="${static.url('images/dots/graduation-cap-disabled.png')}" />
+                % endif
+              </span>
+              % endif
+              <span class="points ${enlarge}">
+                <span class="${section['points']['css_class']}">
+                  Score: ${section['points']['earned']}</span>/${section['points']['total']} pts
+              </span>
+            </div>
+            <div class="courseware">
+              <ul class="units">
+                % for unit in section['units']:
+                  <li data-courseware-url="${unit['courseware_url']}">
+                    <span class="${unit['css_class']} dot"></span>
+                    <div class="sequence-tooltip sr">${_(unit['display_name'])}</div>
+                  </li>
+                % endfor
+              </ul>
+            </div>
+          </div>
+        % endif
+      % endfor
+      </section>
+    </section>
+</main>
