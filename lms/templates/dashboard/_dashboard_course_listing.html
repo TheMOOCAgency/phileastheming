@@ -61,6 +61,7 @@ course_org = course_overview.org
   if cert_name_long == "":
     cert_name_long = settings.CERT_NAME_LONG
   billing_email = settings.PAYMENT_SUPPORT_EMAIL
+  vodeclicImage = ''
 %>
 
 <%namespace name='static' file='../static_content.html'/>
@@ -111,10 +112,12 @@ $(document).ready(function(){
        if(org == 'Vodeclic') {
         var Urls = Url+num;
         $(this).find('.dash-img').attr('href', Urls);
+        /*
         $(this).find('.dash-img').children('img').css('width','120px');
         $(this).find('.dash-img').children('img').css('height','120px');
         $(this).find('.dash-img').children('img').css('margin-left','auto');
         $(this).find('.dash-img').children('img').css('margin-right','auto');
+        */
       }else{
         var Urls = $(this).attr('data-link');
         $(this).find('.dash-img').attr('href', Urls);
@@ -123,6 +126,14 @@ $(document).ready(function(){
 
 })
 </script>
+<style>
+  .imageVodeclick {
+    width: 120px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
 <LINK href="/static/css/dashboard-courses.css" rel="stylesheet" type="text/css">
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
@@ -143,6 +154,13 @@ $(document).ready(function(){
   % else:
     <% mode_class = '' %>
   % endif
+  <!-- GEOFFREY -->
+<style>
+.dashboard .my-courses .course .details .course-info .info-date-block img {
+  margin-bottom: 3px;
+}
+</style>
+<!-- FIN GEOFFREY -->
 <div class="course-container">
  % if course_program_info and course_program_info.get('category')=='xseries':
   <div class="label-xseries-association">
@@ -160,16 +178,40 @@ $(document).ready(function(){
       % if show_courseware_link:
         % if not is_course_blocked:
             <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover dash-img">
-              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"/>
+              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
+
+              % if course_org == 'Vodeclic':
+                width: 120px;
+                height: 120px;
+                margin-left: auto;
+                margin-right: auto;
+              % endif
+              "/>
             </a>
         % else:
             <a class="fade-cover dash-img">
-              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"/>
+              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style="
+
+              % if course_org == 'Vodeclic':
+                width: 120px;
+                height: 120px;
+                margin-left: auto;
+                margin-right: auto;
+              % endif
+              "/>
             </a>
         % endif
       % else:
         <a class="cover dash-img">
-          <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}">
+          <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style="
+
+          % if course_org == 'Vodeclic':
+            width: 120px;
+            height: 120px;
+            margin-left: auto;
+            margin-right: auto;
+          % endif
+          ">
         </a>
       % endif
       % if settings.FEATURES.get('ENABLE_VERIFIED_CERTIFICATES') and course_verified_certs.get('display_mode') != 'audit':
@@ -281,6 +323,7 @@ $(document).ready(function(){
       <div class="wrapper-course-details">
         <div class="course-info" id="course-info-pop1">
           <span class="info-date-block" data-tooltip="Hi">
+            <img src="/static/themes/phileastheming/images/icon_calendar.png" />
             ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
             ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
 
@@ -307,6 +350,7 @@ $(document).ready(function(){
         </h3>
         <div class="course-info" id="course-info-pop2">
           <span class="info-date-block" data-tooltip="Hi">
+            <img src="/static/themes/phileastheming/images/icon_calendar.png" />
             <p>
               ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
             </p>

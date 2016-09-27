@@ -1,14 +1,21 @@
 
 <%
 if(org == 'Vodeclic') {
-      href = href_sso+'&vodeclic_id='+content.number;
+      lienvodeclick = href_sso+'&vodeclic_id='+content.number;
    }
    else {
-      href = '/courses/'+course+'/about'
+      lienvodeclick = '/courses/'+course+'/about'
    }
    VodeclicClass = '';
+   liensA = '';
+   linkForm = '';
    if(org == "Vodeclic"){
+     linkForm = 'display:block;';
+     liensA = 'display:none;';
     VodeclicClass = ' VodeclicClass';
+   }else{
+     linkForm = 'display:none;';
+     liensA = 'display:block;';
    }
 %>
 <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
@@ -18,16 +25,88 @@ if(org == 'Vodeclic') {
     height: 120px;
     background-color: #fff;
   }
+  input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
+  background-image: none;
+  padding: 0;
+  text-shadow: none;
+  border: none;
+  border-radius: 0px;
+  background-color:rgb(0, 157, 224);
+    bottom: 0px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: block;
+    font-family: 'helveticaneue-bold';
+    font-size: 14px;
+    font-stretch: normal;
+    font-style: normal;
+    font-variant-caps: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-weight: normal;
+    height: 59px;
+    line-height: 59px;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    margin-top: 40px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-indent: 0px;
+    transition-delay: 0s;
+    transition-duration: 0.1s;
+    transition-property: all;
+    transition-timing-function: linear;
+    vertical-align: middle;
+    width: 390px;
+    z-index: 10;
+  }
+  .submit button,.submit button:hover,.submit button:focus {
+    background-image: none;
+    border: none;
+    border-radius: none;
+    background-color: transparent;
+    padding: 0px;
+    margin: none;
+  }
+  .course-name {
+    text-align: center;
+    color: #555d68;
+    font-size: 24px;
+    font-family: 'helveticaneue-bold';
+    width: 100%;
+    margin-top: -20px;
+}
+.courses-container .courses .course .course-info h2 {
+    font-family: 'helveticaneue-bold';
+    text-transform: none;
+}
 </style>
 <article class="course" role="region" aria-label="<%- content.display_name %>">
-    <a href="<%- href %>">
         <header class="course-images<%- VodeclicClass %>">
+        <a href="<%- lienvodeclick %>" style="<%- liensA %>">
             <div class="cover-images">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
             </div>
+        </a>
+        <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment" style="<%- linkForm %>">
+          <fieldset class="enroll_fieldset">
+            <legend class="sr">Enroll</legend>
+            <input name="course_id" type="hidden" value="<%- id %>">
+            <input name="enrollment_action" type="hidden" value="enroll">
+          </fieldset>
+          <div class="submit">
+            <button name="submit" type="submit" value="SHOW MORE" onclick="document.location.href='<%- lienvodeclick %>'">
+            <div class="cover-images">
+                <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
+            </div>
+            </button>
+          </div>
+        </form>
         </header>
         <section class="course-info" aria-hidden="true">
-            <h2 class="course-name"><%- content.display_name %>
+            <h2 class="course-name" style="height:56px;font-family: 'helveticaneue-bold';text-transform: none;"><%- content.display_name %>
             </h2>
             <p style="text-align: center;width: 100%;" id="star-note">
               <img src="/static/themes/phileastheming/images/icon_star1.png">
@@ -39,8 +118,17 @@ if(org == 'Vodeclic') {
             <p style="text-align: center;width: 100%;">
               <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
             </p>
-        <a href="<%- href %>" class="learn-more liens_oust" style="
-
-        ">SHOW MORE</a>
-    </a>
+        <a href="<%- lienvodeclick %>" class="learn-more liens_oust" style="<%- liensA %>"><%- showMore %></a>
+        <div style="position: absolute;z-index:1000;<%- linkForm %>">
+          <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment">
+            <fieldset class="enroll_fieldset">
+              <legend class="sr">Enroll</legend>
+              <input name="course_id" type="hidden" value="<%- id %>">
+              <input name="enrollment_action" type="hidden" value="enroll">
+            </fieldset>
+            <div class="submit">
+              <input name="submit" type="submit" value="<%- showMore %>" class="learn-more liens_oust" onclick="document.location.href='<%- gettext("lienvodeclick") %>">
+            </div>
+          </form>
+        </div>
 </article>

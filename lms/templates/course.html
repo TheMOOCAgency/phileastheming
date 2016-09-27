@@ -4,6 +4,10 @@
 <%!
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
+from courseware.courses import get_course_about_section
+from django.conf import settings
+from edxmako.shortcuts import marketing_link
+from openedx.core.lib.courses import course_image_url
 
 #import SSO test
 import json
@@ -33,9 +37,54 @@ data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&ema
 
 href_sso = url+data_fr
 #fin import SSo
+
+test_url = ''
 %>
 <%page args="course" expression_filter="h"/>
+<style>
+  .VodeclicClass img{
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+  }
+  .register {
+    color: #fff;
+  }
+</style>
 <script>
+function Ajax() {
+  (function() {
+    $("article").click(function(event) {
+      console.log('coin');
+      var Url = '${href_sso}'+'&vodeclic_id=';
+      var num = $(this).data('number');
+      var org = $(this).data('org');
+      $(this).find("#class_enroll_form").submit();
+      event.preventDefault();
+      var Urls = Url+num;
+      $(location).attr('href', Urls);
+    });
+    /*
+      $("#add_to_cart_post").click(function(event){
+        $.ajax({
+          url: "/shoppingcart/add/course/${course.id}/",
+          complete: add_course_complete_handler
+        })
+        event.preventDefault();
+    $('#class_enroll_form').on('ajax:complete', function(event, xhr) {
+      if(xhr.status == 200) {
+        var Urls = Url+num;
+        $(location).attr('href', Urls);
+      }else {
+        $('#register_error').html(
+            (xhr.responseText ? xhr.responseText : "${_("An error occurred. Please try again later.")}")
+        ).css("display", "block");
+      }
+    });
+    })
+    */
+  })(this)
+}
 //redimentionnement des images
 function TailleImage(){
   $('.course-image').each(function(){
@@ -53,36 +102,33 @@ function TailleImage(){
     console.log(Org);
     if(imgWidth < tailleWidth && imgHeight < tailleHeight && Org == 'Vodeclic')
     {
-      marginTop = (tailleHeight - imgHeight)/2;
-      marginLeft = (tailleWidth - imgWidth)/2;
-      console.log(marginTop);
-      This.css('width',imgWidth+'px');
-      This.css('height',imgHeight+'px');
-      This.css('padding-top',marginTop+'px');
-      This.css('padding-bottom',marginTop+'px');
-      This.css('padding-left',marginLeft+'px');
-      This.css('padding-right',marginLeft+'px');
-      This.css('background-color','#fff');
-      Taille.css('background-color','#fff');
+      $('.cover-images').children('img').attr('style','width: 120px;height:120px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;')
     }
   })
 }
 $(document).ready(function(){
-  TailleImage();
+  //TailleImage();
+  Ajax();
   // creation du lien SHOW MORE DANS LES VIGNETTES
   $('article').each(function(){
+        /*
         var Url = '${href_sso}'+'&vodeclic_id=';
         var num = $(this).data('number');
+        */
         var org = $(this).data('org');
        if(org == 'Vodeclic') {
-        var Urls = Url+num;
-        $(this).find('.learn-more').attr('href', Urls);
+        /*var Urls = Url+num;*/
+        $(this).addClass('register');
+        $(this).find('.learn-more').addClass('register');
+        $(this).find('.learn-more').css('color','#fff');
+        //$(this).find('.learn-more').attr('href', Urls);
       }else{
         var Urls = $(this).attr('data-link');
         $(this).find('.learn-more').attr('href', Urls);
       }
   })
   // action au click sur la vignette dans Top course
+  /*
   $('article').click(function(){
         var Url = '${href_sso}'+'&vodeclic_id=';
         var num = $(this).data('number');
@@ -95,6 +141,7 @@ $(document).ready(function(){
         $(location).attr('href', Urls);
       }
   })
+  */
 })
 $(window).resize(function(){
   TailleImage();
@@ -107,16 +154,49 @@ $(window).resize(function(){
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/course.css')}">
 </%block>
+<style>
+.courses-container .courses .course .course-info p {
+  margin-top: 6px;
+}
+.course-name {
+    text-align: center;
+    color: #555d68;
+    font-size: 24px;
+    font-family: 'helveticaneue-bold';
+    width: 100%;
+    margin-top: -20px;
+}
+.courses-container .courses .course {
+  background-color: #fff;
+}
+@media(min-width: 1440px) {
+  .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .home .courses-container .courses .courses-listing .courses-listing-item,.cover-images {
+        width: 426px;
+  }
+  .course-images, .course-image {
+    height: 160px;
+  }
+}
+@media (max-width: 486px) {
+  .cover-images {
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+  }
+}
+</style>
   <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}" data-link="${reverse('about_course', args=[course.id.to_deprecated_string()])}" data-number="${course.display_number_with_default}" data-org="${course.display_org_with_default}">
       <header class="course-image" data-org="${course.display_org_with_default}">
         <div class="cover-images">
           <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}"  style="
-
+          % if course.display_org_with_default == 'Vodeclic':
+            width: 120px;height:120px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;
+          % endif
           "/>
         </div>
       </header>
       <div class="course-info" aria-hidden="true">
-        <h2 class="course-name">${course.display_name_with_default}
+        <h2 class="course-name" style="font-family: 'helveticaneue-bold';text-transform: none;">${course.display_name_with_default}
         </h2>
         <p style="text-align: center;width: 100%;" id="star-note">
           <img src="/static/themes/phileastheming/images/icon_star1.png">
@@ -132,5 +212,17 @@ $(window).resize(function(){
     <a href="" class="learn-more" style="
 
     ">${_("SHOW MORE")}</a>
+    </div>
+    <div style="display: none;">
+      <form id="class_enroll_form" method="post" data-remote="true" action="${reverse('change_enrollment')}" data-form="${course.id}">
+        <fieldset class="enroll_fieldset">
+          <legend class="sr">${_("Enroll")}</legend>
+          <input name="course_id" type="hidden" value="${course.id | h}">
+          <input name="enrollment_action" type="hidden" value="enroll">
+        </fieldset>
+        <div class="submit">
+          <input name="submit" type="submit" value="${_('enroll')}">
+        </div>
+      </form>
     </div>
   </article>

@@ -39,7 +39,7 @@
 
     <div class="section-title lines">
         <h2>
-            <span class="text titre_connection"><%- gettext("SIGN IN") %></span>
+            <span class="text titre_connection"><%- signIn %></span>
         </h2>
     </div>
 

@@ -29,6 +29,8 @@ specific_student_selected = selected(not staff_selected and masquerade.user_name
 student_selected = selected(not staff_selected and not specific_student_selected and not masquerade_group_id)
 include_special_exams = settings.FEATURES.get('ENABLE_SPECIAL_EXAMS', False) and (course.enable_proctored_exams or course.enable_timed_exams)
 %>
+<script>
+</script>
 <style>
 .btn-neutral,.btn-neutral:hover {
   border-style: none;
@@ -89,6 +91,20 @@ include_special_exams = settings.FEATURES.get('ENABLE_SPECIAL_EXAMS', False) and
   font-size: 50px;
   font-family: 'gothamrounded-bold';
   text-transform: uppercase;
+}
+@media(min-width:1440px) {
+  .home .courses-container .courses .courses-listing .courses-listing-item {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .home .courses-container .courses .courses-listing .courses-listing-item:first-child {
+    margin-left: 6px;
+    margin-right: 14px;
+  }
+  .home .courses-container .courses .courses-listing .courses-listing-item:last-child {
+    margin-left: 14px;
+    margin-right: 6px;
+  }
 }
 @media(max-width:1440px) {
   .baniere_courseware,.wrapper-course-material .course-material, .wrapper-preview-menu .preview-menu  {

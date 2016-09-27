@@ -5,7 +5,7 @@
 <style>
 .courses-container {
   max-width: 1440px;
-  width: 1206px;
+  width: 93%;;
 }
 </style>
 <section class="courses-container">
@@ -17,6 +17,9 @@
       <link rel="stylesheet" type="text/css" href="${static.url('css/courses.css')}">
     </%block>
     <style>
+    .courses-container .courses-more .courses-more-cta {
+      display: none;
+    }
     @media(max-width:768px) {
       .courses {
         height: 350px;
@@ -28,6 +31,27 @@
       }
     }
     </style>
+    <script>
+    function Largeur(){
+      if($(document).width() >= 1440) {
+        console.log('largeur :'+$(document).width());
+        $('.courses-listing-item').css('margin-left','10px');
+        $('.courses-listing-item').css('margin-right','10px');
+        $('.courses-listing-item:first-child').css('margin-left','6px');
+        $('.courses-listing-item:first-child').css('margin-right','14px');
+        $('.courses-listing-item:last-child').css('margin-right','6px');
+        $('.courses-listing-item:last-child').css('margin-left','14px');
+      }else{
+        $('.courses-listing-item').attr('style','');
+      }
+    }
+    $(document).ready(function(){
+      Largeur();
+    })
+    $(window).resize(function(){
+      Largeur();
+    })
+    </script>
     % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
       <section class="courses" style="padding-top:0px;">
         <ul class="courses-listing">

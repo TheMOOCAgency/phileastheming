@@ -258,3 +258,21 @@ font-style: normal;
   }());
 </script>
 % endif
+<script>
+function CssLast() {
+  $('.course-name').css('height','56px');
+  if($(document).width() <= 786)
+  {
+    $('#table_search').css('position','relative');
+    $('.no-course-discovery').css('margin-top','0px');
+  }else{
+    $('#table_search').css('position','absolute');
+  }
+}
+$(document).ready(function(){
+  CssLast();
+})
+$(window).resize(function(){
+  CssLast()
+})
+</script>

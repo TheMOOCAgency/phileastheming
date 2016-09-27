@@ -172,6 +172,9 @@ from openedx.core.lib.courses import course_image_url
     upWhiteUp();
     confirmSubscribe();
     positionSubscribe();
+    console.log('')
+    console.log('${reverse('add_course_to_cart', args=[course.id.to_deprecated_string()])}');
+    console.log('${cart_link}');
   })
   $(window).resize(function(){
     positionSubscribe();

@@ -116,6 +116,66 @@ function navAllIndex() {
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/navigation.css')}">
 </%block>
+<style>
+.nav-index-all li, .nav-index-all2 li {
+  margin-right: 25px;
+  float: none;
+  display: inline-block;
+}
+.nav-index-all, .nav-index-all2 {
+  width: calc(100% - 268px);
+  margin-left: 0px;
+  text-align: right;
+  padding: 0;
+}
+li input[type="text"] {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  height: 24px;
+  width: 250px;
+  border: 1px solid #c8c8c8;
+  border-radius: 0px;
+  margin-right: 25px;
+}
+.nav-index-all2 li input[type="submit"],.nav-index-all2 li input[type="submit"]:hover:not(:disabled),.nav-index-all2 li input[type="submit"]:focus:not(:disabled) {
+  height: 23px;
+  width: 23px;
+  margin-top: 41px;
+  margin-bottom: 41px;
+  border: none;
+  padding: 0px;
+  border-radius: 0px;
+  background-image: url('/static/themes/phileastheming/images/icon_search.png');
+  background-color: #fff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  box-shadow: none;
+  display: inline-block;
+}
+</style>
+<script>
+/*
+$(document).ready(function(){
+  $('#input').css('height','26px');
+  $('#input').css('width','26px');
+  $('#input').css('margin-top','39px');
+  $('#input').css('margin-bottom','39px');
+  $('#input').css('margin-right','0px');
+  $('#input').css('border','none');
+  $('#input').css('padding','0px');
+  $('#input').css('padding-left','20px');
+  $('#input').css('background-color','#fff');
+  $('#input').css('background-position','center');
+  $('#input').css('background-repeat','no-repeat');
+  $('#input').css('background-size','cover');
+  $('#input').css('box-shadow','none');
+  $('#input').css('border-radius','0px');
+  $('#input').css('background-image',"url('/static/themes/phileastheming/images/icon_search.png')");
+})
+*/
+
+</script>
 <!--
 <LINK href="/static/css/navigation.css" rel="stylesheet" type="text/css">
 -->
@@ -125,10 +185,10 @@ function navAllIndex() {
   %>
   <ol id="sous-menu-table">
     <li>
-      <a href="/courses">${_("Courses")}</a>
+      <a href="/courses">${_("Explore")}</a>
     </li>
     <li>
-      <a href="/faq">${_("How and why ?")}"</a>
+      <a href="/faq">${_("About")}"</a>
     </li>
     <li>
       <a href="/honor">${_("News")}</a>
@@ -136,7 +196,7 @@ function navAllIndex() {
   </ol>
   <div class="menu-for-user">
     <a href="/dashboard" />${_("Dashboard")}</a>
-    <a href="/u/${username}" />${_("My profil")}</a>
+    <a href="/u/${username}" />${_("My profile")}</a>
     <button id="show_languages">${_("Language")}</button>
     <% languages = static.get_released_languages() %>
      % if len(languages) > 1:
@@ -155,7 +215,7 @@ function navAllIndex() {
                </select>
          </form>
      % endif
-    <a href="/logout" />${_("Deconnexion")}</a>
+    <a href="/logout" />${_("Log out")}</a>
   </div>
   </div>
   <header id="global-navigation" class="global ${"slim" if course else ""}">
@@ -192,7 +252,7 @@ function navAllIndex() {
           <li>
                 <button id="menu-top-off">
                   <img src="/static/themes/phileastheming/images/picto_new.png"/>
-                  <span>${_("My acount")}</span>
+                  <span>${_("My account")}</span>
                   <img src="/static/themes/phileastheming/images/arrow.png"/>
                 </button>
           </li>
@@ -201,7 +261,7 @@ function navAllIndex() {
   % else:
   <ol id="sous-menu-table">
     <li>
-      <a href="/faq">${_("How and why ?")}</a>
+      <a href="/faq">${_("About")}</a>
     </li>
     <li>
       <a href="/honor">${_("News")}</a>
@@ -244,7 +304,7 @@ function navAllIndex() {
             <li>
                   <a href="/login" id="menu-top-off-a" style="display: inline-block; color:#000;">
                     <img src="/static/themes/phileastheming/images/picto_new.png"/>
-                    <span>${_("My acount")}</span>
+                    <span>${_("My account")}</span>
                     <img src="/static/themes/phileastheming/images/arrow.png"/>
                   </a>
             </li>
@@ -276,13 +336,18 @@ function navAllIndex() {
 <ol class="right nav-courseware nav-index-all2" id="menu_connect_hd">
         <li class="nav-courseware-01">
               <a href="/courses" style="
-    color: #3D4857;font-size: 18px; font-face:helvetica;">${_("Courses")}</a>
+    color: #3D4857;font-size: 18px; font-face:helvetica;">${_("Explore")}</a>
         </li>
         <li class="nav-courseware-01">
-              <a href="/faq">${_("How and why ?")}</a>
+              <a href="/faq">${_("About")}</a>
         </li>
         <li class="nav-courseware-01">
               <a href="/honor">${_("News")}</a>
+        </li>
+        <li>
+          <form method="get" action="/courses">
+            <input type="text" class="search-input" name="search_query" type="text" placeholder="${_("I want to learn about")}..." ><input class="search-button" type="submit" name="submit" value="" id="input"/>
+          </form>
         </li>
         <li class="nav-courseware-01" style="margin-right: 20px;">
         </li>
@@ -302,7 +367,7 @@ function navAllIndex() {
     </div>
     <ol class="right nav-courseware nav-index-all" id="menu-guest-hd">
         <li class="nav-courseware-01">
-              <a href="/faq">${_("How and why ?")}</a>
+              <a href="/faq">${_("About")}</a>
         </li>
         <li class="nav-courseware-01">
               <a href="/honor">${_("News")}</a>

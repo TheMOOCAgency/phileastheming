@@ -58,6 +58,8 @@ href_sso = url+data_fr
 <!-- GEOFFREY -->
 <script>
 var href_sso =' ${href_sso}';
+var showMore = '${_("SHOW MORE")}'
+//var block_envoie = '';
 </script>
 <!-- GEOFFREY -->
 <%block name="pagetitle">${_("Courses")}</%block>
@@ -83,13 +85,18 @@ var href_sso =' ${href_sso}';
       suppressBlueLink();
     })
   </script>
+  <style>
+    .courses-up-bis {
+      text-transform: uppercase;
+    }
+  </style>
 <section class="find-courses">
 <div class="courses-all">
 <div class="courses-up">
-    <a href="">Home</a> &gt; <a href="">Courses Catalogue</a> &gt; <a href="">All formations</a>
+    <a href="">${_('Home')}</a> &gt; <a href="">${_('Courses Catalogue')}</a> &gt; <a href="">${_('All Courses')}</a>
 </div>
 <div class="courses-up-bis">
-All courses
+${_('All courses')}
 </div>
 % if course_discovery_enabled:
 <div id="discovery-form" role="search" aria-label="course" class="wrapper-search-context">

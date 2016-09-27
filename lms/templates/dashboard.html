@@ -92,23 +92,84 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
     margin-top: -200px;
     margin-left: -25vw;
   }
+  .up_dashboard {
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .up_dashboard div {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+  .wrapper-header-courses h2:first-child {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+  .formation_en_cours, .formation_reussit {
+    text-align: left;
+    width: calc(100% - 80px);
+    margin-left: 80px;
+  }
+  .my-courses, #my-courses {
+    margin-left: 50px;
+  }
+  @media(max-width: 1440px) {
+    .up_dashboard {
+      margin-left: 0px;
+      margin-right: 0px;
+      width: 100vw;
+    }
+  }
+  @media(max-width: 1211px) {
+    .my-courses, #my-courses {
+      margin-left: 20px;
+    }
+  }
+  @media(max-width: 1192px) {
+    .up_dashboard div {
+      margin-left: 0px;
+      width: 100%;
+    }
+    .wrapper-header-courses h2:first-child {
+      margin-left: 0px;
+      width: 100%;
+    }
+    .formation_en_cours, .formation_reussit {
+      text-align: left;
+      width: calc(100%);
+      margin-left: 0px;
+    }
+  }
+  @media(max-width: 974px) {
+    .my-courses, #my-courses {
+      margin-left: 0px;
+    }
+  }
+  @media(max-width:563px) {
+    .dashboard .my-courses .course {
+      width: 100vw;
+      margin: 0;
+      margin-top: 10px;
+    }
+  }
 </style>
 <div class="up_dashboard">
   <div style="
   padding-bottom: 20px;
   height: 14px;
-  width: 100%;
   ">
     <a href="/" style="
     color: #3D4857;
-    font-size: 14px;
-    font-family: helveticaneue;
+    font-size: 15px;
+    font-family: 'helveticaneue';
     text-decoration:none;
+    letter-spacing: 1.2px;
     ">${_("Home")}</a> &gt; <a href="/dashboard" style="
       color: #3D4857;
-      font-size: 14px;
-      font-family: helveticaneue;
+      font-size: 15px;
+      font-family: 'helveticaneue';
       text-decoration: none;
+      letter-spacing: 1.2px;
     ">${_("My courses")}  </a>
   </div>
   <header class="wrapper-header-courses" style="height: 50px;">

@@ -40,6 +40,7 @@
   font-family: 'helveticaneue-bold';
   width: 100%;
   margin-top: -20px;
+  height: 56px;
 }
 .learn-more {
   display: block;
@@ -91,6 +92,7 @@
     display: none;
   }
   #table_search {
+    position: relative;
     width: 96%;
     right: 2%;
     left: 2%;
@@ -111,11 +113,10 @@
   .find-courses .courses-container .courses.no-course-discovery, .university-profile .courses-container .courses.no-course-discovery {
     width: 100%;
     min-width: 100%;
-    margin-top: 300px;
     padding-right: 0px;
   }
   .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
-    margin-left: 3%;
+    /*margin-left: 3%;*/
   }
   .courses-down-up, .find-courses .wrapper-search-context .search-status-label {
     width: auto;
