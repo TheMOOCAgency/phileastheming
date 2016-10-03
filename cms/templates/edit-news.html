@@ -4,7 +4,6 @@
 <%namespace name='static' file='static_content.html'/>
 <%!
   from django.utils.translation import ugettext as _
-  from django.core.urlresolvers import reverse
   from openedx.core.djangolib.js_utils import js_escaped_string
 %>
 <%block name="title">${_("News")}</%block>
@@ -12,6 +11,7 @@
 
 <%block name="header_extras">
 <script src='//cdn.tinymce.com/4/tinymce.min.js'></script>
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_news_editor.css')}">
 </%block>
 
 <%block name="requirejs">
@@ -23,15 +23,14 @@
   <header class="mast has-actions has-subtitle">
     <h1 class="page-header">
       <small class="subtitle">${_("Content")}</small>
-      ## Translators: Pages refer to the tabs that appear in the top navigation of each course.
-      <span class="sr"> > </span>${_("Pages")}
+      <span class="sr"> > </span>${_("News")}
     </h1>
 
     <nav class="nav-actions" aria-label="${_('Page Actions')}">
       <h3 class="sr">${_("Page Actions")}</h3>
       <ul>
         <li class="nav-item">
-          <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("New Page")}</a>
+          <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span> ${_("Add News")}</a>
         </li>
         <li class="nav-item">
           <a href="${lms_link}" rel="external" class="button view-button view-live-button">${_("View Live")}</a>
@@ -46,7 +45,7 @@
     <article class="content-primary" role="main">
 
       <div class="notice-incontext">
-        <p class="copy">${_("Note: Pages are publicly visible. If users know the URL of a page, they can view the page even if they are not registered for or logged in to your course.")}</p>
+        <p class="copy">${_("Note: News are platform wide and hence publicly visible regardless of the course. If users know the URL, they can view the news if they are logged in to the LMS.")}</p>
       </div>
 
 
@@ -54,16 +53,16 @@
         <article class="unit-body">
 
           <div class="news-list">
-            <ol class="course-nav-list course components">
+            <ol class="course-nav-list course components ui-sortable">
 
               % for page in pages_to_render:
 
-              <li class="course-nav-item news-page component" data-page-id="${page.id}">
+              <li class="course-nav-item news-page component is-movable" data-page-summary="${page.summary}" data-page-id="${page.id}">
                 <div class="course-nav-item-header">
                   <h3 class="title">${_(page.title)}</h3>
                 </div>
 
-                <div class="course-nav-item-actions wrapper-actions-list" style="margin-right: 0; padding: 2px 0;">
+                <div class="course-nav-item-actions wrapper-actions-list">
                   <ul class="actions-list">
 
                     <li class="action-item action-edit">
@@ -90,6 +89,9 @@
 
                   </ul>
                 </div>
+                <div class="drag-handle action" data-tooltip="${_('Drag to reorder')}">
+                  <span class="sr">${_("Drag to reorder")}</span>
+                </div>
               </li>
 
               % endfor
@@ -99,7 +101,7 @@
           </div>
 
           <div class="add-pages">
-              <p>${_("You can add additional custom pages to your course.")} <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span>${_("Add a New Page")}</a></p>
+              <p>${_("You can share additional information by adding news.")} <a href="javascript: void(0)" class="button new-button new-news"><span class="icon fa fa-plus" aria-hidden="true"></span>${_("Add News")}</a></p>
           </div>
         </article>
       </div>
@@ -107,16 +109,16 @@
 
     <aside class="content-supplementary" role="complementary">
       <div class="bit">
-        <h3 class="title-3">${_("What are pages?")}</h3>
-        <p>${_("Pages are listed horizontally at the top of your course. Default pages (Home, Course, Discussion, Wiki, and Progress) are followed by textbooks and custom pages that you create.")}</p>
+        <h3 class="title-3">${_("What are news?")}</h3>
+        <p>${_("News are listed at LMS. It is to share the information platform wide. The students can only view the news content.")}</p>
       </div>
       <div class="bit">
-        <h3 class="title-3">${_("Custom pages")}</h3>
-        <p>${_("You can create and edit custom pages to provide students with additional course content. For example, you can create pages for the grading policy, course slides, and a course calendar. ")} </p>
+        <h3 class="title-3">${_("News visibility")}</h3>
+        <p>${_("You can create and edit content of the news to provide students with additional information regardless of the course. You can set news visibility to hide or show the news from the students.")} </p>
       </div>
       <div class="bit">
-        <h3 class="title-3">${_("How do pages look to students in my course?")}</h3>
-        <p>${_("Students see the default and custom pages at the top of your course and use these links to navigate.")} <br /> <a rel="modal" href="#preview-lms-staticpages">${_("See an example")}</a></p>
+        <h3 class="title-3">${_("How do news look to students at LMS?")}</h3>
+        <p>${_("Students see the news whose visibility is set to visible. But anyone with staff access can still view the news regardless of the visibility settings.")} <br /> <a rel="modal" href="#preview-lms-staticpages">${_("See an example")}</a></p>
       </div>
     </aside>
 
@@ -124,10 +126,10 @@
 </div>
 
 <div class="content-modal" id="preview-lms-staticpages">
-  <h3 class="title">${_("Pages in Your Course")}</h3>
+  <h3 class="title">${_("News at LMS")}</h3>
   <figure>
-    <img src="${static.url("images/preview-lms-staticpages.png")}" alt="${_('Preview of Pages in your course')}" />
-    <figcaption class="description">${_("Pages appear in your course's top navigation bar. The default pages (Home, Course, Discussion, Wiki, and Progress) are followed by textbooks and custom pages.")}</figcaption>
+    <img src="${static.url("images/preview-lms-news.png")}" alt="${_('Preview of news at LMS')}" />
+    <figcaption class="description">${_("News appear at LMS sorted by date of creation, latest first.")}</figcaption>
   </figure>
 
   <a href="#" rel="view" class="action action-modal-close">
@@ -137,25 +139,47 @@
 </div>
 
 <div class="wrapper wrapper-modal-window wrapper-modal-window-mock">
-    <div class="modal-window confirm modal-editor modal-lg" id="edit-news-modal" style="display: none;">
+    <div class="modal-window confirm modal-editor modal-lg" id="edit-news-modal">
         <div class="edit-page-modal" action="#">
             <div class="modal-header">
-                <h2 class="title modal-window-title">Editing: Empty</h2>
+                <span class="title modal-window-title">Editing: News</span>
+                <ul class="editor-tabs">
+                    <li  class="inner_tab_wrap"><a href="javascript: void(0)" class="tab current" data-tab_name="Editor">Editor</a></li>
+                    <li  class="inner_tab_wrap"><a href="javascript: void(0)" class="tab" data-tab_name="Settings">Settings</a></li>
+                </ul>
             </div>
             <div class="modal-content">
-              <div class="title-editor" style="margin: 5px;">
-              <label class="label setting-label" for="title"
-               style="margin-right: 5px; font-weight: 600;">News Title</label>
-              <input class="input setting-input" type="text" id="title" value="Empty"
-               style="height: 100%;
-                min-width: 100px;
-                width: 45%;
-                padding: 10px;
-                border-radius: 3px;
-                border: 1px solid #b2b2b2;
-                text-overflow: ellipsis;">
+              <div class="tabs-wrapper">
+                  <div class="component-tab" id="tab-0">
+                      <textarea name="page-content" class="edit-box"></textarea>
+                  </div>
+                  <div class="wrapper-comp-settings component-tab is-inactive" id="tab-1">
+                    <ul class="list-input settings-list">
+
+                      <li class="field comp-setting-entry metadata_entry">
+                        <div class="wrapper-comp-setting">
+                          <label class="label setting-label" for="metadata-title">News Title</label>
+                          <input class="input setting-input" type="text" id="metadata-title" value="Empty">
+                        </div>
+                        <span class="tip setting-help">This name appears as the title of the news.</span>
+                      </li>
+                      <li class="field comp-setting-entry metadata_entry">
+                        <div class="wrapper-comp-setting">
+                          <label class="label setting-label" for="metadata-summary">News Summary</label>
+                          <textarea class="input setting-input" id="metadata-summary" value=""></textarea>
+                        </div>
+                        <span class="tip setting-help">This image appears before the news summary.</span>
+                      </li>
+                      <li class="field comp-setting-entry metadata_entry">
+                        <div class="wrapper-comp-setting">
+                          <label class="label setting-label" for="metadata-jacket">News Jacket</label>
+                          <input class="input setting-input" type="file" id="metadata-jacket" value="Empty">
+                        </div>
+                        <span class="tip setting-help">This image appears before the news summary.</span>
+                      </li>
+                    </ul>
+                  </div>
               </div>
-              <textarea name="page-content" class="edit-box"></textarea>
             </div>
             <div class="modal-actions">
                 <ul>

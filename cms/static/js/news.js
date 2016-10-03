@@ -5,7 +5,7 @@
               'common/js/components/views/feedback_notification'],
   function($, ui, PromptView, NotificationView) {
     // Visibility toggle
-    $("li.action-visible").live('click', function(event){
+    $(document).on("click", "li.action-visible", function(event){
       var checkbox_element, page_element;
       checkbox_element = event.target;
       page_element = $(checkbox_element).closest('.news-page');
@@ -15,7 +15,7 @@
       saving.show();
       $.ajax({
           type: 'POST',
-          url: "/news_handler/" + $(page_element).data('page-id') + "/",
+          url: "/news_visibility/" + $(page_element).data('page-id') + "/",
           data: JSON.stringify({
               visible: !$(checkbox_element).is(':checked')
           }),
@@ -27,7 +27,7 @@
     });  // click
 
     // Delete action
-    $("a.delete-button").live('click', function(event){
+    $(document).on("click", "a.delete-button", function(event){
       var action_element, page_element;
       action_element = event.target;
       page_element = $(action_element).closest('.news-page');
@@ -69,7 +69,7 @@
     });  // click
 
     // Add page
-    $(".new-news").live('click', function(event){
+    $(".new-news").on('click', function(event){
       event.preventDefault();
       $.ajax({
           type: 'POST',
@@ -77,13 +77,14 @@
           contentType: 'application/json'
       }).success(function(data) {
           var pageID = data["page_id"];
+          var pageSummary = data["page_summary"];
           var $el = ' \
-            <li class="course-nav-item news-page component" data-page-id="'+pageID+'"> \
+            <li class="course-nav-item news-page component is-movable" data-page-summary="'+pageSummary+'" data-page-id="'+pageID+'"> \
               <div class="course-nav-item-header"> \
                 <h3 class="title">Empty</h3> \
               </div> \
              \
-              <div class="course-nav-item-actions wrapper-actions-list" style="margin-right: 0; padding: 2px 0;"> \
+              <div class="course-nav-item-actions wrapper-actions-list"> \
                 <ul class="actions-list"> \
              \
                   <li class="action-item action-edit"> \
@@ -104,6 +105,9 @@
                     </a> \
                   </li> \
                 </ul> \
+              </div> \
+              <div class="drag-handle action" data-tooltip="Drag to reorder"> \
+                <span class="sr">${_("Drag to reorder")}</span> \
               </div> \
             </li> \
           ';
@@ -132,7 +136,7 @@
     };
     // Edit action
     tinymce.init({
-        selector: 'textarea',
+        selector: '.edit-box',
           visual: false,
           plugins: "textcolor, link, image",
           image_advtab: true,
@@ -146,58 +150,121 @@
             heading6: gettext("Heading 6")
           }, true),
           width: '100%',
-          height: '347px',
+          height: '396px',
           menubar: false,
           statusbar: false,
           browser_spellcheck: true,
     });
 
-    $("a.action-cancel").live('click', function(event){
+    $("a.action-cancel").on('click', function(event){
       $("#edit-news-modal, #lean_overlay").css({'display': 'none'});
     });  // click
 
-    $("a.action-save").live('click', function(event){
+    $("a.action-save").on('click', function(event){
       var pageID = $(".modal-editor").data('page-id');
       var saving = new NotificationView.Mini({
           title: gettext('Saving')
       });
       saving.show();
+      var newsSummary = $("#metadata-summary").val();
       var newsTitle = '';
-      newsTitle = $("input#title").val();
+      newsTitle = $("input#metadata-title").val();
       if(!newsTitle.length){
         newsTitle = 'Empty';
       }
+
+      var newsData = new FormData();
+      newsData.append('jacket', $("#metadata-jacket").prop('files')[0]);
+      newsData.append('title', newsTitle);
+      newsData.append('summary', newsSummary);
+      newsData.append('content', tinyMCE.activeEditor.getContent());
+
       $.ajax({
           type: 'POST',
           url: "/news_handler/" + pageID + "/",
-          data: JSON.stringify({
-              title: newsTitle,
-              content: tinyMCE.activeEditor.getContent()
-          }),
-          contentType: 'application/json'
+          cache: false,
+          processData: false,
+          contentType: false,
+          data: newsData,
       }).success(function() {
           $("#edit-news-modal, #lean_overlay").css({'display': 'none'});
           $("li.news-page[data-page-id="+pageID+"]"
           ).children('.course-nav-item-header').children("h3.title").text(newsTitle);
+          $("li.news-page[data-page-id="+pageID+"]").data('page-summary', newsSummary);
           return saving.hide();
       });  // ajax
 
     });  // click
 
-    $("a.edit-button").live('click', function(event){
+    $(document).on("click", "a.edit-button", function(event){
       var checkbox_element, page_element;
       checkbox_element = event.target;
       page_element = $(checkbox_element).closest('.news-page');
       var pageTitle = $(page_element).children('.course-nav-item-header').children('h3.title').text();
       $(".modal-editor").css({'top': '90px', 'position': 'absolute'});
       var pageID = $(page_element).data('page-id');
+      var pageSummary = $(page_element).data('page-summary');
       var contentURL = '/get_news_content/'+ pageID + "/"
       $.getJSON( contentURL, function( data ) {
         tinyMCE.activeEditor.setContent(data.content);
       });
       $(".modal-editor").data('page-id', pageID);
-      $("input#title").val(pageTitle);
+      $("input#metadata-title").val(pageTitle);
+      $("#metadata-summary").val(pageSummary);
+      $("#metadata-jacket").val('');
     });  // click
+
+    // draggable
+    var newsMoved = function() {
+        var saving, pages;
+        pages = [];
+        $('.news-page').each(function(idx, element) {
+            return pages.push({
+                page_id: $(element).data('page-id')
+            });
+        });
+        saving = new NotificationView.Mini({
+            title: gettext('Saving')
+        });
+        saving.show();
+        return $.ajax({
+            type: 'POST',
+            url: "/reorder_news/",
+            data: JSON.stringify({
+                pages: pages
+            }),
+            contentType: 'application/json'
+        }).success(function() {
+            return saving.hide();
+        });
+    };
+
+    $('.course-nav-list').sortable({
+      handle: '.drag-handle',
+      update: newsMoved,
+      helper: 'clone',
+      opacity: '0.5',
+      placeholder: 'component-placeholder',
+      forcePlaceholderSize: true,
+      axis: 'y',
+      items: '> .is-movable'
+    }); // draggable end
+
+    // editor/settings tabs
+    $("ul.editor-tabs li a.tab").click(function(){
+      $("ul.editor-tabs li a.tab").removeClass("current");
+      $(this).addClass("current");
+      $("div.tabs-wrapper .component-tab").removeClass("is-inactive");
+      $("div.tabs-wrapper .component-tab").removeClass("is-active");
+      var tab_name = $(this).data("tab_name");
+      if (tab_name == 'Editor'){
+        $("#tab-0").addClass("is-active");
+        $("#tab-1").addClass("is-inactive");
+      } else {
+        $("#tab-0").addClass("is-inactive");
+        $("#tab-1").addClass("is-active");
+      }
+    });
 
   });  // function
 

@@ -9,11 +9,21 @@ from django.template import RequestContext
 import third_party_auth
 from third_party_auth import pipeline
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+from django.db import connection
+from django.db import models
+
 %>
 
 <%
   cert_name_short = settings.CERT_NAME_SHORT
   cert_name_long = settings.CERT_NAME_LONG
+%>
+
+<%
+import pprint
+
+test = pprint.pprint(get_my_course_progress)
+
 %>
 
 
@@ -113,6 +123,19 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
   .my-courses, #my-courses {
     margin-left: 50px;
   }
+  .nonbre_indic {
+    font-family: 'helveticaneue-bold';
+  }
+  .profile-sidebar a, #profile-sidebar a {
+    display: inline-block;
+    width: auto;
+  }
+  .profile-sidebar a:last-child, #profile-sidebar a:last-child {
+      margin-top: 20px;
+      width: auto;
+      margin-bottom: 40px;
+      min-width: 181px;
+  }
   @media(max-width: 1440px) {
     .up_dashboard {
       margin-left: 0px;
@@ -143,6 +166,14 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
   @media(max-width: 974px) {
     .my-courses, #my-courses {
       margin-left: 0px;
+    }
+  }
+  @media(max-width:767px) {
+    .dashboard .profile-sidebar .user-info>ul li .nonbre_indic {
+      display: inline;
+    }
+    .profile-sidebar, #profile-sidebar {
+      height: 480px;
     }
   }
   @media(max-width:563px) {
@@ -199,12 +230,12 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
           </li>
           <li class="primary">
             <div class="formation_en_cours">
-              <span>
+              <span class="nonbre_indic">
                 ${(len(course_enrollments))}
               </span>${_("Courses in progress")}
             </div>
             <div class="formation_reussit">
-              <span>4 </span>${_("Courses succeed")}
+              <span class="nonbre_indic">4 </span>${_("Courses succeed")}
             </div>
           </li>
           <li class="primary">
@@ -371,3 +402,8 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
     </form>
   </div>
 </section>
+<script>
+  $(document).ready(function(){
+    console.log('');
+  })
+</script>

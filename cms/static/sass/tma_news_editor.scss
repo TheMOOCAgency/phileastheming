@@ -1,0 +1,110 @@
+.course-nav-item-header h3.title { text-overflow: ellipsis;overflow: hidden; }
+div#edit-news-modal { display: none; }
+div.modal-content .title-editor { margin: 5px; }
+div.modal-content .title-editor label.setting-label { margin-right: 5px; font-weight: 600; }
+div.modal-content .title-editor input#title {
+    height: 100%;
+    min-width: 100px;
+    width: 45%;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #b2b2b2;
+    text-overflow: ellipsis;
+}
+.is-inactive { display: none; }
+.is-active { display: block; }
+ul.editor-tabs {
+    width: 48%;
+    display: inline-block;
+    text-align: right;
+}
+ul.editor-tabs .inner_tab_wrap {
+    display: inline-block;
+    margin-left: 10px;
+}
+ul.editor-tabs .inner_tab_wrap a.tab{
+    line-height: 2.072rem;
+    border: 0;
+    padding: 5px 10px;
+    text-transform: uppercase;
+    color: #999;
+    font-size: 15px;
+    border-radius: 5px;
+}
+ul.editor-tabs .inner_tab_wrap a.tab:hover {
+    background: #ccc;
+    color: #4c4c4c;
+}
+ul.editor-tabs .inner_tab_wrap a.current, ul.editor-tabs .inner_tab_wrap a.current:hover {
+    background-color: #666;
+    color: #fff;
+}
+.component-tab .list-input.settings-list {
+    height: auto;
+    max-height: none;
+    overflow: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-indent: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+.wrapper-comp-settings .list-input.settings-list .field.comp-setting-entry:first-child {
+    border-top: 0;
+}
+.wrapper-comp-settings .list-input.settings-list .field.comp-setting-entry {
+    opacity: 0.7;
+    margin: 0 20px;
+    border-top: 1px solid #e5e5e5;
+    background-color: #fff;
+    padding: 20px 10px;
+}
+.wrapper-comp-settings .list-input.settings-list .wrapper-comp-setting {
+    min-width: 300px;
+    top: 0;
+    vertical-align: top;
+    margin-bottom: 5px;
+    position: relative;
+}
+.wrapper-comp-settings .list-input.settings-list .setting-label {
+    transition: color 0.25s ease-in-out 0s;
+    vertical-align: middle;
+    display: inline-block;
+    position: relative;
+    left: 0;
+    width: 25%;
+    min-width: 100px;
+    margin-right: 10px;
+    font-size: 1.4rem;
+}
+.wrapper-comp-settings .list-input.settings-list input {
+    height: 100%;
+    width: 100%;
+    width: 45%;
+    min-width: 100px;
+    padding: 10px;
+    border-radius: 3px;
+    border: 1px solid #b2b2b2;
+    text-overflow: ellipsis;
+    font-size: 1.6rem;
+    line-height: 2.368rem;
+}
+#metadata-jacket {
+    border: none;
+}
+.wrapper-actions-list ul.actions-list {
+    display: inline-block;
+    float: right;
+    margin-right: 0px;
+    padding: 0 0 8px 0;
+    vertical-align: middle;
+    text-align: center;
+}
+.view-static-pages .course-nav-item .course-nav-item-header {
+    width: 70%;
+}
+#metadata-summary {width: 365px; height: 100px;}

@@ -1,0 +1,86 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from openedx.core.djangolib.markup import HTML
+from django.core.urlresolvers import reverse
+%>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("News")}</%block>
+<style>
+  .news h1 {
+    font-size: 30px;
+    color: #8A4185;
+    font-family: 'gothamrounded-bold';
+    font-weight: 400;
+    width: 100%;
+    text-align: left;
+    margin-top: 30px;
+  }
+  .news .news_content {
+    color: #445561;
+    font-size: 20px;
+    font-family: 'helveticaneue-light';
+  }
+  .summary {
+    font-size: 20px;
+    color: #445561;
+    font-family: 'helveticaneue-light';
+  }
+  .author_date {
+    font-size: 16px;
+    color: #445561;
+    font-family: 'helveticaneue-light';
+  }
+  :focus {
+      outline: none;
+  }
+  .ariane_news a,.ariane_news a:hover,.ariane_news a:focus{
+    font-size: 14px;
+    color: #3D4857;
+    font-family: 'helveticaneue';
+  }
+  .container {
+    min-width: 0px;
+  }
+</style>
+<script>
+function TailleImage() {
+  var Taille = $('#picture').width();
+  var Ecran = $('.news').width();
+  console.log('taille ecran :' + Ecran);
+  console.log('taille image :' + Taille);
+  if(parseInt(Taille) > parseInt(Ecran)) {
+    $('#picture').css('width',Ecran+'px');
+    $('#picture').css('height','auto');
+  }else{
+    $('#picture').attr('style','');
+  }
+}
+$(document).ready(function(){
+  $('#itemHref').attr('href',window.location.href);
+  TailleImage();
+})
+$(window).resize(function(){
+  TailleImage();
+})
+</script>
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about">
+      % if news:
+        <div class="news">
+            <div class="ariane_news"><a href="/">${_('Home')}</a> > <a href="/news/">${_('News')}</a> > <a href="" id="itemHref">${_('Item')}</a></div>
+            <h1>${_(news.title)}</h1>
+            <p class="summary">${HTML(news.summary)}</p>
+            <p class="author_date"><span>${HTML(news.created.strftime("%d %B %Y"))}</span> <span>${_('by')}</span> <span>${HTML(news.author)}</span></p>
+            <p class="news_picture"><img src="${news.jacket.url}" id="picture"/></p>
+            <p class="news_content">${HTML(news.content)}</p>
+        </div>
+      %endif
+        <!--
+        <div class="back-link">
+            <a href="${reverse('news')}">${_("Back to news")}</a>
+        </div>
+      -->
+    </section>
+</main>

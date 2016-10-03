@@ -1,9 +1,9 @@
 div.sequence-nav {text-align: center;}
-ul#sequence-list {list-style-type: none; display: inline-block; padding: 0 30px; margin:0 auto;}
+ul#sequence-list {list-style-type: none; display: inline-block; padding: 0 30px; margin:0 auto; width:90%;}
 ul#sequence-list li {display: inline-block; padding-left: 57px; position: relative; }
 span.sequence-nav-button,
 ul#sequence-list li:hover {cursor: pointer;}
-ul#sequence-list li::before {
+ul#sequence-list li span.b4 {
     content: '';
     display: inline-block;
     height: 4px;
@@ -14,7 +14,8 @@ ul#sequence-list li::before {
     top:16px;
     cursor: auto;
 }
-ul#sequence-list li:first-child {padding-left: 0px;}
+ul#sequence-list li:first-child span.b4{display:none;}
+ul#sequence-list li:first-child {padding-left: 0px !important;}
 ul#sequence-list li:first-child::before {height: 0; width: 0;}
 .sequence-tooltip {
   margin-top: 14px;

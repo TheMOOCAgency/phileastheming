@@ -1,15 +1,274 @@
 <%page expression_filter="h"/>
 <%!
 from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
 from openedx.core.djangolib.markup import HTML
 %>
 <%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
 
-<%block name="pagetitle">${_("NEWS")}</%block>
+<%block name="pagetitle">${_("News")}</%block>
 
+<%block name="header_extras">
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_news.css')}">
+</%block>
+<style>
+.baniere {
+  padding:0;
+  width: 1440px;
+  height: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'gothamrounded-book';
+}
+.baniere-img {
+background-image:url('/static/themes/phileastheming/images/img_index_desktop.png');
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: relative;
+background-color: #272530;
+height: 102px;
+padding-top:124px;
+padding-bottom:124px;
+position: relative;
+}
+.h1-span {
+    display: block;
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    font-family: 'gothamrounded-book';
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.ariane_news {
+  position: absolute;
+  width: 100%;
+  top: 25px;
+  left: 170px;
+  z-index: 10;
+}
+.ariane_news a,.ariane_news a:hover,.ariane_news a:focus {
+  color: #fff;
+  display: inline;
+  text-transform: none;
+}
+.separation {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #fff;
+}
+.heading-group p {
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-size: 23px;
+  font-family: 'helveticaneue-light';
+}
+:focus {
+    outline: none;
+}
+main#main .social-share p.follow {
+  font-size: 24px;
+  font-family: 'gothamrounded-bold';
+  font-weight: 400;
+  text-transform: uppercase;
+}
+main#main .news-list .news h3 {
+  font-size: 22px;
+  color: #363F4D;
+  font-family: 'helveticaneue-bold';
+  font-weight: 400;
+  padding-bottom: 10px;
+}
+.main#main .news-list .news .news-wrapper.minimum {
+  padding-bottom: 15px;
+}
+main#main .news-list .news .news-wrapper {
+  padding-bottom: 15px;
+}
+main#main .news-list .news .news-wrapper.minimum p {
+  font-size: 16px;
+  color: #363F4D;
+  font-family: 'helveticaneue';
+}
+main#main .news-list .news p.news-info span {
+  font-size: 14px;
+  color: #363F4D;
+  font-family: 'helveticaneue-light';
+}
+.social-share a {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+main#main .news-list .news .news-wrapper.minimum {
+  width: calc(100% - 201px);
+  float: left;
+}
+main#main .news-list .news .news-wrapper {
+  width: 100%;
+}
+.news {
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(54,63,77,0.2);
+}
+.news a img {
+  width: 40px;
+  height: 40px;
+}
+.container {
+  min-width: 0px;
+}
+.mail_low_rez {
+  display: none;
+}
+.date_news {
+  padding-left: calc(100% - 400px);
+}
+@media(max-width: 1440px) {
+  .baniere {
+    width: 100vw;
+    margin: 0;
+  }
+  .ariane_news {
+    left: 10px;
+  }
+}
+@media(max-width: 768px) {
+  main#main .news-list {
+    margin-left: 2.5%;
+  }
+  main#main .social-share {
+    margin-right: 2.5%;
+  }
+}
+@media(max-width: 767px) {
+  main#main .news-list {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    width: 95%;
+  }
+  main#main .social-share {
+    display: none;
+  }
+  .mail_low_rez {
+    display: inline-block;
+  }
+  main#main .news-list .news .news-jacket {
+    float: none;
+    width: 100%;
+  }
+  main#main .news-list .news .news-wrapper.minimum,main#main .news-list .news .news-wrapper {
+    float: none;
+    width: 100%;
+    height: auto;
+    min-height: 60px;
+  }
+}
+@media(max-width: 400px) {
+  .picto_yammer {
+    display: none;
+  }
+  .mail_low_rez {
+    display: none;
+  }
+  .date_news {
+    padding-left: 0px;
+  }
+}
+</style>
+<!--
+<script>
+$(document).ready(function(){
+  $('.news').each(function(){
+    if($(this).find('.news-jacket').length == 0) {
+
+    }
+  })
+})
+</script>
+-->
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="container about">
-        <h1>${_(title)}</h1>
-        ${HTML(content)}
-    </section>
+    <div class="baniere">
+      <header class="baniere-img" style="">
+        <div class="ariane_news">
+          <div>
+            <a href="/" >${_('Home')}</a>
+            <span class="separation">></span>
+            <a href="/news/" >${_('News')}</a>
+          </div>
+        </div>
+        <div class="title" style="">
+          <div class="heading-group">
+                <h1 class="h1-span">${_("News")}</h1>
+                <p>${_("All the information and the events which make the news of the Phileas's community")}</p>
+          </div>
+        </div>
+      </header>
+    </div>
+    <div class="container">
+        <div class="news-list">
+            % for news in news_list:
+            <div class="news">
+                % if news.jacket and 'undefined' not in news.jacket.url:
+                <div class="news-jacket">
+                    <img src="${news.jacket.url}" />
+                </div>
+                <div class="news-wrapper ${'minimum' if news.jacket else ''}">
+                    <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
+                    <p class="news-content">${HTML(news.summary)}</p>
+                </div>
+                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
+                      <span class="date_news">
+                          ${_("On {publish_date} by {author}").format(
+                              publish_date=news.created.strftime("%d %B %Y"),
+                              author=news.author
+                          )}
+                      </span>
+                % else:
+                <div class="news-wrapper ${'minimum' if news.jacket else ''}">
+                    <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
+                    <p class="news-content">${HTML(news.content)}</p>
+                </div>
+                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
+                      <span class="date_news">
+                          ${_("On {publish_date} by {author}").format(
+                              publish_date=news.created.strftime("%d %B %Y"),
+                              author=news.author
+                          )}
+                      </span>
+                % endif
+            </div>
+            % endfor
+            <div class="news-pagination">
+                % if news_list.has_previous():
+                <div class="news-prev">
+                    <span class="icon fa fa-angle-left"></span>
+                    <a href="?page=${ news_list.previous_page_number() }" class="nav-link">${_("PREVIOUS")}</a>
+                </div>
+                % endif
+
+                % if news_list.has_next():
+                <div class="news-next">
+                    <a href="?page=${ news_list.next_page_number() }" class="nav-link">${_("NEXT")}</a>
+                    <span class="icon fa fa-angle-right"></span>
+                </div>
+                % endif
+            </div>
+        </div>
+        <div class="social-share">
+            <p class="follow">${_("Follow Phileas")}</p>
+            <p class="follow">${_("on")}</p>
+            <p>
+                <span><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                <span><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
+            </p>
+        </div>
+    </div>
 </main>

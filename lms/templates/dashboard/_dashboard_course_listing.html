@@ -62,6 +62,8 @@ course_org = course_overview.org
     cert_name_long = settings.CERT_NAME_LONG
   billing_email = settings.PAYMENT_SUPPORT_EMAIL
   vodeclicImage = ''
+  imageVodeclick = 'imageVodeclick'
+  noImageVodeclick = 'course-image'
 %>
 
 <%namespace name='static' file='../static_content.html'/>
@@ -90,8 +92,22 @@ $(window).resize(function(){
 })
 </script>
 <script>
-
+function lienHeightTitle(){
+  $('.course-title').each(function(){
+    if($(this).height() > 53 && $(this).height() <= 106) {
+      $(this).find('a').css('line-height','30px');
+    }else if($(this).height() > 106 && $(this).height() <= 159) {
+      $(this).find('a').css('line-height','30px');
+    }else{
+      $(this).find('a').attr('style','');
+    }
+  })
+}
+$(window).resize(function(){
+  lienHeightTitle();
+})
 $(document).ready(function(){
+  lienHeightTitle();
   $('.course-actions').each(function(){
         var Url = '${href_sso}'+'&vodeclic_id=';
         var num = $(this).data('number');
@@ -126,14 +142,6 @@ $(document).ready(function(){
 
 })
 </script>
-<style>
-  .imageVodeclick {
-    width: 120px;
-    height: 120px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-</style>
 <LINK href="/static/css/dashboard-courses.css" rel="stylesheet" type="text/css">
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
@@ -159,6 +167,28 @@ $(document).ready(function(){
 .dashboard .my-courses .course .details .course-info .info-date-block img {
   margin-bottom: 3px;
 }
+.dashboard .my-courses .course .details .wrapper-course-image .cover .imageVodeclick {
+  width: 187.5px;
+  height: 187.5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+@media(max-width:1018px and min-width: 564px) {
+  .dashboard .my-courses .course .details .wrapper-course-image .cover .imageVodeclick {
+    width: 120px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+@media(max-width: 563px) {
+  .dashboard .my-courses .course {
+    height: 410px;
+  }
+  .wrapper-course-image,.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses {
+    min-height: 187.5px;
+  }
+}
 </style>
 <!-- FIN GEOFFREY -->
 <div class="course-container">
@@ -177,40 +207,31 @@ $(document).ready(function(){
     <div class="wrapper-course-image" aria-hidden="true"  data-number="${course_number}" data-org="${course_org}">
       % if show_courseware_link:
         % if not is_course_blocked:
-            <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover dash-img">
-              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
-
+            <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover dash-img
+            ">
+              <img src="${course_overview.course_image_url}" class="
               % if course_org == 'Vodeclic':
-                width: 120px;
-                height: 120px;
-                margin-left: auto;
-                margin-right: auto;
+                imageVodeclick
+              % else:
+                noImageVodeclick
               % endif
+              " alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
               "/>
             </a>
         % else:
             <a class="fade-cover dash-img">
-              <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style="
-
+              <img src="${course_overview.course_image_url}" class="
               % if course_org == 'Vodeclic':
-                width: 120px;
-                height: 120px;
-                margin-left: auto;
-                margin-right: auto;
+                imageVodeclick
+              % else:
+                noImageVodeclick
               % endif
-              "/>
+              " alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style=""/>
             </a>
         % endif
       % else:
         <a class="cover dash-img">
           <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style="
-
-          % if course_org == 'Vodeclic':
-            width: 120px;
-            height: 120px;
-            margin-left: auto;
-            margin-right: auto;
-          % endif
           ">
         </a>
       % endif

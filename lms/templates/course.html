@@ -39,17 +39,11 @@ href_sso = url+data_fr
 #fin import SSo
 
 test_url = ''
+
+VodeclicClass = 'VodeclicClass'
 %>
 <%page args="course" expression_filter="h"/>
 <style>
-  .VodeclicClass img{
-    width: 120px;
-    height: 120px;
-    background-color: #fff;
-  }
-  .register {
-    color: #fff;
-  }
 </style>
 <script>
 function Ajax() {
@@ -102,7 +96,7 @@ function TailleImage(){
     console.log(Org);
     if(imgWidth < tailleWidth && imgHeight < tailleHeight && Org == 'Vodeclic')
     {
-      $('.cover-images').children('img').attr('style','width: 120px;height:120px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;')
+      //$('.cover-images').children('img').attr('style','width: 187.5px;height:187.5px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;')
     }
   })
 }
@@ -155,6 +149,14 @@ $(window).resize(function(){
   <link rel="stylesheet" type="text/css" href="${static.url('css/course.css')}">
 </%block>
 <style>
+.VodeclicClass img{
+  width: 187.5px;
+  height: 187.5px;
+  background-color: #fff;
+}
+.register {
+  color: #fff;
+}
 .courses-container .courses .course .course-info p {
   margin-top: 6px;
 }
@@ -174,7 +176,12 @@ $(window).resize(function(){
         width: 426px;
   }
   .course-images, .course-image {
-    height: 160px;
+    height: 187.5px;
+  }
+}
+@media(max-width: 1440px) {
+  .course-images, .course-image {
+    height: 187.5px;
   }
 }
 @media (max-width: 486px) {
@@ -184,15 +191,34 @@ $(window).resize(function(){
       margin-right: auto;
   }
 }
+@media screen and (max-width: 768px) and (min-width: 486px) {
+  .home .courses-container .courses .courses-listing .courses-listing-item:nth-child(2n) {
+       margin-right: 1.6vw;
+  }
+  .VodeclicClass img{
+    width: 120px;
+    height: 120px;
+    background-color: #fff;
+  }
+}
+@media(max-width:486px) {
+  .VodeclicClass img{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+}
 </style>
   <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}" data-link="${reverse('about_course', args=[course.id.to_deprecated_string()])}" data-number="${course.display_number_with_default}" data-org="${course.display_org_with_default}">
       <header class="course-image" data-org="${course.display_org_with_default}">
-        <div class="cover-images">
+        <div class="cover-images
+        % if course.display_org_with_default == 'Vodeclic':
+          ${VodeclicClass}
+        % endif
+        ">
           <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}"  style="
-          % if course.display_org_with_default == 'Vodeclic':
-            width: 120px;height:120px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;
-          % endif
-          "/>
+
+          " />
         </div>
       </header>
       <div class="course-info" aria-hidden="true">
@@ -210,7 +236,7 @@ $(window).resize(function(){
         </p>
 
     <a href="" class="learn-more" style="
-
+      font-family: 'helveticaneue-bold';
     ">${_("SHOW MORE")}</a>
     </div>
     <div style="display: none;">
@@ -221,7 +247,7 @@ $(window).resize(function(){
           <input name="enrollment_action" type="hidden" value="enroll">
         </fieldset>
         <div class="submit">
-          <input name="submit" type="submit" value="${_('enroll')}">
+          <input name="submit" type="submit" value="${_('enroll')}"  syle="font-family: 'helveticaneue-bold';">
         </div>
       </form>
     </div>

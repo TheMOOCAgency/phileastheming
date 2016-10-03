@@ -10,6 +10,13 @@ from lms.djangoapps.ccx.overrides import get_current_ccx
 from microsite_configuration import microsite
 from microsite_configuration.templatetags.microsite import platform_name
 from openedx.core.djangolib.markup import HTML, Text
+# count number of students
+from student.models import UserProfile
+countuser = UserProfile.objects.all()
+countuser = len(list(countuser))
+# countcourses
+from openedx.core.djangoapps.models.course_details import CourseDetails
+countcourses = CourseDetails
 
 %>
 <!--
@@ -20,12 +27,56 @@ from openedx.core.djangolib.markup import HTML, Text
   <link rel="stylesheet" type="text/css" href="${static.url('css/index.css')}">
 </%block>
 <style>
+  .section3_down {
+    cursor: pointer;
+  }
   @media(max-width: 486px){
     .courses {
         height: 1500px;
     }
   }
 </style>
+<script>
+function callNews() {
+  var News = '';
+  var nombreNews = '';
+  var This = $('.index-actualite-sous-section-1');
+  var Links = '<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
+  $.ajax({
+    type: "GET",
+    url: '/api/news/',
+    data:{
+      n: '3',
+      user_defined_order: '0',
+      async: false,
+    },
+    dataType: 'json',
+    success: function(data) {
+      News = data.news;
+      nombreNews = News.length;
+      if(nombreNews == 0) {
+        This.append(Links);
+      }else if(nombreNews == 1){
+        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
+        This.append(Links);
+      }else if(nombreNews == 2) {
+        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><img src="'+News[1].jacket+'"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
+      }else if(nombreNews == 3) {
+        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><img src="'+News[1].jacket+'"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><img src="'+News[2].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
+        This.append(Links);
+        ActuFloat();
+      }
+      $('.section3_down').click(function(){
+        var url = $(this).find('.picto_section3_down').data('url');
+        window.location.href = url;
+      })
+    }
+  });
+}
+$(document).ready(function(){
+  callNews();
+})
+</script>
   <section class="home">
     <div class="baniere">
   <!--
@@ -79,7 +130,7 @@ from openedx.core.djangolib.markup import HTML, Text
   }
   */
   .pic-front-head {
-    top: 550px;
+    top: 500px;
   }
   .picto_section3_down{
    float: left;
@@ -93,7 +144,7 @@ from openedx.core.djangolib.markup import HTML, Text
   }
   .img-post-actu img:first-child {
     margin-top: 40px;
-}
+  }
   @media(max-width: 1000px) {
     .titre_section3 {
       margin-top: 55px;
@@ -193,8 +244,22 @@ from openedx.core.djangolib.markup import HTML, Text
   .title {
     height: 180px;
   }
-  .pic-front-head {
-    top: 515px;
+  .picto_section3_down img {
+    width: 154px;
+    height: 120px;
+  }
+  /*
+    CSS SPECIAL LANGUE
+    css a appliquer
+    en traduction
+     en:hide-picture-english => fr:r-a-s
+     en:hide-picture-french => fr:cacher-images-francais
+  */
+  .hide-picture-english {
+    display: none;
+  }
+  .cacher-images-francais {
+    display: none;
   }
   </style>
   <script>
@@ -229,7 +294,8 @@ from openedx.core.djangolib.markup import HTML, Text
   }
   .text_section3_down_down {
     line-height: 23px;
-    font-family: 'helveticaneue'; 
+    font-family: 'helveticaneue';
+    overflow: hidden;
   }
   .courses-container {
     width: 93%;
@@ -277,7 +343,7 @@ from openedx.core.djangolib.markup import HTML, Text
               <div class="section1-up">
                 <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                   <div class="titre_section1">
-                    <br/>${_("phileas, a Trainers' community ...")}
+                    <br/>${_("phileas, a learning community ...")}
                   </div>
                   <div class="titre_section1 act-in">
                     ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -345,10 +411,11 @@ from openedx.core.djangolib.markup import HTML, Text
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="bouton-decouverte">
-                    <a href="#">${_("discover phileas")}</a>
+                    <a href="#" style="color: #914d8e;">${_("discover phileas")}</a>
                   </div>
                 </div>
               </div>
+            </div>
             </div>
           % endif
         <div class="no-grey">
@@ -357,65 +424,11 @@ from openedx.core.djangolib.markup import HTML, Text
               <div class="titre_section3">
                 ${_("news")}
               </div>
-              <!-- sous sec 1 -->
-              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6">
-                <div class="picto_section3_down" data-ordre="1">
-              <img src="/static/themes/phileastheming/images/img2.png" style="
-          display: block;
-          width: 154px;
-          height: 120px;
-          ">
-                </div>
-                <div class="text_section3_down" style="
-              width: calc(100% - 154px);
-              height: 100%;
-              float: left;
-          ">
-                  <div class="text_section3_down_up">
-                    Lorem ipsum dolor sit amet consectetur
-                  </div>
-                  <div class="text_section3_down_down">
-                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                  </div>
-                </div>
-              </div>
-              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6">
-                <div class="picto_section3_down" data-ordre="2">
-              <img src="/static/themes/phileastheming/images/img2.png" id="index-img-img2">
-                </div>
-                <div class="text_section3_down">
-                  <div class="text_section3_down_up">
-                    Lorem ipsum dolor sit amet consectetur
-                  </div>
-                  <div class="text_section3_down_down">
-                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                  </div>
-                </div>
-              </div>
-              <!-- sous sec 3 -->
-              <div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;">
-                <div class="picto_section3_down" data-ordre="3">
-              <img src="/static/themes/phileastheming/images/img2.png" style="
-          display: block;
-          width: 154px;
-          height: 120px;
-          ">
-                </div>
-                <div class="text_section3_down">
-                  <div class="text_section3_down_up">
-                    Lorem ipsum dolor sit amet consectetur
-                  </div>
-                  <div class="text_section3_down_down">
-                    Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor
-                  </div>
-                </div>
-              </div>
-              <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite">
-                <a href="#" style="color:#914d8e;">${_("all of news")}</a>
-              </div>
             </div>
             <div class="section3 img-post-actu">
+              <a href="http://ec2-52-57-118-84.eu-central-1.compute.amazonaws.com/cpf" class="${_('hide-picture-english')}">
               <img src="/static/themes/phileastheming/images/img3.png" />
+            </a>
               <img src="/static/themes/phileastheming/images/img4.png" />
               <img src="/static/themes/phileastheming/images/img5.png" />
             </div>
@@ -445,7 +458,7 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="section1-up">
               <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="titre_section1">
-                  <br/>${_("phileas, a Trainers' community ...")}
+                  <br/>${_("phileas, a learning community ...")}
                 </div>
                 <div class="titre_section1 act-in">
                   ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -549,3 +562,9 @@ from openedx.core.djangolib.markup import HTML, Text
   $(window).load(function() {$('#signup_action').trigger("click");});
 </script>
 % endif
+<script>
+$(document).ready(function(){
+  console.log('nombre d\'apprenant : ${countuser}');
+  console.log('nombre de cours : ${countcourses}');
+})
+</script>

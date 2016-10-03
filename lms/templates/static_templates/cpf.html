@@ -1,0 +1,264 @@
+<%page expression_filter="h"/>
+<%!
+from django.utils.translation import ugettext as _
+from django.core.urlresolvers import reverse
+from openedx.core.djangolib.markup import HTML
+%>
+<%inherit file="../main.html" />
+<%namespace name='static' file='../static_content.html'/>
+
+<%block name="pagetitle">${_("Cpf")}</%block>
+
+<%block name="header_extras">
+<!--
+<link rel="stylesheet" type="text/css" href="${static.url('css/tma_news.css')}">
+-->
+</%block>
+<style>
+  .baniere {
+    padding:0;
+    width: 1440px;
+    height: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    font-family: 'gothamrounded-book';
+  }
+  .baniere-img {
+  background-image:url('/static/themes/phileastheming/images/img_index_desktop.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: relative;
+  background-color: #272530;
+  height: 102px;
+  padding-top:124px;
+  padding-bottom:124px;
+  position: relative;
+  }
+  .ariane_news {
+    position: absolute;
+    width: 100%;
+    top: 25px;
+    left: 170px;
+    z-index: 10;
+  }
+  .ariane_news a,.ariane_news a:hover,.ariane_news a:focus {
+    color: #fff;
+    display: inline;
+    text-transform: none;
+  }
+  .separation {
+    display: inline-block;
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #fff;
+  }
+  .heading-group p {
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    font-size: 23px;
+    font-family: 'helveticaneue-light';
+  }
+  :focus {
+      outline: none;
+  }
+  .h1-span {
+      display: block;
+      width: 100%;
+      height: 45px;
+      color: #fff;
+      font-family: 'gothamrounded-book';
+      font-size: 50px;
+      font-weight: bold;
+      text-transform: uppercase;
+  }
+  #content_cpf {
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    height: auto;
+  }
+  #titre_cpf {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  #titre_cpf,#paragraphes_cpf,#video_cpf {
+    height: auto;
+    width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #titre_cpf h1 {
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #914d8e;
+    font-size: 30px;
+    font-family: 'gothamrounded-medium';
+    text-align: left;
+    padding-left: 20px;
+    width: calc(100% - 40px);
+  }
+  #paragraphes_cpf h4 {
+    font-weight: bold;
+    font-family: 'helveticaneue-light';
+    font-size: 20px;
+    padding-bottom: 5px;
+    color: #445561;
+  }
+  #paragraphes_cpf p {
+    font-size: 16px;
+    color: #445561;
+    font-family: 'helveticaneue-light';
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: -20px;
+  }
+   #paragraphes_cpf ul {
+    width: 100%;
+    margin-right: 30%;
+    height: auto;
+    padding-left: 0px;
+  }
+  #paragraphes_cpf ul li {
+    height: auto;
+    width: 70%;
+    margin-right: 30%;
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  #video_cpf img {
+    display: block;
+    float: left;
+    height: 26vw;
+    width: calc(25% - 20px);
+    padding-left: 20px;
+  }
+  #video_cpf iframe {
+    padding: 0;
+    border: none;
+    margin: 0;
+    display: block;
+    float: left;
+    width: 46vw;
+    height: 26vw;
+  }
+  #into_video_cpf {
+    width: 100%;
+    height: auto;
+    text-align: center;
+  }
+  #clear-left {
+    clear: left;
+  }
+  @media(max-width: 1440px) {
+    #content_cpf {
+      width: 100vw;
+      margin-left: auto;
+      margin-right: auto;
+    }#video_cpf,#paragraphes_cpf,#titre_cpf {
+      width: 80vw;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+</style>
+<script>
+  function reorgPara() {
+    var This = $('#paragraphes_cpf');
+    var longUl = This.find('ul').width();
+    var longLi = This.find('li').width();
+    var newMargLi = parseInt(longUl) - parseInt(longLi);
+    This.find('li').css('margin-left','-'+newMargLi+'px');
+  }
+  function hauteurVideoImg() {
+    var This = $('#video_cpf');
+    var ThisIframe = $('#video_cpf').find('iframe');
+    var ThisImg = $('#video_cpf').find('img');
+    var iframeWidth = ThisIframe.width();
+    var allHeight = parseInt(iframeWidth) * 0.563;
+    This.css('height',allHeight);
+    ThisIframe.css('height',allHeight);
+    ThisImg.css('height',allHeight);
+
+  }
+  $(document).ready(function(){
+    //reorgPara();
+    //hauteurVideoImg();
+  })
+  $(window).resize(function(){
+    //reorgPara();
+    //hauteurVideoImg();
+  })
+</script>
+<section id="content_cpf">
+  <section id="titre_cpf">
+    <h1>PHILEAS - CPF</h1>
+  </section>
+  <section id="video_cpf">
+    <div id="into_video_cpf">
+      <img src="${static.url('images/cpf.png')}">
+      <iframe src="https://www.youtube.com/embed/LM4iq3zSI8Y" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div id="clear-left"></div>
+  </section>
+  <section id="paragraphes_cpf">
+    <ul>
+      <li>
+        <h4>Qu’est-ce que le Compte Personnel de Formation (CPF) ?</h4>
+        <p>
+          L’objectif du CPF est de rendre le salarié acteur de son évolution professionnelle. C’est une épargne d’heures de formation dont vous pouvez disposer tout au long de votre vie professionnelle, quelle que soit l’entreprise dans laquelle vous travaillez. Que vous changiez d’employeur ou une période de chômage, ce crédit d’heures vous est toujours rattaché.
+        </p>
+      </li>
+      <li>
+        <h4>De combien d’heures ai-je droit ?</h4>
+        <p>
+          150 heures au maximum. Les heures accumulées dans votre ancien DIF sont automatiquement crédités sur votre CPF.
+        <p>
+        <p>
+          Le CPF est crédité jusqu’à 24 heures par an. L’acquisition de ces heures se fait au prorata du taux d’activité.
+        </p>
+      </li>
+      <li>
+        <h4>Je peux m’inscrire à tout type de formation ?</h4>
+        <p>
+          Non, votre CPF est réservé principalement aux formations qualifiantes et certifiantes, visant l’acquisition d’un socle de connaissances et de compétences ou accompagnant la VAE.
+        </p>
+      </li>
+      <li>
+        <h4>Chez Amundi, quelles sont les types de formation préconisées ?</h4>
+        <p>
+          Les formation en langues sont les plus demandées et les plus simples à obtenir.
+        </p>
+        <p>
+          Par exemple, si vous souhaitez vous former à l’anglais mais que votre demande n’a pas été validée lors de l’entretien annuel ou l’entretien professionnel, vous pouvez monter votre dossier CPF sous réserve de passer le TOEIC (certificat attestant de votre niveau) à l’issue de votre formation !
+        </p>
+      </li>
+      <li>
+        <h4>Concrètement, comment utiliser mon CPF ?</h4>
+        <p>
+          Si votre formation se déroule hors temps de travail, vous n’avez pas besoin de l’accord de votre manager ou de la DRH. Il vous faut juste avoir plus d’un an d’ancienneté dans l’entreprise à la date de demande de formation.
+        </p>
+        <p>
+          Votre formation se déroule sur votre temps de travail ? L’employeur doit donner son accord à la fois sur le contenu de la formation et sur le calendrier prévisionnel. Dans ce cas, votre salaire est maintenu mais vous devez faire votre demande officielle 60 jours avant le début de la formation si celle-ci dure moins de 6 mois. Au-delà, déclarez-vous au moins 120 jours avant le début.
+        </p>
+      </li>
+      <li>
+        <h4>Comment créer mon compte CPF ?</h4>
+        <p>
+          La procédure de création du compte CPF est décrite en détail dans le guide CPF édité par Amundi. Téléchargez le guide en cliquant sur <a href="https://www.intramundi.com/DocumentsIntrAmundi/4.Ressources%20Humaines/IntranetRH2015/4.%20Mobilit%c3%a9%20Formation%20et%20%c3%89valuation/4.2.%20Formation/GUIDE-CPF.pdf">ce lien.</a>
+        </p>
+      </li>
+      <li>
+        <h4>Qui peut me renseigner chez Amundi ?</h4>
+        <p>Le service formation peut vous accompagner dans vos démarches. Rencontrez votre interlocuteur dédié (<a href="https://www.intramundi.com/Pages/RessourcesHumaines/MobiliteFormationEvaluation/Formation.aspx">l’organigramme sur l’intranet</a>)</p>
+        <p>
+          Le guide CPF d’Amundi est disponible <a href="https://www.intramundi.com/DocumentsIntrAmundi/4.Ressources%20Humaines/IntranetRH2015/4.%20Mobilit%c3%a9%20Formation%20et%20%c3%89valuation/4.2.%20Formation/GUIDE-CPF.pdf">depuis ce lien.</a>
+        </p>
+        <p>
+          Votre compte doit être activé depuis ce lien : <a href="www.moncompteformation.gouv.fr">www.moncompteformation.gouv.fr</a>
+        </p>
+      </li>
+    </ul>
+  </section>
+</section>

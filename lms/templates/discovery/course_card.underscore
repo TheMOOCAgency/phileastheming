@@ -6,24 +6,33 @@ if(org == 'Vodeclic') {
    else {
       lienvodeclick = '/courses/'+course+'/about'
    }
-   VodeclicClass = '';
-   liensA = '';
-   linkForm = '';
-   if(org == "Vodeclic"){
-     linkForm = 'display:block;';
-     liensA = 'display:none;';
-    VodeclicClass = ' VodeclicClass';
-   }else{
-     linkForm = 'display:none;';
-     liensA = 'display:block;';
-   }
+   $(document).ready(function(){
+     if(org == "Vodeclic"){
+       linkForm = 'display:block;';
+       liensA = 'display:none;';
+      VodeclicClass = ' VodeclicClass';
+     }else{
+       linkForm = 'display:none;';
+       liensA = 'display:block;';
+     }
+   })
+   $(window).resize(function(){
+     if(org == "Vodeclic"){
+       idForm = 'course_id';
+      VodeclicClass = ' VodeclicClass';
+     }else{
+       idForm = 'nosubmit';
+     }
+   })
 %>
 <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
 <style>
   .VodeclicClass img{
-    width: 120px;
-    height: 120px;
+    width: 187.5px;
+    height: 187.5px;
     background-color: #fff;
+    margin-left: auto;
+    margin-right: auto;
   }
   input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
   background-image: none;
@@ -32,35 +41,35 @@ if(org == 'Vodeclic') {
   border: none;
   border-radius: 0px;
   background-color:rgb(0, 157, 224);
-    bottom: 0px;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    display: block;
-    font-family: 'helveticaneue-bold';
-    font-size: 14px;
-    font-stretch: normal;
-    font-style: normal;
-    font-variant-caps: normal;
-    font-variant-ligatures: normal;
-    font-variant-numeric: normal;
-    font-weight: normal;
-    height: 59px;
-    line-height: 59px;
-    list-style-image: none;
-    list-style-position: outside;
-    list-style-type: none;
-    margin-top: 40px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    text-indent: 0px;
-    transition-delay: 0s;
-    transition-duration: 0.1s;
-    transition-property: all;
-    transition-timing-function: linear;
-    vertical-align: middle;
-    width: 390px;
-    z-index: 10;
+  bottom: 0px;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  display: block;
+  font-family: 'helveticaneue-bold';
+  font-size: 14px;
+  font-stretch: normal;
+  font-style: normal;
+  font-variant-caps: normal;
+  font-variant-ligatures: normal;
+  font-variant-numeric: normal;
+  font-weight: normal;
+  height: 59px;
+  line-height: 59px;
+  list-style-image: none;
+  list-style-position: outside;
+  list-style-type: none;
+  margin-top: 40px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  text-indent: 0px;
+  transition-delay: 0s;
+  transition-duration: 0.1s;
+  transition-property: all;
+  transition-timing-function: linear;
+  vertical-align: middle;
+  width: 100%;
+  z-index: 10;
   }
   .submit button,.submit button:hover,.submit button:focus {
     background-image: none;
@@ -82,18 +91,44 @@ if(org == 'Vodeclic') {
     font-family: 'helveticaneue-bold';
     text-transform: none;
 }
+@media (max-width: 1440px){
+  .course-images, .course-image {
+      height: 20vh;
+  }
+  .cover-images {
+      width: 100%;
+      margin-left: 0px;
+      margin-right: 0px;
+  }
+}
+@media(max-width: 697px) {
+  .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+    width: 46%;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+}
+@media(max-width: 429px) {
+.find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+}
 </style>
 <article class="course" role="region" aria-label="<%- content.display_name %>">
         <header class="course-images<%- VodeclicClass %>">
-        <a href="<%- lienvodeclick %>" style="<%- liensA %>">
+        <!--
+        <a href="<%- lienvodeclick %>" class="ClassLien">
             <div class="cover-images">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
             </div>
         </a>
-        <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment" style="<%- linkForm %>">
+        -->
+        <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment" >
           <fieldset class="enroll_fieldset">
             <legend class="sr">Enroll</legend>
-            <input name="course_id" type="hidden" value="<%- id %>">
+            <input name="<%- idForm %>" type="hidden" value="<%- id %>">
             <input name="enrollment_action" type="hidden" value="enroll">
           </fieldset>
           <div class="submit">
@@ -118,16 +153,18 @@ if(org == 'Vodeclic') {
             <p style="text-align: center;width: 100%;">
               <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
             </p>
+        <!--
         <a href="<%- lienvodeclick %>" class="learn-more liens_oust" style="<%- liensA %>"><%- showMore %></a>
-        <div style="position: absolute;z-index:1000;<%- linkForm %>">
+        -->
+        <div style="position: absolute;z-index:1000;width: 100%;" class="ClassForm">
           <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment">
             <fieldset class="enroll_fieldset">
               <legend class="sr">Enroll</legend>
-              <input name="course_id" type="hidden" value="<%- id %>">
+              <input name="<%- idForm %>" type="hidden" value="<%- id %>">
               <input name="enrollment_action" type="hidden" value="enroll">
             </fieldset>
             <div class="submit">
-              <input name="submit" type="submit" value="<%- showMore %>" class="learn-more liens_oust" onclick="document.location.href='<%- gettext("lienvodeclick") %>">
+              <input name="submit" type="submit" value="<%- showMore %>" class="learn-more liens_oust <%- org%>" onclick="document.location.href='<%- lienvodeclick %>'">
             </div>
           </form>
         </div>
