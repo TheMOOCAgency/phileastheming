@@ -12,6 +12,7 @@
 <% style_overrides_file = static.get_value('css_overrides_file') %>
 % if course_discovery_enabled:
 <%block name="header_extras">
+  <link rel="stylesheet" type="text/css" href="${static.url('css/jquery.rateyo.css')}" />
   % for template_name in ["course_card", "filter_bar", "filter", "facet", "facet_option"]:
   <script type="text/template" id="${template_name}-tpl">
       <%static:include path="discovery/${template_name}.underscore" />
@@ -93,7 +94,64 @@ var idForm = '';
     .courses-up-bis {
       text-transform: uppercase;
     }
+    .find-courses .wrapper-search-context .wrapper-search-input:last-child {
+      display: none;
+    }
+    .find-courses .courses-container .courses.no-course-discovery, .university-profile .courses-container .courses.no-course-discovery {
+      width: 100%;
+    }
+    #table_search {
+      top: -39px;
+    }
+    #sort_by,#sort_by:hover,#sort_by:focus {
+      border: none;
+      border-radius: 0px;
+      padding: 0;
+      margin: 0;
+      background-color: transparent;
+      box-shadow: none;
+      text-shadow: none;
+      background-image: none;
+      color: #fff;
+      height: 100%;
+      line-height: 100%;
+      vertical-align: middle;
+      display:block;
+      float:right;
+      font-size: 18px;
+      font-family: 'helveticaneue-medium';
+      text-transform: none;
+      margin-right: 20px;
+    }
+    .picto_down_arrow::after {
+      content:"\25BC";
+      color: #fff;
+    }
+    .picto_up_arrow::after {
+      content:"\25B2";
+      color: #fff;
+    }
+    #table_search{
+      display:none;
+    }
+    .find-courses .wrapper-search-context .wrapper-search-input {
+      display: none;
+    }
   </style>
+  <script>
+  $(document).ready(function(){
+    $('#sort_by').click(function(){
+      $('#table_search').toggle();
+      if($(this).hasClass('picto_down_arrow')){
+        $(this).removeClass('picto_down_arrow');
+        $(this).addClass('picto_up_arrow');
+      }else{
+        $(this).removeClass('picto_up_arrow');
+        $(this).addClass('picto_down_arrow');
+      }
+    })
+  })
+  </script>
 <section class="find-courses">
 <div class="courses-all">
 <div class="courses-up">
@@ -116,6 +174,7 @@ ${_('All courses')}
       </div>
     </button>
   </form>
+  <button id="sort_by" class="picto_down_arrow">${_("sort by")}</button>
 </div>
 % endif
 </div>
@@ -129,6 +188,7 @@ ${_('All courses')}
     % endif
     <div class="courses no-course-discovery" role="region" aria-label="${_('List of Courses')}" style="
       border-bottom: none;
+      width:100%;
     ">
     <LINK href="/static/css/course.css" rel="stylesheet" type="text/css">
       <ul class="courses-listing">
@@ -143,6 +203,7 @@ ${_('All courses')}
 
   </section>
 </section>
++<script src="${static.url('js/jquery.rateyo.js')}"></script>
 <script>
 function TailleImage(){
   $('.course-image').each(function(){
@@ -183,4 +244,105 @@ $(window).resize(function(){
 var functionImage = function() {
   console.log('$(this)');
 }
+</script>
+<script>
+var balance = 'boom';
+$(document).ready(function(){
+  $('.search-facets-lists').find('button').each(function(){
+    if($(this).data('value') == 'Vodeclic') {
+      $(this).click();
+    }
+  })
+})
+
+
+function showCourseRatings(){
+      $("li.courses-listing-item article").each(function(){
+        var course_id = $(this).attr("id");
+        var rateSelector = $(this).find(".course-ratings")
+        $.get({
+          url: "/course_ratings_handler/" + course_id + "/",
+          success: function(data) {
+            var nAvgRate = data['avg_ratings'];
+            var nReviews = data['total_reviews'];
+            var nCanRate = data['can_rate'];
+            lblReviews = 'Review';
+            if(nReviews > 1) {
+              lblReviews += "s"
+            }
+            // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+            // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+            rateSelector.rateYo({
+              rating: nAvgRate,
+              halfStar: true,
+              starWidth: "25px",
+              readOnly: !nCanRate,
+              onSet: function (rating, rateYoInstance) {
+                $.post({
+                  url: "/course_ratings_handler/" + course_id + "/",
+                  data: {
+                    'stars': rating,
+                  },
+                  success: function(data) {
+                    nAvgRate = data['avg_ratings'];
+                    nReviews = data['total_reviews'];
+                    lblReviews = 'Review';
+                    if(nReviews > 1) {
+                      lblReviews += "s"
+                    }
+                    // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+                    // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+                    rateSelector.rateYo("option", "readOnly", true);
+                  }
+                }); // POST
+              }
+            });  // RATEYO
+          }
+        }); // GET
+      });  // EACH
+}
+$(document).ajaxComplete(function(event, xhr, settings){
+    if( settings.url.endsWith('course_discovery/') ) {
+        results = xhr.responseJSON.results;
+        var course_list = []
+        for (var i =0; i<results.length;i++ )
+        {
+            if (results[i].data.manager_only == true)
+            {
+                course_list.push(results[i]._id);
+            }
+        }
+      $.get({
+        url: '/course_hide/',
+        data: {'course_list':JSON.stringify(course_list)},
+        success: function(data) {
+            data_list = data['Hidden'].split("\"")
+            hide_course_list = []
+            for (var j=0; j< data_list.length; j++)
+            {
+                if (data_list[j].startsWith('course'))
+                {
+                    hide_course_list.push(data_list[j])
+                }
+            }
+            for (var k =0; k<hide_course_list.length; k++){
+                $("a[href*='"+hide_course_list[k]+"']").parent().parent().remove();
+            }
+            var discoveryMessage = $('#discovery-message').text();
+            message_array = discoveryMessage.split(' ');
+            courseNumber = parseInt(message_array[1]);
+            displayCourseNumber = courseNumber - hide_course_list.length;
+            if(displayCourseNumber){
+              $('#discovery-message').text("Viewing "+displayCourseNumber+" courses");
+            }
+            % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
+            if (window.drawnRatings == undefined){
+              showCourseRatings();
+              window.drawnRatings = true;
+            }
+            % endif
+        }
+      });
+    }
+  });
 </script>

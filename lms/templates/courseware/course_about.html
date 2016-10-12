@@ -236,7 +236,7 @@ from openedx.core.lib.courses import course_image_url
     border: none;
     box-shadow: none;
     position: absolute;
-    top: 190px ;
+    top: 0;
     width: 370px;
   }
   .course-summary img {
@@ -314,6 +314,7 @@ from openedx.core.lib.courses import course_image_url
   }
   .course-info .container {
     padding-bottom: 0px;
+    position: relative;
   }
   .wrapper-footer {
     margin-top: 0px;
@@ -381,7 +382,7 @@ from openedx.core.lib.courses import course_image_url
   border-radius: 50%;
 }
 .teacher-up {
-  width: calc(100% - 134px);
+  width: calc(100% - 136px);
   height: 126px;
   float: left;
 }
@@ -398,9 +399,10 @@ from openedx.core.lib.courses import course_image_url
 /*avis formation */
 .avis-formation {
   padding-left: 130px;
-  width: calc(60% - 130px);
+  width: calc(100% - 130px);
   background-color: #fff;
   clear: left;
+  height: 240px;
 }
 .avis-formation h2 {
   padding-top: 40px;
@@ -473,6 +475,45 @@ from openedx.core.lib.courses import course_image_url
 .grey {
   width: 1440px;
 }
+.course-info .course-sidebar {
+  position: absolute;
+  z-index: 100000;
+  top: -250px;
+  right: 0;
+}
+#note_big,#bigstar,#nombre_avis {
+  float: left;
+  display: block;
+  height: 33px;
+  padding: 5px;
+  margin-top: 60px;
+  margin-bottom: 60px;
+  vertical-align: middle;
+  line-height: 33px;
+}
+#note_big {
+  font-family: 'gothamrounded-light';
+  vertical-align: bottom;
+  font-size:60px;
+  line-height: 20px;
+  color: #8A4185;
+}
+#nombre_avis {
+  color: #8A4185;
+  font-family: 'helveticaneue';
+  font-size: 14px;
+  vertical-align: bottom;
+  line-height: 44px;
+}
+@media(min-width:1440px) {
+  .avis-formation {
+    width: 1180px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 130px;
+    padding-right: 130px;
+  }
+}
 @media(max-width: 1440px) {
   .grey,.white,.grey_inside,.white-up {
     width: 100vw;
@@ -510,13 +551,17 @@ from openedx.core.lib.courses import course_image_url
     margin-left: auto;
     margin-right: auto;
   }
+  .avis-formation {
+    padding-left: 50px;
+  }
 }
 @media(max-width:1278px) {
   .course-info .course-sidebar>section.course-summary {
-    width: 300px;
+    width: 100%;
   }
   .course-info .course-sidebar{
     width: calc(100% - 880px);
+    right: 5px;
   }
   .course-info .details {
     width:700px;
@@ -627,9 +672,9 @@ from openedx.core.lib.courses import course_image_url
     padding: 0px;
     border: none;
     box-shadow: none;
-    position: absolute;
-    top: 190px;
-    width: 234px;
+    position: inherit;
+    top: 0px;
+    width: 100%;
   }
   .course-summary img {
     display: block;
@@ -678,15 +723,31 @@ from openedx.core.lib.courses import course_image_url
   }
 }
 @media(max-width:767px) {
-  .course-sidebar {
-    display: none;
+  .course-info .course-sidebar {
+    position: inherit;
+    float:right;
+    top: 0;
+    right:0;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+  }
+  .course-info .details {
+    float: left;
+  }
+  .course-info .course-sidebar>section.course-summary {
+    position:inherit;
+    top: 0;
+    right:0;
+    z-index: 1;
+    width: 100%;
   }
   .grey_inside {
     height: 1100px;
   }
   .course-sidebar-low-res,.course-summary {
     width: 100%;
-    max-height: 77  0px;
+    max-height: 770px;
     display: block;
   }
   .up_dashboard {
@@ -702,7 +763,7 @@ from openedx.core.lib.courses import course_image_url
     width: 100%;
     padding-right: 0px;
   }
-  .about,.prerequisites,.faq {
+  .about,.prerequisites,.faq,.course-staff {
     margin-right: 0px;
     padding-left: 1%;
     padding-right: 1%;
@@ -772,16 +833,16 @@ from openedx.core.lib.courses import course_image_url
   .important-dates-item span {
     height: 18px;
     width: 30%;
-    margin-right: 20%;
+    margin-right: 10%;
     float: left;
     padding: 0px;
     margin: 0px;
     font-weight: bold;
   }
   .avis-formation {
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
+    width: 98%;
+    margin-left: 1%;
+    margin-right: 1%;
     padding: 0px;
   }
   .liens {
@@ -799,76 +860,72 @@ from openedx.core.lib.courses import course_image_url
     font-size: 10px;
   }
   .important-dates-item span {
-    width: 40%;
-    margin-right: 10%;
+    width: 30%;
+    margin-right: 0%;
     font-size: 12px;
+  }
+}
+@media(max-width:510px) {
+  #note_big {
+    font-family: 'gothamrounded-light';
+    vertical-align: bottom;
+    font-size:40px;
+    line-height: 30px;
+    color: #8A4185;
+  }
+  #nombre_avis {
+    color: #8A4185;
+    font-family: 'helveticaneue';
+    font-size: 14px;
+    vertical-align: bottom;
+    line-height: 44px;
+  }
+}
+@media(max-width:410px) {
+  #note_big {
+    font-family: 'gothamrounded-light';
+    vertical-align: bottom;
+    font-size:30px;
+    line-height: 30px;
+    color: #8A4185;
+  }
+  #nombre_avis {
+    color: #8A4185;
+    font-family: 'helveticaneue';
+    font-size: 14px;
+    vertical-align: bottom;
+    line-height: 44px;
+  }
+  #bigstar {
+
   }
 }
 @media(max-width:391px) {
   .important-dates-item-title {
     font-size: 9px;
   }
+  #total-reviews {
+    width: 60px;
+  }
+  #course-rate {
+
+  }
   .teacher-up h3,.teacher-up p {
     font-size: 14px;
     line-height: 20px;
   }
   .important-dates-item span {
-    width: 35%;
-    margin-right: 15%;
+    width: 30%;
+    margin-right: 0%;
     font-size: 10px;
   }
 }
-@media(max-width:370px) {
+@media(max-width:375px) {
+  .up_dashboard {
+    height: 220px;
+  }
+}
 
-}
-/*
-@media(max-width:1368px) {
-  .course-sidebar {
-    display: none;
-  }
-  .course-summary {
-    display: none
-  }
-  .course-sidebar-low-res,.course-summary-low-res {
-    width: 100%;
-    height: 500px;
-    display: block;
-  }
-  .course-summary-low-res img {
-    display: block;
-    width: 100%;
-    height: auto;
-    padding: 0px;
-    margin: 0px;
-    border: none;
-    box-shadow: none;
-  }
-  .course-summary-low-res a {
-    display: block;
-    width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: #009DE0;
-    color: #fff;
-    height: 60px;
-    line-height: 60px;
-    vertical-align: middle;
-    text-align: center;
-  }
-   .course-summary-low-res .important-dates-item {
-     width: 46%;
-     margin-left: 1%;
-     margin-right: 1%;
-     display: block;
-     float: left;
-     padding: 1%;
-   }
-   .course-summary-low-res .important-dates-item img {
-     width: 18px;
-     height: auto;
-   }
-}
-*/
 .pop-up {
   display: none;
   position: fixed;
@@ -978,14 +1035,41 @@ from openedx.core.lib.courses import course_image_url
   overflow:hidden;
 }
 </style>
+<script>
+function bougerDiv() {
+  var Details = $('.details');
+  var DMenu = $('.course-sidebar');
+  console.log(Details);
+  if(parseInt($(document).width()) < 768) {
+    $('.details').before($('.course-sidebar'));
+  }else{
+    $('.course-sidebar').before($('.details'));
+  }
+}
+function starShip() {
+  if(parseInt($(document).width()) < 392) {
+    $('#course-rate').css('margin-left','0px');
+  }else{
+    $('#course-rate').css('margin-left','10px');
+  }
+}
+$(document).ready(function(){
+  bougerDiv();
+  starShip();
+})
+$(window).resize(function(){
+  bougerDiv();
+  starShip();
+})
+</script>
 <div class="pop-up">
   <div class="button-close">
     <button id="close-popup"><img src="/static/themes/phileastheming/images/icon_close.png" /></button>
   </div>
-  <h2>${_("Your enroll in  {course_name} is subject to validation").format(course_name=course.display_number_with_default) | h}</h2>
+  <h2>${_("Your enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h} ${_("is subject to validation")}</h2>
   <div class="link">
     <a href="#" class="register">
-      ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
+      ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h}
     </a>
   </div>
 </div>
@@ -1086,7 +1170,7 @@ from openedx.core.lib.courses import course_image_url
                   <div id="register_error"></div>
                 %else:
                   <button href="#" class="registers">
-                    ${_("Enroll in {course_name}").format(course_name=course.display_number_with_default) | h}
+                    ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h}
                   </button>
                   <div id="register_error"></div>
                 %endif
@@ -1101,15 +1185,8 @@ from openedx.core.lib.courses import course_image_url
             % endif
             % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
               <li class="important-dates-item">
-                <span id="total-reviews" style="float: left;">
-                  ${total_reviews}
-                  % if total_reviews > 1:
-                    Reviews
-                  % else:
-                    Review
-                  % endif
-                </span>
-                <span id="avg-rating-number" class="important-dates-item-text">${avg_ratings}/5</span>
+                <span id="total-reviews" style="float: left;"> </span>
+                <span id="avg-rating-number" class="important-dates-item-text"></span>
                 <span id="course-rate" style="float: left; margin-top: -5px; margin-left: 25px;"></span>
               </li>
             % endif
@@ -1119,14 +1196,13 @@ from openedx.core.lib.courses import course_image_url
               </li>
 
               % if get_course_about_section(request, course, "effort"):
-                <li class="important-dates-item"><i class="icon fa fa-pencil"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+                <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
               % endif
               ## We plan to ditch end_date (which is not stored in course metadata),
               ## but for backwards compatibility, show about/end_date blob if it exists.
               % if get_course_about_section(request, course, "end_date") or course.end:
               <li class="important-dates-item">
-                  <i class="icon fa fa-calendar"></i>
-                  <p class="important-dates-item-title">${_("Classes End")}</p>
+                  <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes End")}</p>
                   <span class="important-dates-item-text final-date">
                       % if get_course_about_section(request, course, "end_date"):
                           ${get_course_about_section(request, course, "end_date")}
@@ -1168,6 +1244,10 @@ from openedx.core.lib.courses import course_image_url
       </section>
     </div>
   </section>
+  <section class="avis-formation">
+    <h2>${_("course rating")}</h2>
+    <span id="note_big"></span><span id="bigstar"></span><span id="nombre_avis"></span>
+  </section>
 </section>
 
 ## Need to put this hidden form on the page so that the registration button works.
@@ -1196,36 +1276,83 @@ from openedx.core.lib.courses import course_image_url
   <script src="${static.url('js/jquery.rateyo.js')}"></script>
   <script>
     $(document).ready(function(){
+            var course_id = "${course.id}";
+            $.get({
+              url: "/course_ratings_handler/" + course_id + "/",
+              success: function(data) {
+                var nAvgRate = data['avg_ratings'];
+                var nReviews = data['total_reviews'];
+                var nCanRate = data['can_rate'];
+                lblReviews = 'Review';
+                if(nReviews > 1) {
+                  lblReviews += "s"
+                }
+                $("#nombre_avis").text(String(nReviews)+" "+lblReviews);
+                $("#note_big").text(String(nAvgRate)+"/5");
+                $("#bigstar").rateYo({
+                  rating: nAvgRate,
+                  halfStar: true,
+                  starWidth: "28px",
+                  readOnly: !nCanRate,
+                  onSet: function (rating, rateYoInstance) {
+                    $.post({
+                      url: "/course_ratings_handler/" + course_id + "/",
+                      data: {
+                        'stars': rating,
+                      },
+                      success: function(data) {
+                        nAvgRate = data['avg_ratings'];
+                        nReviews = data['total_reviews'];
+                        lblReviews = 'Review';
+                        if(nReviews > 1) {
+                          lblReviews += "s"
+                        }
+                        $("#nombre_avis").text(String(nReviews)+" "+lblReviews);
+                        $("#note_big").text(String(nAvgRate)+"/5");
+                        $("#bigstar").rateYo("option", "readOnly", true);
+                      }
+                     });
+                  }
+          });
+        }
 
-	var is_read_only =  false;
-	% if not can_rate:
-       	 is_read_only = true;
-	% endif
-
-      $("#course-rate").rateYo({
-
-        rating: "${avg_ratings}",
-        halfStar: true,
-        starWidth: "25px",
-        readOnly: is_read_only,
-        onSet: function (rating, rateYoInstance) {
-          $.post({
-            url: "/rate_course/",
-            data: {
-              'course_id': "${course.id}",
-              'stars': rating,
-            },
-            success: function(data) {
-              var nAvgRate = data['avg_ratings'];
-              var nReviews = data['total_reviews'];
-              lblReviews = 'Review';
-              if(nReviews > 1) {
-                lblReviews += "s"
-              }
-              $("#total-reviews").text(String(nReviews)+" "+lblReviews);
-              $("#avg-rating-number").text(String(nAvgRate)+"/5");
-              $("#course-rate").rateYo("option", "readOnly", true);
-            }
+      });
+            $.get({
+              url: "/course_ratings_handler/" + course_id + "/",
+              success: function(data) {
+                var nAvgRate = data['avg_ratings'];
+                var nReviews = data['total_reviews'];
+                var nCanRate = data['can_rate'];
+                lblReviews = 'Review';
+                if(nReviews > 1) {
+                  lblReviews += "s"
+                }
+                $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+                $("#avg-rating-number").text(String(nAvgRate)+"/5");
+                $("#course-rate").rateYo({
+                  rating: nAvgRate,
+                  halfStar: true,
+                  starWidth: "21px",
+                  readOnly: !nCanRate,
+                  onSet: function (rating, rateYoInstance) {
+                    $.post({
+                      url: "/course_ratings_handler/" + course_id + "/",
+                      data: {
+                        'stars': rating,
+                      },
+                      success: function(data) {
+                        nAvgRate = data['avg_ratings'];
+                        nReviews = data['total_reviews'];
+                        lblReviews = 'Review';
+                        if(nReviews > 1) {
+                          lblReviews += "s"
+                        }
+                        $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+                        $("#avg-rating-number").text(String(nAvgRate)+"/5");
+                        $("#course-rate").rateYo("option", "readOnly", true);
+                      }
+                    });
+                  }
           });
         }
 

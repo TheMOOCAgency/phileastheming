@@ -58,25 +58,6 @@ function Ajax() {
       var Urls = Url+num;
       $(location).attr('href', Urls);
     });
-    /*
-      $("#add_to_cart_post").click(function(event){
-        $.ajax({
-          url: "/shoppingcart/add/course/${course.id}/",
-          complete: add_course_complete_handler
-        })
-        event.preventDefault();
-    $('#class_enroll_form').on('ajax:complete', function(event, xhr) {
-      if(xhr.status == 200) {
-        var Urls = Url+num;
-        $(location).attr('href', Urls);
-      }else {
-        $('#register_error').html(
-            (xhr.responseText ? xhr.responseText : "${_("An error occurred. Please try again later.")}")
-        ).css("display", "block");
-      }
-    });
-    })
-    */
   })(this)
 }
 //redimentionnement des images
@@ -121,21 +102,6 @@ $(document).ready(function(){
         $(this).find('.learn-more').attr('href', Urls);
       }
   })
-  // action au click sur la vignette dans Top course
-  /*
-  $('article').click(function(){
-        var Url = '${href_sso}'+'&vodeclic_id=';
-        var num = $(this).data('number');
-        var org = $(this).data('org');
-       if(org == 'Vodeclic') {
-        var Urls = Url+num;
-        $(location).attr('href', Urls);
-      }else{
-        var Urls = $(this).attr('data-link');
-        $(location).attr('href', Urls);
-      }
-  })
-  */
 })
 $(window).resize(function(){
   TailleImage();
@@ -170,6 +136,15 @@ $(window).resize(function(){
 }
 .courses-container .courses .course {
   background-color: #fff;
+}
+.jq-ry-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+.jq-ry-container>.jq-ry-group-wrapper {
+  position: absolute;
+  top: -26px;
+  z-index: 10000000000;
 }
 @media(min-width: 1440px) {
   .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .home .courses-container .courses .courses-listing .courses-listing-item,.cover-images {
@@ -224,13 +199,10 @@ $(window).resize(function(){
       <div class="course-info" aria-hidden="true">
         <h2 class="course-name" style="font-family: 'helveticaneue-bold';text-transform: none;">${course.display_name_with_default}
         </h2>
-        <p style="text-align: center;width: 100%;" id="star-note">
-          <img src="/static/themes/phileastheming/images/icon_star1.png">
-          <img src="/static/themes/phileastheming/images/icon_star1.png">
-          <img src="/static/themes/phileastheming/images/icon_star1.png">
-          <img src="/static/themes/phileastheming/images/icon_star1.png">
-          <img src="/static/themes/phileastheming/images/icon_star2.png">
+        % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
+          <div class="course-ratings"></div>
         </p>
+        % endif
         <p style="text-align: center;width: 100%;">
           <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
         </p>

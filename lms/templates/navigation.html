@@ -155,26 +155,6 @@ li input[type="text"] {
 }
 </style>
 <script>
-/*
-$(document).ready(function(){
-  $('#input').css('height','26px');
-  $('#input').css('width','26px');
-  $('#input').css('margin-top','39px');
-  $('#input').css('margin-bottom','39px');
-  $('#input').css('margin-right','0px');
-  $('#input').css('border','none');
-  $('#input').css('padding','0px');
-  $('#input').css('padding-left','20px');
-  $('#input').css('background-color','#fff');
-  $('#input').css('background-position','center');
-  $('#input').css('background-repeat','no-repeat');
-  $('#input').css('background-size','cover');
-  $('#input').css('box-shadow','none');
-  $('#input').css('border-radius','0px');
-  $('#input').css('background-image',"url('/static/themes/phileastheming/images/icon_search.png')");
-})
-*/
-
 </script>
 <!--
 <LINK href="/static/css/navigation.css" rel="stylesheet" type="text/css">
@@ -188,7 +168,7 @@ $(document).ready(function(){
       <a href="/courses">${_("Explore")}</a>
     </li>
     <li>
-      <a href="/faq">${_("About")}"</a>
+      <a href="/faq">${_("About")}</a>
     </li>
     <li>
       <a href="/news/">${_("News")}</a>
@@ -248,7 +228,66 @@ $(document).ready(function(){
         font-size: 15px;
         font-family: 'helveticaneue';
       }
+      .picto-low-res {
+        float: right;
+        width: auto;
+      }
+      #button-menu-tablette {
+        padding-left: 0px;
+        padding: 0;
+      }
+      @media(max-width:557px) {
+        .logo {
+          width: 237px;
+        }
+        .logo a img{
+          height: auto;
+          width: 237px;
+        }
+        #menu-table {
+          margin-right: 0px;
+        }
+      }
+      @media (max-width: 489px) {
+        .logo {
+          width: 237px;
+        }
+        .logo a img{
+          height: auto;
+          width: 237px;
+        }
+      }
+      @media(max-width: 330px) {
+        #menu-table {
+          width: auto;
+        }
+      }
       </style>
+      <script>
+      /*
+      function centrerLogo() {
+        var docWidth = parseInt($(document).width());
+        var gauche = parseInt($('#button-menu-tablette').width());
+        var droite = parseInt($('.picto-low-res').width());
+        var centre = parseInt($('.logo').width());
+        var logo = $('.logo');
+        if(docWidth < 558) {
+          marginLeft = (docWidth / 2) - (gauche + (centre / 2));
+          marginRight = (docWidth / 2) - (droite + (centre / 2));
+          logo.css('margin-left',marginLeft+'px');
+          logo.css('margin-right',marginRight+'px');
+        }else{
+          logo.attr('style','');
+        }
+      }
+      $(document).ready(function(){
+        centrerLogo();
+      })
+      $(window).resize(function(){
+        centrerLogo();
+      })
+      */
+      </script>
           <li>
                 <button id="menu-top-off">
                   <img src="/static/themes/phileastheming/images/picto_new.png"/>

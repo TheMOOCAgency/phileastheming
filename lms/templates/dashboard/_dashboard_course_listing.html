@@ -8,6 +8,7 @@ from django.utils.translation import ungettext
 from django.core.urlresolvers import reverse
 from markupsafe import escape
 from course_modes.models import CourseMode
+from courseware.courses import get_course_about_section
 from course_modes.helpers import enrollment_mode_display
 from student.helpers import (
   VERIFY_STATUS_NEED_TO_VERIFY,
@@ -50,6 +51,8 @@ href_sso = url+data_fr
 #fin import SSo
 course_number = course_overview.number
 course_org = course_overview.org
+
+
 %>
 <!-- GEOFFREY -->
 <%

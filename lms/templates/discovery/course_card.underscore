@@ -116,7 +116,7 @@ if(org == 'Vodeclic') {
 }
 }
 </style>
-<article class="course" role="region" aria-label="<%- content.display_name %>">
+<article class="course" role="region" aria-label="<%- content.display_name %>" data-org="<%- org %>">
         <header class="course-images<%- VodeclicClass %>">
         <!--
         <a href="<%- lienvodeclick %>" class="ClassLien">
@@ -143,13 +143,7 @@ if(org == 'Vodeclic') {
         <section class="course-info" aria-hidden="true">
             <h2 class="course-name" style="height:56px;font-family: 'helveticaneue-bold';text-transform: none;"><%- content.display_name %>
             </h2>
-            <p style="text-align: center;width: 100%;" id="star-note">
-              <img src="/static/themes/phileastheming/images/icon_star1.png">
-              <img src="/static/themes/phileastheming/images/icon_star1.png">
-              <img src="/static/themes/phileastheming/images/icon_star1.png">
-              <img src="/static/themes/phileastheming/images/icon_star1.png">
-                <img src="/static/themes/phileastheming/images/icon_star2.png">
-            </p>
+              <div class="course-ratings"></div>
             <p style="text-align: center;width: 100%;">
               <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
             </p>

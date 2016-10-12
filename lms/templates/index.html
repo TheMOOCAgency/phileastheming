@@ -41,7 +41,7 @@ function callNews() {
   var News = '';
   var nombreNews = '';
   var This = $('.index-actualite-sous-section-1');
-  var Links = '<div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
+  var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
   $.ajax({
     type: "GET",
     url: '/api/news/',
@@ -57,18 +57,19 @@ function callNews() {
       if(nombreNews == 0) {
         This.append(Links);
       }else if(nombreNews == 1){
-        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
+        This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"style="background-image:url('+News[0].jacket+')"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
         This.append(Links);
       }else if(nombreNews == 2) {
-        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><img src="'+News[1].jacket+'"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
+        This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id=""><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
       }else if(nombreNews == 3) {
-        This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><img src="'+News[0].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><img src="'+News[1].jacket+'"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><img src="'+News[2].jacket+'" style="display: block;width: 154px;height: 120px;"></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
+        This.append('<style>@media(max-width:320px){#item_news_3{margin-bottom: 0px;} #first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;" id="item_news_3"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[2].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
         This.append(Links);
         ActuFloat();
+        marginNewsTitle();
       }
       $('.section3_down').click(function(){
         var url = $(this).find('.picto_section3_down').data('url');
-        window.location.href = url;
+        window.href.target() = url;
       })
     }
   });
@@ -121,14 +122,6 @@ $(document).ready(function(){
     </header>
   -->
   <style>
-  /*
-  .h1-span:first-child {
-    font-size: 18px;
-    text-align: left;
-    margin-left: 4%;
-    width: 96%;
-  }
-  */
   .pic-front-head {
     top: 500px;
   }
@@ -137,13 +130,32 @@ $(document).ready(function(){
   }
 
   .heading-group h1 {
-    min-height: 175px;
+    min-height: 130px;
   }
   .courses-container {
     height: 480px;
   }
   .img-post-actu img:first-child {
     margin-top: 40px;
+  }
+  .section1-marge {
+    min-height: 154px;
+    height: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 20px;
+
+    background-image:url('/static/themes/phileastheming/images/PatternFondActivite.svg');
+    background-size: 50px 29px;
+    fill: #3D4857;
+  }
+  .text_section1_down_up {
+    text-align: left;
+    height: 46px;
+    line-height: 23px;
+  }
+  .text_section1_down_down {
+    text-align: left;
   }
   @media(max-width: 1000px) {
     .titre_section3 {
@@ -161,6 +173,15 @@ $(document).ready(function(){
     .heading-group h1 {
       margin-bottom: 0px;
     }
+    .section3_down {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+    .text_section3_down_up,.text_section3_down_down {
+      width: 92%;
+      padding-left: 4%;
+      padding-right: 4%;
+    }
     .baniere-img {
       padding-bottom: 90px;
       padding-top: 0;
@@ -172,9 +193,11 @@ $(document).ready(function(){
       width: 100%;
       clear: left;
     }
+
     .index-actualite {
       height: 1200px;
     }
+
     .section3 {
       width: 99%;
       margin-top: 0;
@@ -182,7 +205,7 @@ $(document).ready(function(){
     }
     .section3:last-child {
       width: 99%;
-      min-height: 550px;
+      min-height: 10px;
     }
     .section3:last-child img {
       display: block;
@@ -204,14 +227,43 @@ $(document).ready(function(){
       margin-right: auto;
     }
     .section1-marge {
-      height: 380px;
       background-color: #fff;
+      height: 308px;
     }
   }
   .titre_section3 {
     margin-left: 0;
   }
+  @media(max-width:587px) {
+    .text_section1_down_up {
+      height: 69px;
+    }
+  }
+  @media(max-width:577px) {
+    .text_section3_down {
+      padding-top: 25px;
+    }
+    .text_section3_down_up {
+      height: 120px;
+      line-height: 120px;;
+      vertical-align: middle;
+    }
+  }
+  @media(max-width:554px) {
+    .heading-group a:last-child {
+      margin-top: 5px;
+    }
+  }
   @media(max-width: 391px) {
+    % if user.is_authenticated():
+    .heading-group:first-child {
+      padding-top: 35px;
+    }
+    % else:
+    .heading-group {
+      padding-top: 35px;
+    }
+    % endif
     .heading-group h1 {
       min-height: 90px;
     }
@@ -231,20 +283,79 @@ $(document).ready(function(){
       width: 100%;
     }
   }
+  @media(max-width:350px) {
+    .section3:last-child img {
+      display: block;
+      width: 99%;
+      height: auto;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    .section3_down {
+      padding-top: 30px;
+      padding-bottom: 30px;
+      width:98%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .text_section3_down {
+      padding-top: 0;
+    }*
+    .text_section3_down_up {
+      width: 98%;
+      padding: 0px;
+      padding-left: 1%;
+      padding-right: 1%;
+    }
+  }
   @media(max-width: 321px) {
+    .section1_down {
+      height: 210px;
+    }
+    .section1-up, .color-grey {
+      height: 980px;
+    }
+     .act-in {
+       margin-top: 20px;
+       margin-bottom: 20px;
+     }
     .heading-group h1 {
       min-height: 130px;
     }
+    .color-grey {
+      padding-top: 15px;
+    }
+    .heading-group:first-child{
+      padding-top: 50px;
+      height: 80px;
+  }
+   .index-actualite {
+     margin-top: 0px;
+   }
+   .titre_section3 {
+     padding-top: 50px;
+   }
+   .section3_down:first-child {
+     margin-top: 0px;
+     padding-top: 0px;
+   }
   }
   @media(max-width:486px) {
     .courses-container {
       height: 1450px;
     }
   }
-  .title {
-    height: 180px;
+  @media(max-width:368px) {
+    .text_section1_down_up {
+      height: 80px;
+    }
   }
-  .picto_section3_down img {
+  .title {
+    max-height: 175px;
+  }
+  .picto_section3_down  {
     width: 154px;
     height: 120px;
   }
@@ -263,15 +374,18 @@ $(document).ready(function(){
   }
   </style>
   <script>
-  /*
-  function FormationCss() {
-    if($(document).width() <= 391) {
-      $('.color-greys').children('.titre_section3').attr('style','');
+  function AnglaisFrancais() {
+    var doc = parseInt($(document).width());
+    var langue = "${_('hide-picture-english')}";
+    console.log(langue);
+    if(doc < 768) {
+      if(langue == 'hide-picture-english') {
+        $('.index-actualite').css('height','1050px');
+      }
     }else{
-      $('.color-greys').('.titre_section3').attr('style','margin-bottom: 10px; margin-left: calc(3.5% + 15px); padding-top: 70px;width:calc(96.5% - 15px);');
+        $('.index-actualite').attr('style','');
     }
   }
-  */
   function ActuFloat() {
    $('.picto_section3_down').each(function(){
     if($(this).data('ordre') == '2') {
@@ -281,16 +395,33 @@ $(document).ready(function(){
     }
    });
   }
+  function marginNewsTitle() {
+    $('.text_section3_down_up').each(function(){
+      var Height = $(this).height();
+      console.log('hauteur:'+Height);
+      if(Height <= 30) {
+        $(this).css('margin-top','25px');
+      }else{
+        $(this).css('margin-top','0px');
+      }
+    })
+  }
   $(document).ready(function(){
+  marginNewsTitle();
    ActuFloat();
+   AnglaisFrancais();
   })
   $(window).resize(function(){
+   marginNewsTitle();
    ActuFloat();
+   AnglaisFrancais();
   })
   </script>
   <style>
   .text_section3_down_up {
     line-height: 25px;
+    min-height: 25px;
+    height: auto;
   }
   .text_section3_down_down {
     line-height: 23px;
@@ -329,7 +460,7 @@ $(document).ready(function(){
           % if user.is_authenticated():
             <!-- caroucel -->
             <div class="color-greys" style="padding-top: 0px; padding-bottom: 60px;">
-              <div class="titre_section3" style="margin-bottom: 10px; margin-left: calc(3.5% + 15px); padding-top: 70px;width:calc(96.5% - 15px);">
+              <div class="titre_section3" style="margin-bottom: 10px; margin-left:3.5%; padding-top: 70px;width:96.5%;">
                 ${_("Featured Courses")}
               </div>
             <%include file="${courses_list}" />
@@ -436,19 +567,19 @@ $(document).ready(function(){
           <!-- Icones -->
           <div class="section1-marge">
             <!-- sous sec 1 -->
-            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+            <div class="section2_down">
                 <img src="/static/themes/phileastheming/images/data1.png">
             </div>
             <!-- sous sec 2 -->
-            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+            <div class="section2_down">
                 <img src="/static/themes/phileastheming/images/data2.png">
             </div>
             <!-- sous sec 3 -->
-            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+            <div class="section2_down">
                 <img src="/static/themes/phileastheming/images/data3.png">
             </div>
             <!-- sous sec 4 -->
-            <div class="section2_down col-xs-3 col-md-3 col-sm-3 col-lg-3">
+            <div class="section2_down">
                 <img src="/static/themes/phileastheming/images/data4.png">
             </div>
           </div>
@@ -534,7 +665,6 @@ $(document).ready(function(){
           % endif
       </div>
     </section>
-
 </div>
 <!--
 % if show_homepage_promo_video:
@@ -564,7 +694,9 @@ $(document).ready(function(){
 % endif
 <script>
 $(document).ready(function(){
+  /*
   console.log('nombre d\'apprenant : ${countuser}');
   console.log('nombre de cours : ${countcourses}');
+  */
 })
 </script>

@@ -2,6 +2,7 @@
 <%namespace name='static' file='static_content.html'/>
 <% style_overrides_file = static.get_value('css_overrides_file') %>
 <%! from django.utils.translation import ugettext as _ %>
+<link rel="stylesheet" type="text/css" href="${static.url('css/jquery.rateyo.css')}" />
 <style>
 .courses-container {
   max-width: 1440px;
@@ -76,3 +77,53 @@
 
   </section>
 </section>
+% if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
+  <script src="${static.url('js/jquery.rateyo.js')}"></script>
+  <script>
+    $(document).ready(function(){
+      $("li.courses-listing-item article").each(function(){
+        var course_id = $(this).attr("id");
+        var rateSelector = $(this).find(".course-ratings")
+        $.get({
+          url: "/course_ratings_handler/" + course_id + "/",
+          success: function(data) {
+            var nAvgRate = data['avg_ratings'];
+            var nReviews = data['total_reviews'];
+            var nCanRate = data['can_rate'];
+            lblReviews = 'Review';
+            if(nReviews > 1) {
+              lblReviews += "s"
+            }
+            // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+            // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+            rateSelector.rateYo({
+              rating: nAvgRate,
+              halfStar: true,
+              starWidth: "25px",
+              readOnly: !nCanRate,
+              onSet: function (rating, rateYoInstance) {
+                $.post({
+                  url: "/course_ratings_handler/" + course_id + "/",
+                  data: {
+                    'stars': rating,
+                  },
+                  success: function(data) {
+                    nAvgRate = data['avg_ratings'];
+                    nReviews = data['total_reviews'];
+                    lblReviews = 'Review';
+                    if(nReviews > 1) {
+                      lblReviews += "s"
+                    }
+                    // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+                    // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+                    rateSelector.rateYo("option", "readOnly", true);
+                  }
+                }); // POST
+              }
+            });  // RATEYO
+          }
+        }); // GET
+      });  // EACH
+    }); // READY
+  </script>
+% endif
