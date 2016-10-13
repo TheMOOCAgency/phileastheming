@@ -36,48 +36,6 @@ countcourses = CourseDetails
     }
   }
 </style>
-<script>
-function callNews() {
-  var News = '';
-  var nombreNews = '';
-  var This = $('.index-actualite-sous-section-1');
-  var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
-  $.ajax({
-    type: "GET",
-    url: '/api/news/',
-    data:{
-      n: '3',
-      user_defined_order: '0',
-      async: false,
-    },
-    dataType: 'json',
-    success: function(data) {
-      News = data.news;
-      nombreNews = News.length;
-      if(nombreNews == 0) {
-        This.append(Links);
-      }else if(nombreNews == 1){
-        This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"style="background-image:url('+News[0].jacket+')"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
-        This.append(Links);
-      }else if(nombreNews == 2) {
-        This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id=""><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
-      }else if(nombreNews == 3) {
-        This.append('<style>@media(max-width:320px){#item_news_3{margin-bottom: 0px;} #first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;" id="item_news_3"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[2].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
-        This.append(Links);
-        ActuFloat();
-        marginNewsTitle();
-      }
-      $('.section3_down').click(function(){
-        var url = $(this).find('.picto_section3_down').data('url');
-        window.location.href = url;
-      })
-    }
-  });
-}
-$(document).ready(function(){
-  callNews();
-})
-</script>
   <section class="home">
     <div class="baniere">
   <!--
@@ -169,6 +127,7 @@ $(document).ready(function(){
     .h1-span {
       width: 100%;
       display: block;
+      height: auto;
     }
     .heading-group h1 {
       margin-bottom: 0px;
@@ -234,6 +193,9 @@ $(document).ready(function(){
   .titre_section3 {
     margin-left: 0;
   }
+  #rond-2 {
+    display: none;
+  }
   @media(max-width:587px) {
     .text_section1_down_up {
       height: 69px;
@@ -254,14 +216,119 @@ $(document).ready(function(){
       margin-top: 5px;
     }
   }
-  @media(max-width: 391px) {
+  @media(max-width: 415px) {
+    .baniere-img {
+      background-image: url('/static/themes/phileastheming/images/img_index_mobile.png');
+      padding: 0;
+      height: 400px;
+    }
+    .heading-group h1 {
+      height: auto;
+    }
+    .heading-group:first-child {
+      height: auto;
+    }
+    .title {
+      max-height: 430px;
+    }
+    .h1-span {
+      font-size: 30px;
+      line-height: 35px;
+    }
+    .baniere {
+      height:430px;
+    }
+    .pic-front-head {
+      display:block;
+    }
+    #rond-2 {
+      display: block;
+    }
+    #rond-1 {
+      display: none;
+    }
+    .picto_section1_down {
+      margin-bottom: 0px;
+    }
+    .titre_section1 {
+      height: auto;
+      margin-bottom: 30px;
+    }
+    .section1_down {
+      height: auto;
+    }
+    .act-in {
+      display: none;
+    }
+    .section1_down {
+      width: 95%;
+      margin-left: 2.5%;
+      margin-right: 2.5%;
+    }
+    .picto_section1_down {
+      width: 51px;
+      margin-left: 4px;
+      margin-right: 4px;
+      float:left;
+    }
+    .text_section1_down {
+      width: calc(100% - 62px);
+      margin: 0px;
+      padding: 0px;
+      float:left;
+    }
+    .section1-up,.section1,.text_section1_down_down,.text_section1_down_up,.text_section1_down {
+      height: auto;
+    }
+    .section1-up {
+      margin-top: 25px;
+    }
+    .section1-up,.color-grey {
+      height: 600px;
+    }
+    #bouton-decouverte {
+      margin-top: 395px;
+    }
+    #bouton-decouverte a,#toute-les-actualite a{
+      width: 230px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: 18px;
+    }
+    .text_section3_down_up {
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
     % if user.is_authenticated():
     .heading-group:first-child {
       padding-top: 35px;
     }
+    .heading-group a {
+      font-size: 15px;
+      width: 280px;
+    }
     % else:
     .heading-group {
       padding-top: 35px;
+    }
+    .picto-low-res {
+      width: 18px;
+      float: right;
+      margin-right: 5px;
+    }
+    header.global h1.logo {
+      width: calc(100% - 51px);
+    }
+    .section3:last-child {
+      display: none;
+    }
+    .index-actualite {
+      height: 800px;
+    }
+    .heading-group a {
+      font-size: 20px;
+      width: 160px;
     }
     % endif
     .heading-group h1 {
@@ -282,8 +349,26 @@ $(document).ready(function(){
       text-align: center;
       width: 100%;
     }
+    .logo a img {
+      width: 200px;
+    }
+    #menu-table button {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    #menu-table {
+      margin-left: 5px;
+      margin-right: 5px;
+      padding: 0;
+      height: 99px;
+      width: 18px;
+    }
+    #menu-table li {
+      margin: 0;
+      padding: 0;
+    }
   }
-  @media(max-width:350px) {
+  @media(max-width:415px) {
     .section3:last-child img {
       display: block;
       width: 99%;
@@ -310,26 +395,16 @@ $(document).ready(function(){
       padding-right: 1%;
     }
   }
-  @media(max-width: 321px) {
-    .section1_down {
-      height: 210px;
-    }
-    .section1-up, .color-grey {
-      height: 980px;
-    }
+  @media(max-width: 415px) {
      .act-in {
        margin-top: 20px;
        margin-bottom: 20px;
      }
-    .heading-group h1 {
-      min-height: 130px;
-    }
     .color-grey {
       padding-top: 15px;
     }
     .heading-group:first-child{
       padding-top: 50px;
-      height: 80px;
   }
    .index-actualite {
      margin-top: 0px;
@@ -346,14 +421,6 @@ $(document).ready(function(){
     .courses-container {
       height: 1450px;
     }
-  }
-  @media(max-width:368px) {
-    .text_section1_down_up {
-      height: 80px;
-    }
-  }
-  .title {
-    max-height: 175px;
   }
   .picto_section3_down  {
     width: 154px;
@@ -374,6 +441,82 @@ $(document).ready(function(){
   }
   </style>
   <script>
+  function callNews() {
+    var News = '';
+    var nombreNews = '';
+    var This = $('.index-actualite-sous-section-1');
+    var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
+    $.ajax({
+      type: "GET",
+      url: '/api/news/',
+      data:{
+        n: '3',
+        user_defined_order: '0',
+        async: false,
+      },
+      dataType: 'json',
+      success: function(data) {
+        News = data.news;
+        nombreNews = News.length;
+        if(nombreNews == 0) {
+          This.append(Links);
+        }else if(nombreNews == 1){
+          This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"style="background-image:url('+News[0].jacket+')"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
+          This.append(Links);
+        }else if(nombreNews == 2) {
+          This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id=""><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
+        }else if(nombreNews == 3) {
+          This.append('<style>@media(max-width:320px){#item_news_3{margin-bottom: 0px;} #first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;" id="item_news_3"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[2].jacket+');background-position: center; "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
+          This.append(Links);
+          function ActuFloats() {
+           $('.picto_section3_down').each(function(){
+            if($(this).data('ordre') == '2') {
+             $(this).css('float','right');
+            }else{
+             $(this).css('float','left');
+            }
+           });
+          }
+          function aligneTitresNews() {
+            $('.text_section3_down_up').each(function(){
+              var doc = $(document).width();
+              var This = $(this);
+              var Attr = This.attr('style');
+              var Height = This.height();
+              if(parseInt(doc) <= 415) {
+                marginTop = ((120 - parseInt(Height))/2);
+                This.css('margin-top',marginTop+'px');
+              }else{
+                This.attr('style',Attr);
+              }
+            })
+          }
+          ActuFloats();
+          marginNewsTitle();
+          aligneTitresNews();
+        }
+        $('.section3_down').click(function(){
+          var url = $(this).find('.picto_section3_down').data('url');
+          window.location.href = url;
+        })
+      }
+    });
+  }
+
+  function alignerPicto() {
+    var Largeur = $(document).width();
+    $('.picto_section1_down').each(function(){
+      var This = $(this);
+      var parentHeight = $(this).parent().height();
+      var pictoHeight = $(this).height();
+      if(parseInt(Largeur) <= 415) {
+        var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) / 2;
+        This.css('margin-top',margintop+'px');
+      }else{
+        This.attr('style','');
+      }
+    })
+  }
   function AnglaisFrancais() {
     var doc = parseInt($(document).width());
     var langue = "${_('hide-picture-english')}";
@@ -385,15 +528,6 @@ $(document).ready(function(){
     }else{
         $('.index-actualite').attr('style','');
     }
-  }
-  function ActuFloat() {
-   $('.picto_section3_down').each(function(){
-    if($(this).data('ordre') == '2') {
-     $(this).css('float','right');
-    }else{
-     $(this).css('float','left');
-    }
-   });
   }
   function marginNewsTitle() {
     $('.text_section3_down_up').each(function(){
@@ -408,13 +542,14 @@ $(document).ready(function(){
   }
   $(document).ready(function(){
   marginNewsTitle();
-   ActuFloat();
    AnglaisFrancais();
+   alignerPicto();
+   callNews();
   })
   $(window).resize(function(){
    marginNewsTitle();
-   ActuFloat();
    AnglaisFrancais();
+   alignerPicto();
   })
   </script>
   <style>
@@ -550,6 +685,24 @@ $(document).ready(function(){
             </div>
           % endif
         <div class="no-grey">
+          <div class="section1-marge" id="rond-2">
+            <!-- sous sec 1 -->
+            <div class="section2_down">
+                <img src="/static/themes/phileastheming/images/data1.png">
+            </div>
+            <!-- sous sec 2 -->
+            <div class="section2_down">
+                <img src="/static/themes/phileastheming/images/data2.png">
+            </div>
+            <!-- sous sec 3 -->
+            <div class="section2_down">
+                <img src="/static/themes/phileastheming/images/data3.png">
+            </div>
+            <!-- sous sec 4 -->
+            <div class="section2_down">
+                <img src="/static/themes/phileastheming/images/data4.png">
+            </div>
+          </div>
       <div class="index-actualite">
             <div class="section3 col-xs-12 col-md-12 col-sm-12 col-lg-12 index-actualite-sous-section-1">
               <div class="titre_section3">
@@ -565,7 +718,7 @@ $(document).ready(function(){
             </div>
           </div>
           <!-- Icones -->
-          <div class="section1-marge">
+          <div class="section1-marge" id="rond-1">
             <!-- sous sec 1 -->
             <div class="section2_down">
                 <img src="/static/themes/phileastheming/images/data1.png">
