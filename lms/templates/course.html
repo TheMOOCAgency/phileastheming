@@ -56,7 +56,8 @@ function Ajax() {
       $(this).find("#class_enroll_form").submit();
       event.preventDefault();
       var Urls = Url+num;
-      $(location).attr('href', Urls);
+      //$(location).attr('href', Urls);
+      window.open(Urls);
     });
   })(this)
 }
@@ -164,6 +165,28 @@ $(window).resize(function(){
       width: 100%;
       margin-left: auto;
       margin-right: auto;
+  }
+  .courses-container .courses .course .course-info {
+    position: relative;
+    height: 182px;
+  }
+}
+@media(max-width: 414px) {
+  .courses-container .courses .course .course-info p {
+    padding-bottom: 5px;
+    background-color: #fff;
+  }
+  .highlighted-courses .courses .course a {
+    position: absolute;
+    bottom: 0;
+    display: none;
+  }
+  .jq-ry-container {
+    display: none;
+  }
+  .home .courses-container .courses .courses-listing .courses-listing-item {
+    height: 300px;
+    background-color: #fff;
   }
 }
 @media screen and (max-width: 768px) and (min-width: 486px) {

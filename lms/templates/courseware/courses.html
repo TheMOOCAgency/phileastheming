@@ -137,9 +137,25 @@ var idForm = '';
     .find-courses .wrapper-search-context .wrapper-search-input {
       display: none;
     }
+    @media(max-width:415px) {
+      .courses-up-bis {
+        height: 40px;
+        line-height: 30px;
+        text-align: center;
+        font-weight: normal;
+      }
+    }
   </style>
   <script>
+  function eraseButton() {
+    if(parseInt($(document).width()) <= 425) {
+      $('#sort_by').text('');
+    }else{
+      $('#sort_by').text('${_("sort by")}');
+    }
+  }
   $(document).ready(function(){
+    eraseButton();
     $('#sort_by').click(function(){
       $('#table_search').toggle();
       if($(this).hasClass('picto_down_arrow')){
@@ -150,6 +166,9 @@ var idForm = '';
         $(this).addClass('picto_down_arrow');
       }
     })
+  })
+  $(document).resize(function(){
+    eraseButton();
   })
   </script>
 <section class="find-courses">
@@ -235,8 +254,31 @@ function TailleImage(){
     }
   })
 }
+function vodeclicCall() {
+  var url = window.location.href;
+  if(url.indexOf('Vodeclic') != -1) {
+    $('body').hide();
+    var source = '';
+    var boucle = setInterval(function(){
+      console.log('nombre de cours : '+$('#discovery-message').text());
+      source = $('#discovery-message').text();
+      if(source != ''){
+        clearInterval(boucle);
+      $('.discovery-button').each(function(){
+        if($(this).data('value') == 'Vodeclic'){
+          $(this).trigger('click');
+          $('body').show();
+        }
+      })
+    $(document).show();
+    }
+    },500);
+  }
+}
+
 $(document).ready(function(){
   TailleImage();
+  vodeclicCall();
 })
 $(window).resize(function(){
   TailleImage();

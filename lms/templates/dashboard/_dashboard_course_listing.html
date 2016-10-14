@@ -118,6 +118,7 @@ $(document).ready(function(){
        if(org == 'Vodeclic') {
         var Urls = Url+num;
         $(this).find('a').attr('href', Urls);
+        $(this).find('a').attr('target', '_blank');
       }else{
         var Urls = $(this).attr('data-link');
         $(this).find('a').attr('href', Urls);
@@ -131,6 +132,7 @@ $(document).ready(function(){
        if(org == 'Vodeclic') {
         var Urls = Url+num;
         $(this).find('.dash-img').attr('href', Urls);
+        $(this).find('a').attr('target', '_blank');
         /*
         $(this).find('.dash-img').children('img').css('width','120px');
         $(this).find('.dash-img').children('img').css('height','120px');
@@ -190,6 +192,14 @@ $(document).ready(function(){
   }
   .wrapper-course-image,.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses {
     min-height: 187.5px;
+  }
+}
+@media(max-width: 415px) {
+  .dashboard .my-courses .listing-courses .course-item .course-container {
+    min-height: 480px;
+  }
+  .dashboard .my-courses .course {
+    height: 100%;
   }
 }
 </style>
@@ -258,7 +268,7 @@ $(document).ready(function(){
           <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
             <div class="social-sharing">
                 <a href="mailto:?subject=Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
-                  <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
+                  <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend this Course")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
                 </a>
             </div>
           % if is_paid_course and show_refund_option:
@@ -348,9 +358,12 @@ $(document).ready(function(){
         <div class="course-info" id="course-info-pop1">
           <span class="info-date-block" data-tooltip="Hi">
             <img src="/static/themes/phileastheming/images/icon_calendar.png" />
+            % if course_overview.display_org_with_default == "Vodeclic":
+            ${_("Continuous formation")}
+            % else:
             ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
             ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
-
+            % endif
           </span>
         </div>
         <!-- -->
@@ -375,12 +388,16 @@ $(document).ready(function(){
         <div class="course-info" id="course-info-pop2">
           <span class="info-date-block" data-tooltip="Hi">
             <img src="/static/themes/phileastheming/images/icon_calendar.png" />
+            % if course_overview.display_org_with_default == "Vodeclic":
+            <p>Formation permanente</p>
+            % else:
             <p>
               ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
             </p>
             <p>
               ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
             </p>
+            % endif
           </span>
         </div>
         <p id="text-compl">

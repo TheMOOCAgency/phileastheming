@@ -50,8 +50,6 @@
   margin-left: 0;
 }
 .welcome-wrapper .section ul.units {
-    height: 54px;
-    line-height: 54px;
     background-color: #FFFFFF;
     text-align: center;
     width: 100%;
@@ -69,7 +67,7 @@
   display: inline-block;
   margin: 15px 12px;
 }
-.welcome-wrapper .section ul.units li::before {
+.welcome-wrapper .section ul.units li.second-line::before {
     content: '';
     position: absolute;
     height: 4px;
@@ -78,20 +76,27 @@
     left: -33px;
     background-color: #A6A6A6;
 }
-.welcome-wrapper .section ul.units li:first-child::before {
+.welcome-wrapper .section ul.units li.first-line::after {
     content: '';
     position: absolute;
     height: 4px;
-    width: 68px;
+    width: 31px;
     top: 12px;
-    left: -66px;
+    left: 22.5px;
     background-color: #A6A6A6;
 }
-.welcome-wrapper .section ul.units li:last-child::after {
+.welcome-wrapper .section ul.units li.first-line:first-child::before,
+.welcome-wrapper .section ul.units li.first-line:last-child::after,
+.welcome-wrapper .section ul.units li.second-line:last-child::after {
+    content: '';
+    height: 0;
+    width: 0;
+}
+.welcome-wrapper .section ul.units li.first-line.least:last-child::after {
     content: '';
     position: absolute;
     height: 4px;
-    width: 68px;
+    width: 34px;
     top: 12px;
     left: 24px;
     background-color: #A6A6A6;

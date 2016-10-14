@@ -18,6 +18,11 @@ countuser = len(list(countuser))
 from openedx.core.djangoapps.models.course_details import CourseDetails
 countcourses = CourseDetails
 
+from django.db.models import Count
+from django.contrib.auth.models import User
+
+all_active_user = User.objects.filter(is_active = 1,).count()
+
 %>
 <!--
 <LINK href="/static/css/index.css"   rel="stylesheet" type="text/css">
@@ -26,16 +31,7 @@ countcourses = CourseDetails
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/index.css')}">
 </%block>
-<style>
-  .section3_down {
-    cursor: pointer;
-  }
-  @media(max-width: 486px){
-    .courses {
-        height: 1500px;
-    }
-  }
-</style>
+
   <section class="home">
     <div class="baniere">
   <!--
@@ -80,6 +76,9 @@ countcourses = CourseDetails
     </header>
   -->
   <style>
+  .section3_down {
+    cursor: pointer;
+  }
   .pic-front-head {
     top: 500px;
   }
@@ -114,6 +113,33 @@ countcourses = CourseDetails
   }
   .text_section1_down_down {
     text-align: left;
+  }
+  .section2_down {
+    width: 154px;
+    height: 151px;
+    border-radius:50%;
+    background-color: #08A2E1;
+    position: relative;
+    font-family: 'gothamrounded-medium';
+    color: #fff;
+  }
+  .section2_down h4 {
+    position: absolute;
+    top: 28%;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-family: 'gothamrounded-medium';
+    color: #fff;
+  }
+  .section2_down p {
+    position: absolute;
+    top: 60%;
+    font-size: 17px;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-family: 'gothamrounded-medium';
   }
   @media(max-width: 1000px) {
     .titre_section3 {
@@ -175,12 +201,6 @@ countcourses = CourseDetails
       margin-top: 20px;
       margin-bottom: 20px;
     }
-    .section2_down {
-      width: 40%;
-      margin-left: 5%;
-      margin-right: 5%;
-      height: auto;
-    }
     .section2_down img {
       margin-left: auto;
       margin-right: auto;
@@ -214,6 +234,17 @@ countcourses = CourseDetails
   @media(max-width:554px) {
     .heading-group a:last-child {
       margin-top: 5px;
+    }
+    #rond-2 {
+      margin-top: 0;
+    }
+  }
+  @media(max-width:486px) {
+    .courses {
+        height: 1500px;
+    }
+    .courses-container {
+      height: 1450px;
     }
   }
   @media(max-width: 415px) {
@@ -286,9 +317,6 @@ countcourses = CourseDetails
     .section1-up,.color-grey {
       height: 600px;
     }
-    #bouton-decouverte {
-      margin-top: 395px;
-    }
     #bouton-decouverte a,#toute-les-actualite a{
       width: 230px;
       margin-left: auto;
@@ -308,7 +336,23 @@ countcourses = CourseDetails
       font-size: 15px;
       width: 280px;
     }
+    #toute-les-actualite a {
+      margin-top: 0;
+    }
+    #bouton-decouverte {
+      margin-top: 340px;
+      padding-bottom: 95px;
+    }
+    .no-grey {
+      height: auto;
+    }
+    .color-grey {
+      height: 650px;
+    }
     % else:
+    #bouton-decouverte {
+      margin-top: 395px;
+    }
     .heading-group {
       padding-top: 35px;
     }
@@ -324,7 +368,7 @@ countcourses = CourseDetails
       display: none;
     }
     .index-actualite {
-      height: 800px;
+      height: 950px;
     }
     .heading-group a {
       font-size: 20px;
@@ -396,7 +440,7 @@ countcourses = CourseDetails
     }
   }
   @media(max-width: 415px) {
-     .act-in {
+    .act-in {
        margin-top: 20px;
        margin-bottom: 20px;
      }
@@ -416,10 +460,16 @@ countcourses = CourseDetails
      margin-top: 0px;
      padding-top: 0px;
    }
+   .courses-container {
+     height: 1150px;
+   }
   }
-  @media(max-width:486px) {
-    .courses-container {
-      height: 1450px;
+  @media(max-width: 360px) {
+    .index-actualite {
+      height: 800px;
+    }
+    .color-grey {
+      height: 900px;
     }
   }
   .picto_section3_down  {
@@ -482,8 +532,9 @@ countcourses = CourseDetails
               var doc = $(document).width();
               var This = $(this);
               var Attr = This.attr('style');
+              console.log(doc);
               var Height = This.height();
-              if(parseInt(doc) <= 415) {
+              if(parseInt(doc) <= 425) {
                 marginTop = ((120 - parseInt(Height))/2);
                 This.css('margin-top',marginTop+'px');
               }else{
@@ -491,6 +542,9 @@ countcourses = CourseDetails
               }
             })
           }
+          $(window).resize(function(){
+            aligneTitresNews();
+          })
           ActuFloats();
           marginNewsTitle();
           aligneTitresNews();
@@ -509,8 +563,8 @@ countcourses = CourseDetails
       var This = $(this);
       var parentHeight = $(this).parent().height();
       var pictoHeight = $(this).height();
-      if(parseInt(Largeur) <= 415) {
-        var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) / 2;
+      if(parseInt(Largeur) <= 425) {
+        var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) /2 ;
         This.css('margin-top',margintop+'px');
       }else{
         This.attr('style','');
@@ -540,6 +594,7 @@ countcourses = CourseDetails
       }
     })
   }
+  /* call ajax recuperation nombre de cours */
   $(document).ready(function(){
   marginNewsTitle();
    AnglaisFrancais();
@@ -687,20 +742,14 @@ countcourses = CourseDetails
         <div class="no-grey">
           <div class="section1-marge" id="rond-2">
             <!-- sous sec 1 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data1.png">
+            <div class="section2_down nombre_apprenant_ajax">
+              <h4></h4>
+              <p>${_("learners")}</p>
             </div>
             <!-- sous sec 2 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data2.png">
-            </div>
-            <!-- sous sec 3 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data3.png">
-            </div>
-            <!-- sous sec 4 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data4.png">
+            <div class="section2_down nombre_cours_ajax">
+              <h4></h4>
+              <p>${_("trainings")}</p>
             </div>
           </div>
       <div class="index-actualite">
@@ -710,30 +759,26 @@ countcourses = CourseDetails
               </div>
             </div>
             <div class="section3 img-post-actu">
-              <a href="http://ec2-52-57-118-84.eu-central-1.compute.amazonaws.com/cpf" class="${_('hide-picture-english')}">
+              <a href="/cpf" class="${_('hide-picture-english')}">
               <img src="/static/themes/phileastheming/images/img3.png" />
             </a>
               <img src="/static/themes/phileastheming/images/img4.png" />
+            <a href="/courses?Vodeclic">
               <img src="/static/themes/phileastheming/images/img5.png" />
+            </a>
             </div>
           </div>
           <!-- Icones -->
           <div class="section1-marge" id="rond-1">
             <!-- sous sec 1 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data1.png">
+            <div class="section2_down nombre_apprenant_ajax">
+              <h4></h4>
+              <p>${_("learners")}</p>
             </div>
             <!-- sous sec 2 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data2.png">
-            </div>
-            <!-- sous sec 3 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data3.png">
-            </div>
-            <!-- sous sec 4 -->
-            <div class="section2_down">
-                <img src="/static/themes/phileastheming/images/data4.png">
+            <div class="section2_down nombre_cours_ajax">
+              <h4></h4>
+              <p>${_("trainings")}</p>
             </div>
           </div>
           % if user.is_authenticated():
@@ -847,9 +892,18 @@ countcourses = CourseDetails
 % endif
 <script>
 $(document).ready(function(){
-  /*
-  console.log('nombre d\'apprenant : ${countuser}');
-  console.log('nombre de cours : ${countcourses}');
-  */
+  $.ajax({
+    type: "POST",
+    url: '/search/course_discovery/',
+    data:{
+      coin: 'coin',
+    },
+    dataType: 'json',
+    success: function(data) {
+      var total = data.total;
+      $('.nombre_apprenant_ajax').find('h4').html('${all_active_user}+');
+      $('.nombre_cours_ajax').find('h4').html(total+'+');
+    }
+  })
 })
 </script>

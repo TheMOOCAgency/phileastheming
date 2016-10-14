@@ -157,6 +157,10 @@ test = pprint.pprint(get_my_course_progress)
       margin-left: 0px;
       width: 100%;
     }
+    .up_dashboard {
+      padding-left: 5px;
+      width: calc(100% - 5px);
+    }
     .formation_en_cours, .formation_reussit {
       text-align: left;
       width: calc(100%);
@@ -232,10 +236,10 @@ test = pprint.pprint(get_my_course_progress)
             <div class="formation_en_cours">
               <span class="nonbre_indic">
                 ${(len(course_enrollments))}
-              </span>${_("Courses in progress")}
+              </span>${_("courses in progress")}
             </div>
             <div class="formation_reussit">
-              <span class="nonbre_indic">4 </span>${_("Courses succeed")}
+              <span class="nonbre_indic">4 </span>${_("courses succeed")}
             </div>
           </li>
           <li class="primary">

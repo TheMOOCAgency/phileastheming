@@ -14,6 +14,7 @@ if(org == 'Vodeclic') {
      }else{
        linkForm = 'display:none;';
        liensA = 'display:block;';
+       VodeclicClass = '';
      }
    })
    $(window).resize(function(){
@@ -27,7 +28,7 @@ if(org == 'Vodeclic') {
 %>
 <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
 <style>
-  .VodeclicClass img{
+  .Vodeclic img{
     width: 187.5px;
     height: 187.5px;
     background-color: #fff;
@@ -108,6 +109,22 @@ if(org == 'Vodeclic') {
     margin-right: 2%;
   }
 }
+@media(max-width: 486px) {
+  .cover-images img {
+    margin: 0;
+    width: 100%;
+  }
+  .Vodeclic img {
+      width: 187.5px;
+      height: 187.5px;
+      background-color: #fff;
+      margin-left: auto;
+      margin-right: auto;
+  }
+  .courses-container .courses .course .course-info {
+  margin-top: 50px;
+  }
+}
 @media(max-width: 429px) {
 .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
   width: 90%;
@@ -115,9 +132,14 @@ if(org == 'Vodeclic') {
   margin-right: 5%;
 }
 }
+@media(max-width: 415px) {
+ .ClassForm {
+ display: none;
+ }
+}
 </style>
 <article class="course" role="region" aria-label="<%- content.display_name %>" data-org="<%- org %>">
-        <header class="course-images<%- VodeclicClass %>">
+        <header class="course-images <%- org %>">
         <!--
         <a href="<%- lienvodeclick %>" class="ClassLien">
             <div class="cover-images">
@@ -132,7 +154,7 @@ if(org == 'Vodeclic') {
             <input name="enrollment_action" type="hidden" value="enroll">
           </fieldset>
           <div class="submit">
-            <button name="submit" type="submit" value="SHOW MORE" onclick="document.location.href='<%- lienvodeclick %>'">
+            <button name="submit" type="submit" value="SHOW MORE" onclick="window.open('<%- lienvodeclick %>')">
             <div class="cover-images">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
             </div>
@@ -158,7 +180,7 @@ if(org == 'Vodeclic') {
               <input name="enrollment_action" type="hidden" value="enroll">
             </fieldset>
             <div class="submit">
-              <input name="submit" type="submit" value="<%- showMore %>" class="learn-more liens_oust <%- org%>" onclick="document.location.href='<%- lienvodeclick %>'">
+              <input name="submit" type="submit" value="<%- showMore %>" class="learn-more liens_oust <%- org%>" onclick="window.open('<%- lienvodeclick %>')">
             </div>
           </form>
         </div>

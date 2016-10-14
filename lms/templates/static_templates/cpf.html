@@ -22,6 +22,7 @@ from openedx.core.djangolib.markup import HTML
     margin-left: auto;
     margin-right: auto;
     font-family: 'gothamrounded-book';
+    text-align: justify;
   }
   .baniere-img {
   background-image:url('/static/themes/phileastheming/images/img_index_desktop.png');
@@ -59,6 +60,7 @@ from openedx.core.djangolib.markup import HTML
     text-align: center;
     font-size: 23px;
     font-family: 'helveticaneue-light';
+    text-align: justify;
   }
   :focus {
       outline: none;
@@ -72,6 +74,7 @@ from openedx.core.djangolib.markup import HTML
       font-size: 50px;
       font-weight: bold;
       text-transform: uppercase;
+      text-align: justify;
   }
   #content_cpf {
     width: 1440px;
@@ -98,6 +101,7 @@ from openedx.core.djangolib.markup import HTML
     text-align: left;
     padding-left: 20px;
     width: calc(100% - 40px);
+    text-align: justify;
   }
   #paragraphes_cpf h4 {
     font-weight: bold;
@@ -105,6 +109,7 @@ from openedx.core.djangolib.markup import HTML
     font-size: 20px;
     padding-bottom: 5px;
     color: #445561;
+    text-align: justify;
   }
   #paragraphes_cpf p {
     font-size: 16px;
@@ -113,6 +118,8 @@ from openedx.core.djangolib.markup import HTML
     padding-top: 5px;
     padding-bottom: 5px;
     margin-left: -20px;
+    text-align: justify;
+    margin-top: 8px;
   }
    #paragraphes_cpf ul {
     width: 100%;
@@ -124,8 +131,9 @@ from openedx.core.djangolib.markup import HTML
     height: auto;
     width: 70%;
     margin-right: 30%;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: justify;
   }
   #video_cpf img {
     display: block;
@@ -193,11 +201,13 @@ from openedx.core.djangolib.markup import HTML
 </script>
 <section id="content_cpf">
   <section id="titre_cpf">
-    <h1>PHILEAS - CPF</h1>
+    <h1>Tout savoir sur votre Compte Personnel de Formation (CPF)</h1>
   </section>
   <section id="video_cpf">
     <div id="into_video_cpf">
+      <a href="https://www.intramundi.com/DocumentsIntrAmundi/4.Ressources%20Humaines/IntranetRH2015/4.%20Mobilit%c3%a9%20Formation%20et%20%c3%89valuation/4.2.%20Formation/GUIDE-CPF.pdf">
       <img src="${static.url('images/cpf.png')}">
+    </a>
       <iframe src="https://www.youtube.com/embed/LM4iq3zSI8Y" frameborder="0" allowfullscreen></iframe>
     </div>
     <div id="clear-left"></div>
@@ -211,11 +221,11 @@ from openedx.core.djangolib.markup import HTML
         </p>
       </li>
       <li>
-        <h4>De combien d’heures ai-je droit ?</h4>
-        <p>
+        <h4>De combien d'heures je dispose ?</h4>
+        <p style="margin-top: 0px;">
           150 heures au maximum. Les heures accumulées dans votre ancien DIF sont automatiquement crédités sur votre CPF.
-        <p>
-        <p>
+        </p>
+        <p style="margin-top: 0px;">
           Le CPF est crédité jusqu’à 24 heures par an. L’acquisition de ces heures se fait au prorata du taux d’activité.
         </p>
       </li>
