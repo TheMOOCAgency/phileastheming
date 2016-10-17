@@ -458,6 +458,9 @@ $(window).resize(function(){
 })
 </script>
 <style>
+.path {
+  display: none;
+}
 .xmodule_display.xmodule_SequenceModule .sequence-nav,.xmodule_display.xmodule_SequenceModule nav.sequence-bottom {
   display : none;
 }
@@ -489,7 +492,10 @@ body.view-in-course .wrapper-footer {
   width: calc(68% - 50px);
   padding-right: 25px;
   padding-left: 25px;
-  background-color: #FAFAFA;
+  background-color: #F5F6F8;
+}
+.container>div {
+  background-color: #F5F6F8;
 }
 body, h1, h2, h3, h4, h5, h6, p, label,.xmodule_display.xmodule_HtmlModule p {
   color: #363F4D;
@@ -509,6 +515,10 @@ body, h1, h2, h3, h4, h5, h6, p, label,.xmodule_display.xmodule_HtmlModule p {
 }
 .xmodule_display.xmodule_HtmlModule h2 {
   font-size: 30px;
+}
+.wrapper-course-material {
+  width: 1440px;
+  background-color: #F5F6F8;
 }
 body.view-in-course .wrapper-course-material .course-material .course-tabs {
   padding-top: 15px;
@@ -613,6 +623,9 @@ body.view-in-course .container {
     width: 100vw;
     margin-left: auto;
     margin-right: auto;
+  }
+  .wrapper-course-material {
+    width: 100%;
   }
 }
 @media(max-width:667px) {

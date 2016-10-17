@@ -209,7 +209,118 @@ ${_('All courses')}
       border-bottom: none;
       width:100%;
     ">
-    <LINK href="/static/css/course.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
+    <style>
+      .Vodeclic img{
+        width: 187.5px;
+        height: 187.5px;
+        background-color: #fff;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
+      background-image: none;
+      padding: 0;
+      text-shadow: none;
+      border: none;
+      border-radius: 0px;
+      background-color:rgb(0, 157, 224);
+      bottom: 0px;
+      color: rgb(255, 255, 255);
+      cursor: pointer;
+      display: block;
+      font-family: 'helveticaneue-bold';
+      font-size: 14px;
+      font-stretch: normal;
+      font-style: normal;
+      font-variant-caps: normal;
+      font-variant-ligatures: normal;
+      font-variant-numeric: normal;
+      font-weight: normal;
+      height: 59px;
+      line-height: 59px;
+      list-style-image: none;
+      list-style-position: outside;
+      list-style-type: none;
+      margin-top: 40px;
+      position: relative;
+      text-align: center;
+      text-decoration: none;
+      text-indent: 0px;
+      transition-delay: 0s;
+      transition-duration: 0.1s;
+      transition-property: all;
+      transition-timing-function: linear;
+      vertical-align: middle;
+      width: 100%;
+      z-index: 10;
+      }
+      .submit button,.submit button:hover,.submit button:focus {
+        background-image: none;
+        border: none;
+        border-radius: none;
+        background-color: transparent;
+        padding: 0px;
+        margin: none;
+      }
+      .course-name {
+        text-align: center;
+        color: #555d68;
+        font-size: 24px;
+        font-family: 'helveticaneue-bold';
+        width: 100%;
+        margin-top: -20px;
+    }
+    .courses-container .courses .course .course-info h2 {
+        font-family: 'helveticaneue-bold';
+        text-transform: none;
+    }
+    @media (max-width: 1440px){
+      .course-images, .course-image {
+          height: 20vh;
+      }
+      .cover-images {
+          width: 100%;
+          margin-left: 0px;
+          margin-right: 0px;
+      }
+    }
+    @media(max-width: 697px) {
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+        width: 46%;
+        margin-left: 2%;
+        margin-right: 2%;
+      }
+    }
+    @media(max-width: 486px) {
+      .cover-images img {
+        margin: 0;
+        width: 100%;
+      }
+      .Vodeclic img {
+          width: 187.5px;
+          height: 187.5px;
+          background-color: #fff;
+          margin-left: auto;
+          margin-right: auto;
+      }
+      .courses-container .courses .course .course-info {
+      margin-top: 50px;
+      }
+    }
+    @media(max-width: 429px) {
+    .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+    }
+    }
+    @media(max-width: 415px) {
+     .ClassForm {
+     display: none;
+     }
+    }
+    </style>
       <ul class="courses-listing">
         %for course in courses:
 
