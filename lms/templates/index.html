@@ -93,7 +93,14 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     height: 480px;
   }
   .img-post-actu img:first-child {
-    margin-top: 40px;
+    margin-top: 0;
+  }
+  .img-post-actu a img:first-child {
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  .img-post-actu .r-a-s img:first-child {
+    margin-top: 45px;
   }
   .section1-marge {
     min-height: 154px;
@@ -207,7 +214,6 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
     .section1-marge {
       background-color: #fff;
-      height: 308px;
     }
   }
   .titre_section3 {
@@ -470,6 +476,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
     .color-grey {
       height: 900px;
+    }
+    .pic-front-head {
+      top: 500px;
     }
   }
   .picto_section3_down  {

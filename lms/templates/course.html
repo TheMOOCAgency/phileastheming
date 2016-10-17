@@ -82,9 +82,21 @@ function TailleImage(){
     }
   })
 }
+function grille() {
+  var doc = parseInt($(document).width());
+  $('.course-image').children('.VodeclicClass').each(function(){
+    var cible = $(this);
+    var width = parseInt(cible.width());
+
+    if(doc < 1440){
+      cible.css('margin-left','-'+width/2+'px');
+    }
+  })
+}
 $(document).ready(function(){
   //TailleImage();
   Ajax();
+  grille();
   // creation du lien SHOW MORE DANS LES VIGNETTES
   $('article').each(function(){
         /*
@@ -106,6 +118,7 @@ $(document).ready(function(){
 })
 $(window).resize(function(){
   TailleImage();
+  grille();
 })
 
 </script>
@@ -117,9 +130,19 @@ $(window).resize(function(){
 </%block>
 <style>
 .VodeclicClass img{
-  width: 187.5px;
-  height: 187.5px;
+  width: 150px;
+  height: 150px;
   background-color: #fff;
+  margin-top: 18.75px;
+  margin-bottom: 18.75px;
+}
+.VodeclicClass {
+  max-width: 300px;
+  margin-left: -150px;
+  height: auto;
+  left: 50%;
+  background: linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px);
+  background-size: 1px 3px;
 }
 .register {
   color: #fff;

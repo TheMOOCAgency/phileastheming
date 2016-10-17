@@ -29,6 +29,9 @@ from openedx.core.djangolib.markup import HTML, Text
 .achievement .chart-title{
   margin-top: 34px;
 }
+.about {
+  margin-top: 5px;
+}
 @media(max-width:1440px) {
   .section {
     padding-left: 86px;
@@ -103,6 +106,9 @@ from openedx.core.djangolib.markup import HTML, Text
             <div class="bar-chart"><img src="${static.url('images/crafted.png')}" /></div>
             <div class="view-my-progress">
               <a href="${reverse('progress', args=[course_id])}">${_("View my progress")}</a>
+            </div>
+            <div class="view-my-progress about">
+              <a href="/courses/${course_id}/about">${_("Course about")}</a>
             </div>
           </div>
           <div class="social">
