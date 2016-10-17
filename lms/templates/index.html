@@ -751,6 +751,11 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               <h4></h4>
               <p>${_("trainings")}</p>
             </div>
+            <!-- sous sec 3 -->
+            <div class="section2_down nombre_heure_ajax">
+              <h4></h4>
+              <p>${_("training's hours")}</p>
+            </div>
           </div>
       <div class="index-actualite">
             <div class="section3 col-xs-12 col-md-12 col-sm-12 col-lg-12 index-actualite-sous-section-1">
@@ -779,6 +784,11 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <div class="section2_down nombre_cours_ajax">
               <h4></h4>
               <p>${_("trainings")}</p>
+            </div>
+            <!-- sous sec 3 -->
+            <div class="section2_down nombre_heure_ajax">
+              <h4></h4>
+              <p>${_("training's hours")}</p>
             </div>
           </div>
           % if user.is_authenticated():
@@ -901,8 +911,10 @@ $(document).ready(function(){
     dataType: 'json',
     success: function(data) {
       var total = data.total;
+      var time = parseInt(total) * 3;
       $('.nombre_apprenant_ajax').find('h4').html('${all_active_user}+');
       $('.nombre_cours_ajax').find('h4').html(total+'+');
+      $('.nombre_heure_ajax').find('h4').html(time+'+');
     }
   })
 })

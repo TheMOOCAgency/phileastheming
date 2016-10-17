@@ -18,7 +18,11 @@ from django.core.urlresolvers import reverse
 <%include file="_js_head_dependencies.html" />
 <link rel="stylesheet" type="text/css" href="${static.url('css/discussion.css')}" />
 </%block>
-
+<style>
+#content {
+  max-width: 1440px;
+}
+</style>
 <%block name="js_extra">
 ## Enable fast preview to fix discussion MathJax rendering bug when page first loads.
 <%include file="_js_body_dependencies.html" args="disable_fast_preview=False"/>
@@ -26,7 +30,6 @@ from django.core.urlresolvers import reverse
 </%block>
 
 <%include file="_discussion_course_navigation.html" args="active_page='discussion'" />
-
 <%block name="content">
 <section class="discussion container" id="discussion-container"
          data-roles="${roles}"
@@ -76,7 +79,7 @@ from django.core.urlresolvers import reverse
             unique_users_list = $.unique(user_list)
 
             $.get({
-            
+
                 url: "/tutor_tag/"+course_id+"/"+discussion_id,
                 data: {'users':unique_users_list},
                 success: function(data) {
@@ -97,7 +100,7 @@ from django.core.urlresolvers import reverse
                             });
                         }
                     };
-                    
+
                 },
                 failure: function(data) {
                     console.log(data)

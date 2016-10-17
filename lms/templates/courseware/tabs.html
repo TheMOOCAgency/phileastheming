@@ -201,6 +201,17 @@ tab_class = ''
       }
     })
   }
+  /* action sur la page discution */
+  function addMarginNavForum(){
+    var url = window.location.href;
+    if(url.indexOf('/discussion/forum') != -1){
+      $('.tab').find('img').css('margin-top','15px');
+      $('.sur_menu_courseware').css('bottom','-26px');
+      $('.tabs').css('padding-top','6px');
+      $('#global-navigation').css('background-color','#EEF1F2');
+    }
+  }
+  /* fin action page discution */
   function Active_course_navigation() {
     $('.tab').children('a').each(function(){
       var url = $(this).attr('href');
@@ -227,6 +238,7 @@ tab_class = ''
   $(document).ready(function(){
     Active_course_navigation();
     apparitionBouton();
+    addMarginNavForum();
     /*
     alignerImg();
     */

@@ -410,6 +410,12 @@ callForAllUser = function(){
 
 </script>
 <script>
+function ActionSiUneSection() {
+  var nombre = $('.menu-item').length;
+  if(parseInt(nombre) <= 1) {
+    $('.course-index').hide();
+  }
+}
 function menuPhone() {
     $('#active_menu').click(function(){
             if($('.course-index').css('display') == 'none') {
@@ -444,6 +450,12 @@ function customRadioLabel(){
     $(this).css('border-color','#A2C126');
   })
 }
+function clearMarginFooter(){
+  var url = window.location.href;
+  if(url.indexOf('/courseware/') != -1){
+    $('.wrapper-footer').css('margin-top','0px');
+  }
+}
 $('fieldset').ready(function(){
   customRadioLabel();
   $('.check').click(function(){
@@ -451,7 +463,9 @@ $('fieldset').ready(function(){
   })
 })
 $(document).ready(function(){
+  clearMarginFooter();
   menuPhone();
+  ActionSiUneSection();
 })
 $(window).resize(function(){
   sizeMenu();
