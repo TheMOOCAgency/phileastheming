@@ -18,7 +18,7 @@ import datetime
 now = datetime.datetime.now()
 
 date = now.strftime("%d%m%Y")
-
+datess = ("10102016")
 api = 'xGXMdnyltTAHZMSHPZHg'
 partenaire = 'CgFVrWdhuSVccijkVVwF'
 email = 'amundi3.admin@vodeclic.com'
@@ -30,7 +30,7 @@ year = '2016'
 crypt = hashlib.sha256(id_membre+api).hexdigest()
 
 d = hashlib.sha256(date+api).hexdigest()
-
+dada = hashlib.sha256(datess+api).hexdigest()
 url = 'https://lms.vodeclic.com/api/sso?'
 
 data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&email='+email+'&d='+d+''
@@ -94,6 +94,7 @@ function grille() {
   })
 }
 $(document).ready(function(){
+  console.log('date : ${dada}');
   //TailleImage();
   Ajax();
   grille();

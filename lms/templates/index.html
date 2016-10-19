@@ -76,8 +76,14 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     </header>
   -->
   <style>
+  #bouton-decouverte {
+    padding-bottom: 15px;
+  }
   .section3_down {
     cursor: pointer;
+  }
+  .text_section3_down_up {
+    width: 70%;
   }
   .pic-front-head {
     top: 500px;
@@ -113,9 +119,12 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     background-size: 50px 29px;
     fill: #3D4857;
   }
+  .section1 {
+    height: auto;
+  }
   .text_section1_down_up {
     text-align: left;
-    height: 46px;
+    height: auto;
     line-height: 23px;
   }
   .text_section1_down_down {
@@ -124,6 +133,8 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   .section2_down {
     width: 154px;
     height: 151px;
+    margin-top: 40px;
+    margin-bottom: 40px;
     border-radius:50%;
     background-color: #08A2E1;
     position: relative;
@@ -148,6 +159,12 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     color: #fff;
     font-family: 'gothamrounded-medium';
   }
+  .titre_section3 {
+    margin-left: 0;
+  }
+  #rond-2 {
+    display: none;
+  }
   @media(max-width: 1000px) {
     .titre_section3 {
       margin-top: 55px;
@@ -160,6 +177,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     .h1-span {
       width: 100%;
       display: block;
+      height: auto;
+    }
+    .section1-up {
       height: auto;
     }
     .heading-group h1 {
@@ -216,15 +236,14 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       background-color: #fff;
     }
   }
-  .titre_section3 {
-    margin-left: 0;
-  }
-  #rond-2 {
-    display: none;
+  @media(max-width:630px) {
+    .text_section3_down_up {
+      font-size: 17px;
+    }
   }
   @media(max-width:587px) {
     .text_section1_down_up {
-      height: 69px;
+      height: auto;
     }
   }
   @media(max-width:577px) {
@@ -527,8 +546,25 @@ all_active_user = User.objects.filter(is_active = 1,).count()
           This.append(Links);
           function ActuFloats() {
            $('.picto_section3_down').each(function(){
+             var text = $(this).parent().find('.text_section3_down_down').text();
+             var long = parseInt(text.length);
+             if(long > 100) {
+               str = text.slice(100, -1);
+               text = text.replace(str,' ..');
+               $(this).parent().find('.text_section3_down_down').html(text);
+               intNews();
+             }
             if($(this).data('ordre') == '2') {
              $(this).css('float','right');
+             $(this).parent().find('.text_section3_down_up').css('text-align','right');
+             $(this).parent().find('.text_section3_down_up').css('margin-left','26%');
+             $(this).parent().find('.text_section3_down_down').css('text-align','right');
+             $(this).parent().find('.text_section3_down_down').css('margin-left','25%');
+
+             if(parseInt($(document).width())<425) {
+               $(this).parent().find('.text_section3_down_up').css('margin-left','0');
+               $(this).parent().find('.text_section3_down_up').css('margin-right','5%');
+             }
             }else{
              $(this).css('float','left');
             }
@@ -539,7 +575,6 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               var doc = $(document).width();
               var This = $(this);
               var Attr = This.attr('style');
-              console.log(doc);
               var Height = This.height();
               if(parseInt(doc) <= 425) {
                 marginTop = ((120 - parseInt(Height))/2);
@@ -549,9 +584,21 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               }
             })
           }
+          /* marge sur les intitulé de news */
+          function intNews() {
+            $('.text_section3_down_down').each(function(){
+             var This = $(this);
+             var width = parseInt($(this).height());
+             if(width <= 60) {
+              var margeTop = 60 - width;
+               This.css('margin-top',margeTop+'px');
+             }
+            })
+          }
           $(window).resize(function(){
             aligneTitresNews();
           })
+          intNews();
           ActuFloats();
           marginNewsTitle();
           aligneTitresNews();
@@ -581,7 +628,6 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   function AnglaisFrancais() {
     var doc = parseInt($(document).width());
     var langue = "${_('hide-picture-english')}";
-    console.log(langue);
     if(doc < 768) {
       if(langue == 'hide-picture-english') {
         $('.index-actualite').css('height','1050px');
@@ -593,7 +639,6 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   function marginNewsTitle() {
     $('.text_section3_down_up').each(function(){
       var Height = $(this).height();
-      console.log('hauteur:'+Height);
       if(Height <= 30) {
         $(this).css('margin-top','25px');
       }else{
@@ -602,6 +647,11 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     })
   }
   /* call ajax recuperation nombre de cours */
+  /* resize decouvrez phileas */
+  function philDec(){
+    var hauteur = parseInt($('.section1').height()) - 140;
+    $('#bouton-decouverte').css('margin-top',hauteur+'px');
+  }
   $(document).ready(function(){
   marginNewsTitle();
    AnglaisFrancais();
@@ -624,6 +674,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     line-height: 23px;
     font-family: 'helveticaneue';
     overflow: hidden;
+    max-height: 60px;
+    height: auto;
+    width: 70%;
   }
   .courses-container {
     width: 93%;
@@ -761,7 +814,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <!-- sous sec 3 -->
             <div class="section2_down nombre_heure_ajax">
               <h4></h4>
-              <p>${_("training's hours")}</p>
+              <p>${_("Training Hours")}</p>
             </div>
           </div>
       <div class="index-actualite">
@@ -795,7 +848,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <!-- sous sec 3 -->
             <div class="section2_down nombre_heure_ajax">
               <h4></h4>
-              <p>${_("training's hours")}</p>
+              <p>${_("Training Hours")}</p>
             </div>
           </div>
           % if user.is_authenticated():

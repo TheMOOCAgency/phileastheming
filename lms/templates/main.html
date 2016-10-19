@@ -259,11 +259,11 @@ font-style: normal;
 </script>
 % endif
 <script>
+
 /* action sur la page discution */
 function addMarginNavForum(){
   var url = window.location.href;
   if(url.indexOf('/discussion/forum') != -1){
-    console.log('page discution');
     $('.tab').find('img').css('margin-top','15px');
     $('.sur_menu_courseware').css('bottom','-26px');
     $('.tabs').css('padding-top','6px');
@@ -285,8 +285,15 @@ function CssLast() {
     $('#table_search').css('position','absolute');
   }
 }
+/* ie 11 H1 bold */
+function h1Ie11() {
+  if(navigator.userAgent.indexOf("rv:11.0") != -1) {
+    $('h1').css('font-weight','bold');
+  }
+}
 $(document).ready(function(){
   CssLast();
+  h1Ie11();
   couleurFont();
   addMarginNavForum();
 })

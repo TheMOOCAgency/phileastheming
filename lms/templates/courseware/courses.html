@@ -205,10 +205,7 @@ ${_('All courses')}
       </section>
     </aside>
     % endif
-    <div class="courses no-course-discovery" role="region" aria-label="${_('List of Courses')}" style="
-      border-bottom: none;
-      width:100%;
-    ">
+    <div class="courses no-course-discovery" role="region" aria-label="${_('List of Courses')}">
     <link rel="stylesheet" type="text/css" href="/static/themes/phileastheming/css/course.css">
     <style>
       .Vodeclic img{
@@ -283,6 +280,13 @@ ${_('All courses')}
           width: 100%;
           margin-left: 0px;
           margin-right: 0px;
+      }
+    }
+    @media(max-width: 1280px) {
+      .find-courses .courses-container .courses.no-course-discovery {
+        width: 94vw;
+        padding-left: 3vw;
+        padding-right: 3vw;
       }
     }
     @media(max-width: 697px) {
@@ -408,7 +412,7 @@ $(document).ready(function(){
   })
 })
 
-
+/*
 function showCourseRatings(){
       $("li.courses-listing-item article").each(function(){
         var course_id = $(this).attr("id");
@@ -416,6 +420,7 @@ function showCourseRatings(){
         $.get({
           url: "/course_ratings_handler/" + course_id + "/",
           success: function(data) {
+            console.log(data);
             var nAvgRate = data['avg_ratings'];
             var nReviews = data['total_reviews'];
             var nCanRate = data['can_rate'];
@@ -469,7 +474,7 @@ $(document).ajaxComplete(function(event, xhr, settings){
         url: '/course_hide/',
         data: {'course_list':JSON.stringify(course_list)},
         success: function(data) {
-            data_list = data['Hidden'].split("\"")
+            //data_list = data['Hidden'].split("\"")
             hide_course_list = []
             for (var j=0; j< data_list.length; j++)
             {
@@ -498,4 +503,5 @@ $(document).ajaxComplete(function(event, xhr, settings){
       });
     }
   });
+  */
 </script>

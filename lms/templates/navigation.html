@@ -60,8 +60,6 @@ function rightMenuUser() {
   var largeurEcran = $(window).width();
   var marginCorp = parseInt(parseInt(largeurEcran) - parseInt(widthCorp)) / 2;
   var Right = parseInt(marginCorp) - 2;
-  console.log(largeurEcran);
-  console.log(marginCorp);
   if(parseInt(largeurEcran) > 1440) {
     $('.menu-for-user').css('right',Right+'px');
   }else {
@@ -137,6 +135,12 @@ li input[type="text"] {
   border-radius: 0px;
   margin-right: 25px;
 }
+li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
+  line-height: 14px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
 .nav-index-all2 li input[type="submit"],.nav-index-all2 li input[type="submit"]:hover:not(:disabled),.nav-index-all2 li input[type="submit"]:focus:not(:disabled) {
   height: 23px;
   width: 23px;
