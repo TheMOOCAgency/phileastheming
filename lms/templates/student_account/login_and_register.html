@@ -43,9 +43,19 @@ function footerCss() {
   $('#footer-openedx').css('margin-right','0');
   $('#footer-openedx').css('background-color','#363F4E');
 }
+function loginCss(){
+  var width = $(document).width();
+  if(parseInt(width) <= 340) {
+    $('#login-anchor').css('height','calc(100vh - 175px)');
+    $('#login-anchor').css('height','calc(100vh - 175px)');
+  }else{
+    $('#login-anchor').attr('style','');
+  }
+}
 /* fixer footer en bas de page ( fix IE11) */
 $(document).ready(function(){
   footerCss();
+  loginCss();
 })
 </script>
 <div class="section-bkg-wrapper">

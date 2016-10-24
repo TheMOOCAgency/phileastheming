@@ -26,7 +26,7 @@ if(org == 'Vodeclic') {
      }
    })
 %>
-<article class="course" role="region" aria-label="<%- content.display_name %>" data-org="<%- org %>">
+<article class="course" role="region" aria-label="<%- content.display_name %>" data-org="<%- org %>" data-id="<%- id %>" >
         <header class="course-images <%- org %>">
         <!--
         <a href="<%- lienvodeclick %>" class="ClassLien">

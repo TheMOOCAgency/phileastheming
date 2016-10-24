@@ -77,10 +77,14 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   -->
   <style>
   #bouton-decouverte {
-    padding-bottom: 15px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    clear: left;
   }
   .section3_down {
     cursor: pointer;
+    margin-top: 25px;
+    margin-bottom: 25px;
   }
   .text_section3_down_up {
     width: 70%;
@@ -165,6 +169,26 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   #rond-2 {
     display: none;
   }
+  .section-premier {
+    margin-bottom: 10px;
+    margin-left:3.5%;
+    padding-top: 70px;
+    width:96.5%;
+  }
+  .section1 {
+    padding-top: 20px;
+    padding-bottom: 30px;
+  }
+  @media(max-width:1440px) {
+    .section-premier {
+      margin-left:0.5%;
+    }
+  }
+  @media(max-width:1280px) {
+    .text_section3_down_up {
+      font-size: 19px;
+    }
+  }
   @media(max-width: 1000px) {
     .titre_section3 {
       margin-top: 55px;
@@ -190,7 +214,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       margin-bottom: 30px;
     }
     .text_section3_down_up,.text_section3_down_down {
-      width: 92%;
+      width: 70%;
       padding-left: 4%;
       padding-right: 4%;
     }
@@ -207,7 +231,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
 
     .index-actualite {
-      height: 1200px;
+      height: 1250px;
     }
 
     .section3 {
@@ -262,6 +286,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
     #rond-2 {
       margin-top: 50px;
+    }
+    .section2_down {
+      margin: 0;
     }
   }
   @media(max-width:486px) {
@@ -365,8 +392,8 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       margin-top: 0;
     }
     #bouton-decouverte {
-      margin-top: 340px;
-      padding-bottom: 95px;
+      margin-top: 0;
+      padding-bottom: 35px;
     }
     .no-grey {
       height: auto;
@@ -376,7 +403,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
     % else:
     #bouton-decouverte {
-      margin-top: 395px;
+      margin-top: 0;
     }
     .heading-group {
       padding-top: 35px;
@@ -476,9 +503,11 @@ all_active_user = User.objects.filter(is_active = 1,).count()
    .index-actualite {
      margin-top: 0px;
    }
+   /*
    .titre_section3 {
      padding-top: 50px;
    }
+   */
    .section3_down:first-child {
      margin-top: 0px;
      padding-top: 0px;
@@ -486,7 +515,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
    .courses-container {
      height: 1150px;
    }
-  }
+  } style=""
   @media(max-width: 360px) {
     .index-actualite {
       height: 800px;
@@ -496,6 +525,12 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     }
     .pic-front-head {
       top: 500px;
+    }
+  }
+  @media(max-width: 425px) {
+    .section1-up {
+      padding-top: 35px;
+      clear: left;
     }
   }
   .picto_section3_down  {
@@ -552,14 +587,15 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                str = text.slice(100, -1);
                text = text.replace(str,' ..');
                $(this).parent().find('.text_section3_down_down').html(text);
-               intNews();
+               //intNews();
              }
             if($(this).data('ordre') == '2') {
              $(this).css('float','right');
              $(this).parent().find('.text_section3_down_up').css('text-align','right');
-             $(this).parent().find('.text_section3_down_up').css('margin-left','26%');
+             $(this).parent().find('.text_section3_down_up').css('margin-left','21%');
              $(this).parent().find('.text_section3_down_down').css('text-align','right');
-             $(this).parent().find('.text_section3_down_down').css('margin-left','25%');
+             $(this).parent().find('.text_section3_down_down').css('margin-left','21%');
+
 
              if(parseInt($(document).width())<425) {
                $(this).parent().find('.text_section3_down_up').css('margin-left','0');
@@ -585,6 +621,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             })
           }
           /* marge sur les intitulé de news */
+          /*
           function intNews() {
             $('.text_section3_down_down').each(function(){
              var This = $(this);
@@ -595,10 +632,11 @@ all_active_user = User.objects.filter(is_active = 1,).count()
              }
             })
           }
+          */
           $(window).resize(function(){
             aligneTitresNews();
           })
-          intNews();
+          //intNews();
           ActuFloats();
           marginNewsTitle();
           aligneTitresNews();
@@ -612,14 +650,16 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   }
 
   function alignerPicto() {
-    var Largeur = $(document).width();
+    var Largeur = $('#rond-2').width();
     $('.picto_section1_down').each(function(){
       var This = $(this);
       var parentHeight = $(this).parent().height();
       var pictoHeight = $(this).height();
+      console.log('Largeur '+Largeur);
       if(parseInt(Largeur) <= 425) {
         var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) /2 ;
         This.css('margin-top',margintop+'px');
+        console.log('margintop '+margintop);
       }else{
         This.attr('style','');
       }
@@ -652,16 +692,36 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     var hauteur = parseInt($('.section1').height()) - 140;
     $('#bouton-decouverte').css('margin-top',hauteur+'px');
   }
+  /* optimiser taille */
+  function policeOpti(){
+    $('.text_section1_down_up').each(function(){
+      var height = parseInt($(this).height());
+      var font = $(this).css('font-size');
+      font = font.replace('px','');
+      font = parseInt(font);
+      var i = 0;
+      for(i; i<=font;i++) {
+        if(height > 230) {
+          font = font - 1;
+          $('.text_section1_down_up').css('font-size',font+'px');
+        }else{
+          i = font;
+        }
+      }
+    })
+  }
   $(document).ready(function(){
   marginNewsTitle();
    AnglaisFrancais();
    alignerPicto();
    callNews();
+   policeOpti();
   })
   $(window).resize(function(){
    marginNewsTitle();
    AnglaisFrancais();
    alignerPicto();
+   policeOpti();
   })
   </script>
   <style>
@@ -710,7 +770,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
           % if user.is_authenticated():
             <!-- caroucel -->
             <div class="color-greys" style="padding-top: 0px; padding-bottom: 60px;">
-              <div class="titre_section3" style="margin-bottom: 10px; margin-left:3.5%; padding-top: 70px;width:96.5%;">
+              <div class="titre_section3 section-premier">
                 ${_("Featured Courses")}
               </div>
             <%include file="${courses_list}" />
@@ -724,7 +784,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               <div class="section1-up">
                 <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                   <div class="titre_section1">
-                    <br/>${_("phileas, a learning community ...")}
+                    ${_("phileas, a learning community ...")}
                   </div>
                   <div class="titre_section1 act-in">
                     ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -744,10 +804,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                     </div>
                     <div class="text_section1_down">
                       <div class="text_section1_down_up">
-                        Lorem ipsum dolor sit amet consectetur
+                        ${_("Trainings accessible for all")}
                       </div>
                       <div class="text_section1_down_down">
-                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                        ${_("In France and abroad, broaden your skills with contents accessible to all your Amundi devices.")}
                       </div>
                     </div>
                   </div>
@@ -764,10 +824,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                     </div>
                     <div class="text_section1_down">
                       <div class="text_section1_down_up">
-                        Lorem ipsum dolor sit amet consectetur
+                        ${_("Business inside")}!
                       </div>
                       <div class="text_section1_down_down">
-                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                        ${_("Every Amundi business line will be able to share Knowledge through Phileas.")}
                       </div>
                     </div>
                   </div>
@@ -784,10 +844,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                     </div>
                     <div class="text_section1_down">
                       <div class="text_section1_down_up">
-                        Lorem ipsum dolor sit amet consectetur
+                        ${_("Up to you to organize your training time")}!
                       </div>
                       <div class="text_section1_down_down">
-                        Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                        ${_("Start, stop and resume your training courses without constraint.")}
                       </div>
                     </div>
                   </div>
@@ -814,7 +874,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <!-- sous sec 3 -->
             <div class="section2_down nombre_heure_ajax">
               <h4></h4>
-              <p>${_("Training Hours")}</p>
+              <p>${_("training hours")}</p>
             </div>
           </div>
       <div class="index-actualite">
@@ -848,7 +908,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <!-- sous sec 3 -->
             <div class="section2_down nombre_heure_ajax">
               <h4></h4>
-              <p>${_("Training Hours")}</p>
+              <p>${_("training hours")}</p>
             </div>
           </div>
           % if user.is_authenticated():
@@ -857,7 +917,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <div class="section1-up">
               <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="titre_section1">
-                  <br/>${_("phileas, a learning community ...")}
+                  ${_("phileas, a learning community ...")}
                 </div>
                 <div class="titre_section1 act-in">
                   ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -877,10 +937,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                   </div>
                   <div class="text_section1_down">
                     <div class="text_section1_down_up">
-                      Lorem ipsum dolor sit amet consectetur
+                      ${_("Trainings accessible for all")}
                     </div>
                     <div class="text_section1_down_down">
-                      Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      ${_("In France and abroad, broaden your skills with contents accessible to all your Amundi devices.")}
                     </div>
                   </div>
                 </div>
@@ -897,10 +957,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                   </div>
                   <div class="text_section1_down">
                     <div class="text_section1_down_up">
-                      Lorem ipsum dolor sit amet consectetur
+                      ${_("Business inside")}!
                     </div>
                     <div class="text_section1_down_down">
-                      Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      ${_("Every Amundi business line will be able to share Knowledge through Phileas.")}
                     </div>
                   </div>
                 </div>
@@ -917,10 +977,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                   </div>
                   <div class="text_section1_down">
                     <div class="text_section1_down_up">
-                      Lorem ipsum dolor sit amet consectetur
+                      ${_("Up to you to organize your training time")}!
                     </div>
                     <div class="text_section1_down_down">
-                      Lorem ipsum dolor sit amet, consectetur elit, sed do ...
+                      ${_("Start, stop and resume your training courses without constraint.")}
                     </div>
                   </div>
                 </div>

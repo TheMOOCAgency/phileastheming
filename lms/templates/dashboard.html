@@ -61,14 +61,14 @@ test = pprint.pprint(get_my_course_progress)
       $('#sub-menu-low-rez').click(function(){
         $('#profile-sidebar').toggle();
       })
+      console.log('largeur : '+parseInt($(document).width()));
     })
     $(window).resize(function(){
-      if(parseInt($(document).width()) > 767) {
+      if(parseInt($(document).width()) > 768) {
         if($('#profile-sidebar').hide()) {
           $('#profile-sidebar').show();
         }
       }else{
-        console.log('coin');
         if($('#profile-sidebar').show()) {
           $('#profile-sidebar').hide();
         }
@@ -172,12 +172,15 @@ test = pprint.pprint(get_my_course_progress)
       margin-left: 0px;
     }
   }
-  @media(max-width:767px) {
+  @media(max-width:768px) {
     .dashboard .profile-sidebar .user-info>ul li .nonbre_indic {
       display: inline;
     }
     .profile-sidebar, #profile-sidebar {
       height: 480px;
+      top: 290px;
+      left: calc(100% - 335px);
+      margin: 0px;
     }
   }
   @media(max-width:563px) {
@@ -185,6 +188,17 @@ test = pprint.pprint(get_my_course_progress)
       width: 100vw;
       margin: 0;
       margin-top: 10px;
+    }
+    .dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses .course .details .wrapper-course-image a.fade-cover {
+      margin-left: 5vw;
+      margin-right: 5vw;
+    }
+  }
+  @media(max-width:425px) {
+    .profile-sidebar, #profile-sidebar {
+      left: 50%;
+      top: 265px;
+      margin-left: -160px;
     }
   }
 </style>
@@ -254,6 +268,202 @@ test = pprint.pprint(get_my_course_progress)
     <!-- -->
     <!-- -->
     <section class="my-courses" id="my-courses" role="main" tabindex="-1">
+        <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
+      <!-- GEOFFREY -->
+      <style>
+      .dashboard .profile-sidebar .user-info>ul li span {
+        display: inline-block;
+        margin-right: 5px;
+      }
+      .dashboard .my-courses .course .details .course-title a {
+      height: auto;
+      }
+      .dashboard .my-courses .course .details .wrapper-course-actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      }
+      .dashboard .my-courses .course .details .wrapper-course-image {
+      min-height: 230px;
+      }
+      .dashboard .my-courses .course .details .course-info .info-date-block img {
+      margin-bottom: 3px;
+      }
+      /*
+      .dashboard .my-courses .course .details .wrapper-course-image .cover .imageVodeclick {
+      width: 187.5px;
+      height: 187.5px;
+      margin-left: auto;
+      margin-right: auto;
+      }
+      */
+      .dashboard .my-courses .course .details .wrapper-course-image .imageVodeclick img{
+      width: 150px;
+      height: 150px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #fff;
+      margin-top: 18.75px;
+      margin-bottom: 18.75px;
+      }
+      .dashboard .my-courses .course .details .wrapper-course-image .cover  {
+      max-width: 300px;
+      margin-left: -150px;
+      height: auto;
+      left: 50%;
+      }
+      .dashboard .my-courses .course .details .wrapper-course-image .imageVodeclick {
+        background: linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px);
+        background-size: 1px 3px;
+      }
+      .course-info p {
+      height: 40px;
+      }
+      .social2-on {
+      display:none;
+      }
+      .inner-wrapper {
+        position: relative;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        border: none;
+      }
+      #unenrollment-modal-title {
+        border-bottom-color: transparent;
+      }
+      .sr {
+        display: none;
+      }
+      .modal .inner-wrapper, .leanModal_box .inner-wrapper, body.discussion .wmd-prompt-dialog .inner-wrapper, .discussion-module .wmd-prompt-dialog .inner-wrapper, .discussion-user-threads .wmd-prompt-dialog .inner-wrapper {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+      .modal .inner-wrapper header hr, .leanModal_box .inner-wrapper header hr, body.discussion .wmd-prompt-dialog .inner-wrapper header hr, .discussion-module .wmd-prompt-dialog .inner-wrapper header hr, .discussion-user-threads .wmd-prompt-dialog .inner-wrapper header hr {
+        display: none;
+      }
+      #unenrollment-modal-title {
+        color: #8a4186;
+        font-family: 'gothamrounded-medium';
+        font-size: 24px;
+        border-bottom: none;
+      }
+      .modal .inner-wrapper form .submit input[type="submit"]{
+        background: none;
+        box-shadow: none;
+        text-shadow: none;
+        border: none;
+        border-radius: 0px;
+        color: #8a4186;
+        border: 2px solid #8a4186;
+        width: auto;
+        font-family: 'helveticaneue-medium';
+      }
+      @media (max-width: 1192px) {
+      .wrapper-action-more {
+          width: 100%;
+          clear: left;
+          position: absolute;
+          bottom: 15px;
+        }
+      }
+      @media(max-width: 1024px) {
+        .formation_en_cours,.formation_reussit {
+          font-size: 15px;
+        }
+        .social-sharing {
+          font-size: 12px;
+        }
+        .actions-item a:first-child {
+            margin-right: 5px;
+        }
+        .profile-sidebar {
+          width: 220px;
+        }
+      }
+      @media(max-width:1018px) {
+      .dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses .course .details .wrapper-course-image a.fade-cover  {
+        max-height:200px;
+      }
+      }
+      @media(max-width: 768px) {
+        .button-option-action,.button-option-action:focus:not(:disabled),.button-option-action:hover:not(:disabled) {
+          margin:0px;
+          box-shadow: none;
+          text-shadow: none;
+          border:none;
+          border-radius: none;
+          background-image: none;
+          background-color: transparent;
+          color: #000;
+          text-transform:none;
+          text-align: center;
+          margin-left: auto;
+          margin-right: auto;
+          width: 100px;
+          display: block;
+          outline: none;
+        }
+        .formation_en_cours,.formation_reussit {
+          text-align:center;
+        }
+        .wrapper-action-more {
+          position: absolute;
+          bottom: 5px;
+          width: 100%;
+          height: 22px;
+        }
+        .dashboard .my-courses .course .details .wrapper-course-image {
+          position: relative;
+        }
+        .profile-sidebar, #profile-sidebar {
+          height: auto;
+        }
+        article, aside, details, figcaption, figure, footer, header, nav, section {
+          height: auto;
+        }
+      }
+      @media(max-width: 563px) {
+      .dashboard .my-courses .course {
+        height: auto;
+      }
+      .wrapper-course-image,.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses {
+        min-height: 187.5px;
+      }
+      .wrapper-action-more {
+          width: 100%;
+          clear: left;
+          position: relative;
+          bottom: 0;
+        }
+      }
+      @media(max-width: 415px) {
+        .dashboard .my-courses .listing-courses .course-item .course-container {
+          min-height: 480px;
+        }
+        .dashboard .my-courses .course {
+          height: 100%;
+        }
+        .dashboard .my-courses .course .details .wrapper-course-image {
+          min-height: 210px;
+        }
+      }
+      @media(max-width:360px) {
+        .dashboard .my-courses .course .details .wrapper-course-image .cover {
+          margin-left: -144px;
+          top: -20px;
+        }
+        .details {
+          margin-top: 30px;
+        }
+        .course-info p {
+          height: 20px;
+        }
+      }
+      </style>
+      <!-- FIN GEOFFREY -->
       % if len(course_enrollments) > 0:
         <ul class="listing-courses">
         <% share_settings = getattr(settings, 'SOCIAL_SHARING_SETTINGS', {}) %>
@@ -407,7 +617,56 @@ test = pprint.pprint(get_my_course_progress)
   </div>
 </section>
 <script>
+  function aligneCours() {
+    var Cc = parseInt($('.formation_en_cours').find('.nonbre_indic').width());
+    var ct = parseInt($('.formation_reussit').find('.nonbre_indic').width());
+    if(Cc > ct) {
+      marge = Cc - ct;
+      $('.formation_reussit').find('.nonbre_indic').css('margin-left',marge+'px');
+    }else if(ct > Cc) {
+      marge = ct - Cc;
+      $('.formation_en_cours').find('.nonbre_indic').css('margin-left',marge+'px');
+    }
+  }
+  function changeResolutionImage() {
+    var src = $('.user-image-frame').attr('src');
+    var replace = src.replace('_50','_120');
+    $('.user-image-frame').attr('src',replace);
+  }
+  function gestionOption() {
+    $('.button-option-action').each(function(){
+
+      $(this).click(function(){
+        var parents = $(this).parent().parent().parent();
+        var height = parseInt(parents.height());
+        $(this).parent().parent().find('.social2-on').toggle();
+      })
+    })
+  }
+  function tradDes(){
+    var test = '${_("trainings")}';
+    $('.action-unenroll').click(function(){
+      var interval = setInterval(function(){
+        if($('.unenroll-modal').find('#track-info').text() != ''){
+          var info = $('.unenroll-modal').find('#track-info').text();
+          var replace = info.replace(/\(.[^(]*\)/g,'');
+          console.log(test);
+          if(test.indexOf('trainings') != -1) {
+            $('.unenroll-modal').find('#track-info').text(replace);
+            clearInterval(interval);
+          }else{
+            replace = replace.replace('Are you sure you want to unenroll from','Voulez-vous vous désinscrire de');
+            $('.unenroll-modal').find('#track-info').text(replace);
+          clearInterval(interval);
+          }
+        }
+      },10)
+    })
+  }
   $(document).ready(function(){
-    console.log('');
+    gestionOption();
+    changeResolutionImage();
+    aligneCours();
+    tradDes();
   })
 </script>

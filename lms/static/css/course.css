@@ -58,11 +58,6 @@
   font-size: 14px;
   font-family: 'helveticaneue-bold';
 }
-.find-courses .courses-container .courses.no-course-discovery, .university-profile .courses-container .courses.no-course-discovery {
-  padding-right: 300px;
-  min-width: calc(100% - 300px);
-  width: calc(100% - 300px);
-}
 @media(max-width:1440px) {
   .cover-images {
     width: 30vw;

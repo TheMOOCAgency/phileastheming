@@ -13,6 +13,10 @@ from openedx.core.djangolib.markup import HTML
 <link rel="stylesheet" type="text/css" href="${static.url('css/tma_news.css')}">
 </%block>
 <style>
+main#main .news-list {
+  width: 100%;
+  margin: 0;
+}
 .baniere {
   padding:0;
   width: 1440px;
@@ -222,6 +226,7 @@ $(document).ready(function(){
                     <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
                     <p class="news-content">${HTML(news.summary)}</p>
                 </div>
+                <div>
                       <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
                       <span class="date_news">
@@ -230,11 +235,13 @@ $(document).ready(function(){
                               author=news.author
                           )}
                       </span>
+                </div>
                 % else:
-                <div class="news-wrapper ${'minimum' if news.jacket else ''}">
+                <div class="news-jacket">
                     <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
                     <p class="news-content">${HTML(news.content)}</p>
                 </div>
+                <div>
                       <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
                       <span class="date_news">
@@ -243,6 +250,7 @@ $(document).ready(function(){
                               author=news.author
                           )}
                       </span>
+                  </div>
                 % endif
             </div>
             % endfor
@@ -262,6 +270,7 @@ $(document).ready(function(){
                 % endif
             </div>
         </div>
+        <!--
         <div class="social-share">
             <p class="follow">${_("Follow Phileas")}</p>
             <p class="follow">${_("on")}</p>
@@ -270,5 +279,46 @@ $(document).ready(function(){
                 <span><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
             </p>
         </div>
+      -->
     </div>
 </main>
+<script>
+/* translate date */
+function translateDate(){
+  $('.date_news').each(function(){
+    var text = $(this).text();
+    console.log(text);
+    var replace = text.replace('On','Le');
+    replace = replace.replace('by','par');
+    if(text.indexOf('January') !=-1) {
+      replace = replace.replace('January','Janvier');
+    }else if(text.indexOf('March') !=-1) {
+      replace = replace.replace('March','Mars');
+    }else if(text.indexOf('April') !=-1) {
+      replace = replace.replace('April','Avril');
+    }else if(text.indexOf('May') !=-1) {
+      replace = replace.replace('May','mai');
+    }else if(text.indexOf('June') !=-1) {
+      replace = replace.replace('June','juin');
+    }else if(text.indexOf('July') !=-1) {
+      replace = replace.replace('July','Juillet');
+    }else if(text.indexOf('August') !=-1) {
+      replace = replace.replace('August','Aout');
+    }else if(text.indexOf('September') !=-1) {
+      replace = replace.replace('September','Septembre');
+    }else if(text.indexOf('October') !=-1) {
+      replace = replace.replace('October','Octobre');
+    }else if(text.indexOf('November') !=-1) {
+      replace = replace.replace('November','Novembre');
+    }else if(text.indexOf('December') !=-1) {
+      replace = replace.replace('December','Décembre');
+    }
+    $(this).text(replace);
+  })
+}
+var translate = '${_("hide-picture-english")}';
+$(document).ready(function(){
+  if(translate != 'hide-picture-english')
+  {translateDate();}
+})
+</script>

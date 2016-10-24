@@ -154,6 +154,20 @@ var idForm = '';
       $('#sort_by').text('${_("sort by")}');
     }
   }
+  /* function We couldn't find any results */
+  /*
+  $(document).on('DOMNodeInserted', function(e) {
+    text = $('#discovery-message').text();
+    if( text.indexOf('We couldn\'t find any results') != -1 || text.indexOf('Nous ne trouvons pas de résultat pour') != -1 ) {
+      $('.courses-container').html('');
+      var width = parseInt($('#footer-openedx').width());
+      $('#footer-openedx').css('position','fixed');
+      $('#footer-openedx').css('bottom','0');
+      $('#footer-openedx').css('left','50%');
+      $('#footer-openedx').css('margin-left','-'+(width / 2)+'px');
+    }
+  })
+  */
   $(document).ready(function(){
     eraseButton();
     $('#sort_by').click(function(){
@@ -211,9 +225,14 @@ ${_('All courses')}
       .Vodeclic img{
         width: 187.5px;
         height: 187.5px;
-        background-color: #fff;
-        margin-left: auto;
-        margin-right: auto;
+        width: 150px;
+        height: 150px;
+        background: linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px);
+        background-size: 1px 3px;
+        padding-top:18.75px;
+        padding-bottom:18.75px;
+        padding-left:calc((100% - 180px)/2);
+        padding-right:calc((100% - 180px)/2);
       }
       input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
       background-image: none;
@@ -272,6 +291,11 @@ ${_('All courses')}
         font-family: 'helveticaneue-bold';
         text-transform: none;
     }
+    .course-ratings {
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 10px;
+    }
     @media (max-width: 1440px){
       .course-images, .course-image {
           height: 20vh;
@@ -280,13 +304,60 @@ ${_('All courses')}
           width: 100%;
           margin-left: 0px;
           margin-right: 0px;
+          top: -70px;
+          height: auto;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .home .courses-container .courses .courses-listing .courses-listing-item {
+        margin-left: 1.5vw;
+        margin-right: 1.5vw;
       }
     }
+    /*
     @media(max-width: 1280px) {
       .find-courses .courses-container .courses.no-course-discovery {
         width: 94vw;
         padding-left: 3vw;
         padding-right: 3vw;
+      }
+    }
+    */
+    @media(max-width: 768px) {
+      /* nav */
+      .nav-courseware-01 input[type="text"] {
+        margin-top: 0;
+      }
+      /* end nav */
+      .courses-container .courses .course {
+        height: auto;
+      }
+      .courses-container .courses .course .course-info {
+      margin-top: 50px;
+      margin-bottom: 60px;
+      height: auto;
+      }
+      .course-images, .course-image {
+        height: 10vh;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n) {
+        margin-right: 1.5vw;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
+        height: auto;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+        height: auto;
+      }
+      .courses-container .courses .courses-listing {
+        height: auto;
+      }
+      input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
+        margin-top: 0px;
+      }
+      .cover-images {
+          width: 100%;
+          margin-left: 0px;
+          margin-right: 0px;
+          height: auto;
       }
     }
     @media(max-width: 697px) {
@@ -295,35 +366,76 @@ ${_('All courses')}
         margin-left: 2%;
         margin-right: 2%;
       }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n) {
+        margin-bottom: 90px;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
+        margin-bottom: 90px;
+      }
+      .cover-images {
+        top: -90px;
+      }
     }
     @media(max-width: 486px) {
       .cover-images img {
         margin: 0;
         width: 100%;
       }
+      .cover-images {
+        top: -90px;
+      }
       .Vodeclic img {
-          width: 187.5px;
-          height: 187.5px;
-          background-color: #fff;
-          margin-left: auto;
-          margin-right: auto;
+        width: 150px;
+        height: 150px;
+        background-color: #fff;
+        padding-top: 18.75px;
+        padding-bottom: 18.75px;
+      }
+      .courses-container .courses .course {
+        height: auto;
       }
       .courses-container .courses .course .course-info {
       margin-top: 50px;
+      height: auto;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
+        height: auto;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+        height: auto;
+      }
+      .courses-container .courses .courses-listing {
+        height: auto;
       }
     }
     @media(max-width: 429px) {
-    .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
-      width: 90%;
-      margin-left: 5%;
-      margin-right: 5%;
-    }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n) {
+        margin-bottom: 30px;
+      }
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
+        margin-bottom: 30px;
+      }
+
+      .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
+        width: 90%;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
     }
     @media(max-width: 415px) {
      .ClassForm {
      display: none;
      }
+   }
+    @media(max-width: 350px) {
+      .cover-images {
+        top: -110px;
+      }
+      .find-courses .courses-container, .university-profile .courses-container {
+        margin-top: 60px;
+      }
     }
+
     </style>
       <ul class="courses-listing">
         %for course in courses:
@@ -339,6 +451,7 @@ ${_('All courses')}
 </section>
 +<script src="${static.url('js/jquery.rateyo.js')}"></script>
 <script>
+
 function TailleImage(){
   $('.course-image').each(function(){
     var This = $(this).children().children('img');
@@ -352,12 +465,10 @@ function TailleImage(){
     var imgWidth = img.width;
     var imgHeight = img.height;
     var Org = Taille.data('org');
-    console.log(Org);
     if(imgWidth < tailleWidth && imgHeight < tailleHeight && Org == 'Vodeclic')
     {
       marginTop = (tailleHeight - imgHeight)/2;
       marginLeft = (tailleWidth - imgWidth)/2;
-      console.log(marginTop);
       This.css('width',imgWidth+'px');
       This.css('height',imgHeight+'px');
       This.css('padding-top',marginTop+'px');
@@ -375,7 +486,6 @@ function vodeclicCall() {
     $('body').hide();
     var source = '';
     var boucle = setInterval(function(){
-      console.log('nombre de cours : '+$('#discovery-message').text());
       source = $('#discovery-message').text();
       if(source != ''){
         clearInterval(boucle);
@@ -398,9 +508,6 @@ $(document).ready(function(){
 $(window).resize(function(){
   TailleImage();
 })
-var functionImage = function() {
-  console.log('$(this)');
-}
 </script>
 <script>
 var balance = 'boom';
@@ -411,16 +518,18 @@ $(document).ready(function(){
     }
   })
 })
-
-/*
-function showCourseRatings(){
-      $("li.courses-listing-item article").each(function(){
-        var course_id = $(this).attr("id");
+</script>
+% if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
+  <script src="${static.url('js/jquery.rateyo.js')}"></script>
+  <script>
+  /*
+    $(document).on('DOMNodeInserted', function(e) {
+      $("article").each(function(){
+        var course_id = $(this).data("id");
         var rateSelector = $(this).find(".course-ratings")
         $.get({
           url: "/course_ratings_handler/" + course_id + "/",
           success: function(data) {
-            console.log(data);
             var nAvgRate = data['avg_ratings'];
             var nReviews = data['total_reviews'];
             var nCanRate = data['can_rate'];
@@ -458,50 +567,57 @@ function showCourseRatings(){
           }
         }); // GET
       });  // EACH
-}
-$(document).ajaxComplete(function(event, xhr, settings){
-    if( settings.url.endsWith('course_discovery/') ) {
-        results = xhr.responseJSON.results;
-        var course_list = []
-        for (var i =0; i<results.length;i++ )
-        {
-            if (results[i].data.manager_only == true)
-            {
-                course_list.push(results[i]._id);
+    });
+    */
+
+    $(document).on('DOMNodeInserted', function(e) {
+      if ($(e.target).find('article').data('id') != undefined) {
+          var course_id = $(e.target).find('article').data('id');
+          //var rateSelector = $(e.target).find(".course-ratings");
+          $.get({
+            url: "/course_ratings_handler/" + course_id + "/",
+            success: function(data) {
+              var nAvgRate = data['avg_ratings'];
+              var nReviews = data['total_reviews'];
+              var nCanRate = data['can_rate'];
+              $(e.target).find('article').attr('data-canrate',data['test']);
+              lblReviews = 'Review';
+              if(nReviews > 1) {
+                lblReviews += "s"
+              }
+              // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+              // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+              $(e.target).find('article').each(function(){
+                var rateSelector = $(this).find(".course-ratings");
+                rateSelector.rateYo({
+                  rating: nAvgRate,
+                  halfStar: true,
+                  starWidth: "25px",
+                  readOnly: $(this).data('canrate'),
+                  onSet: function (rating, rateYoInstance) {
+                    $.post({
+                      url: "/course_ratings_handler/" + course_id + "/",
+                      data: {
+                        'stars': rating,
+                      },
+                      success: function(data) {
+                        nAvgRate = data['avg_ratings'];
+                        nReviews = data['total_reviews'];
+                        lblReviews = 'Review';
+                        if(nReviews > 1) {
+                          lblReviews += "s"
+                        }
+                        // $("#total-reviews").text(String(nReviews)+" "+lblReviews);
+                        // $("#avg-rating-number").text(String(nAvgRate)+"/5");
+                        rateSelector.rateYo("option", "readOnly", true);
+                      }
+                    }); // POST
+                  }
+                });  // RATEYO
+              })
             }
-        }
-      $.get({
-        url: '/course_hide/',
-        data: {'course_list':JSON.stringify(course_list)},
-        success: function(data) {
-            //data_list = data['Hidden'].split("\"")
-            hide_course_list = []
-            for (var j=0; j< data_list.length; j++)
-            {
-                if (data_list[j].startsWith('course'))
-                {
-                    hide_course_list.push(data_list[j])
-                }
-            }
-            for (var k =0; k<hide_course_list.length; k++){
-                $("a[href*='"+hide_course_list[k]+"']").parent().parent().remove();
-            }
-            var discoveryMessage = $('#discovery-message').text();
-            message_array = discoveryMessage.split(' ');
-            courseNumber = parseInt(message_array[1]);
-            displayCourseNumber = courseNumber - hide_course_list.length;
-            if(displayCourseNumber){
-              $('#discovery-message').text("Viewing "+displayCourseNumber+" courses");
-            }
-            % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
-            if (window.drawnRatings == undefined){
-              showCourseRatings();
-              window.drawnRatings = true;
-            }
-            % endif
-        }
-      });
-    }
-  });
-  */
-</script>
+          }); // GET
+      }
+    });
+  </script>
+% endif

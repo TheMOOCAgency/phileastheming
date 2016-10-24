@@ -83,13 +83,27 @@ function navAllIndex() {
     $('#sous-menu-table').toggle();
   })
 }
+function inputSearchDisaplay() {
+  var width = $(window).width();
+  if(width > 557 || width < 768) {
+    $('.picto-low-res').find('a').click(function(){
+      $('#search_ipad').toggle();
+    })
+  }else{
+    $('#search_ipad').attr('style','');
+  }
+}
   $(document).ready(function(){
     navAllIndex();
     languages();
     rightMenuUser();
+    $('#input_search_nav').css('height','24px');
+    $('#input_search_nav').css('margin-top','5px');
+    inputSearchDisaplay();
   })
   $(window).resize(function(){
     rightMenuUser();
+    inputSearchDisaplay();
     if(parseInt($('#nav-up-up').width()) > 981)
     {
       $('#sous-menu-table').hide();
@@ -115,6 +129,9 @@ function navAllIndex() {
   <link rel="stylesheet" type="text/css" href="${static.url('css/navigation.css')}">
 </%block>
 <style>
+#search-right {
+  margin-right: -7px;
+}
 .nav-index-all li, .nav-index-all2 li {
   margin-right: 25px;
   float: none;
@@ -127,13 +144,14 @@ function navAllIndex() {
   padding: 0;
 }
 li input[type="text"] {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   height: 24px;
   width: 250px;
-  border: 1px solid #c8c8c8;
+  border: 1px solid transparent;
   border-radius: 0px;
   margin-right: 25px;
+  outline:none;
 }
 li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
   line-height: 14px;
@@ -144,8 +162,8 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
 .nav-index-all2 li input[type="submit"],.nav-index-all2 li input[type="submit"]:hover:not(:disabled),.nav-index-all2 li input[type="submit"]:focus:not(:disabled) {
   height: 23px;
   width: 23px;
-  margin-top: 41px;
-  margin-bottom: 41px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   border: none;
   padding: 0px;
   border-radius: 0px;
@@ -155,7 +173,18 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
   background-repeat: no-repeat;
   background-size: cover;
   box-shadow: none;
+  outline:none;
   display: inline-block;
+}
+.nav-courseware-01 form {
+  display: inline-block;
+  background-color: #fff;
+  height: 34px;
+}
+.nav-index-all2 li {
+  height: 34px;
+  line-height: 34px;
+  margin-top: 25px;
 }
 </style>
 <script>
@@ -240,25 +269,49 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
         padding-left: 0px;
         padding: 0;
       }
+      #search_ipad {
+        display: none;
+        margin-left: 0;
+        margin-right: 0;
+        float: right;
+        width:calc(100% - 382px);
+      }
+      .nav-courseware-01 input[type="text"] {
+        margin-top: 0;
+        height: 100%;
+      }
+      @media(max-width:768px) {
+        #search_ipad {
+          display: block;
+        }
+      }
+      @media(max-width:768px and min-width:558px) {
+        .nav-index-all2 li {
+          margin-right: -14px;
+        }
+      }
       @media(max-width:557px) {
         .logo {
           width: 237px;
         }
         .logo a img{
           height: auto;
-          width: 237px;
+          width: 200px;
         }
         #menu-table {
-          margin-right: 0px;
+          margin-right: 5px;
+        }
+        #search_ipad {
+          display: none;
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 250px;
         }
       }
-      @media (max-width: 489px) {
-        .logo {
-          width: 237px;
-        }
-        .logo a img{
-          height: auto;
-          width: 237px;
+      @media(max-width: 487px){
+        #search_ipad input[type="text"] {
+          width: 200px;
         }
       }
       @media(max-width: 330px) {
@@ -387,14 +440,23 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
         <li class="nav-courseware-01">
               <a href="/news/">${_("News")}</a>
         </li>
-        <li>
+        <li class="nav-courseware-01" id="search-right">
           <form method="get" action="/courses">
-            <input type="text" class="search-input" name="search_query" type="text" placeholder="${_("I want to learn about")}..." ><input class="search-button" type="submit" name="submit" value="" id="input"/>
+            <input type="text" id="input_search_nav" class="search-input" name="search_query" type="text" placeholder="${_("I want to learn about")}..." ><input class="search-button" type="submit" name="submit" value="" id="input"/>
           </form>
         </li>
         <li class="nav-courseware-01" style="margin-right: 20px;">
         </li>
     </ol>
+    <ol class="right nav-courseware nav-index-all2" id="search_ipad">
+            <li class="nav-courseware-01">
+              <form method="get" action="/courses">
+                <input type="text" id="input_search_nav" class="search-input" name="search_query" type="text" placeholder="${_("I want to learn about")}..." ><input class="search-button" type="submit" name="submit" value="" id="input"/>
+              </form>
+            </li>
+            <li class="nav-courseware-01" style="margin-right: 20px;">
+            </li>
+        </ol>
       % if should_display_shopping_cart_func() and not (course and static.is_request_in_themed_site()): # see shoppingcart.context_processor.user_has_cart_context_processor
         <ol class="user">
           <li class="primary">

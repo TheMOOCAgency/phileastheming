@@ -722,7 +722,7 @@ from openedx.core.lib.courses import course_image_url
     margin-right: 36px;
   }
 }
-@media(max-width:767px) {
+@media(max-width:768px) {
   .course-info .course-sidebar {
     position: inherit;
     float:right;
@@ -731,6 +731,7 @@ from openedx.core.lib.courses import course_image_url
     z-index: 1;
     width: 100%;
     height: auto;
+    background-color: #fff;
   }
   .course-info .details {
     float: left;
@@ -1040,7 +1041,7 @@ function bougerDiv() {
   var Details = $('.details');
   var DMenu = $('.course-sidebar');
   console.log(Details);
-  if(parseInt($(document).width()) < 768) {
+  if(parseInt($(document).width()) < 769) {
     $('.details').before($('.course-sidebar'));
   }else{
     $('.course-sidebar').before($('.details'));

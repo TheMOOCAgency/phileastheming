@@ -1,0 +1,251 @@
+<%page expression_filter="h"/>
+<%! from django.utils.translation import ugettext as _ %>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("About")}</%block>
+<style>
+#contenair {
+  width: 1440px;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+}
+#contenair_inside {
+  width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+}
+#ariane,#title,#sub_title,#fil {
+  width: 100%;
+  height: auto;
+}
+#title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  font-weight: 600;
+  height: 28px;
+  line-height: 28px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: #914d8e;
+  font-size: 30px;
+  font-family: 'gothamrounded-medium';
+}
+#ariane a,#ariane a:hover,#ariane a:visited,#ariane a:focus {
+  color: #3D4857;
+  font-size: 14px;
+  font-family: 'helveticaneue';
+  text-decoration: none;
+}
+@media(max-width:1440px) {
+  #contenair {
+    width : 100vw;
+  }
+}
+@media(max-width: 1180px) {
+  #contenair_inside {
+    width: 100%;
+  }
+}
+/* block FIL */
+.textone {
+  width: calc(50% - 25px);
+  float: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 15px;
+}
+.middle1,.middle2,.middle3 {
+  float: left;
+  height: auto;
+}
+.clear_left {
+  clear: left;
+}
+.line {
+  border-left:2px solid #914d8e;
+  height: calc(50% - 10px);
+  margin-left: calc(10px - 1px);
+}
+.circleone {
+  width: 20px;
+  height: 20px;
+  background-color: #914d8e;
+  border-radius: 10px;
+}
+/* fin block FIL */
+.cell2 {
+  margin-left:calc(50% - 15px);
+}
+.textwo {
+  width: calc( 95% - 15px);
+  margin-left: 15px;
+  float: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.linetwo {
+  border-left:2px solid #914d8e;
+  height: calc(50% - 15px);
+  margin-left: calc(15px - 1px);
+}
+.circletwo {
+  width: 26px;
+  height: 26px;
+  background-color: #fff;
+  border: 2px solid #914d8e;
+  border-radius: 15px;
+}
+.dashed {
+  border-left-style: dashed
+}
+.text_inside_one {
+  height: auto;
+  float: left;
+  display: inline-block;
+}
+.img_inside_one {
+  float: right;
+  display: inline-block;
+}
+.text_inside_two {
+  height: auto;
+  float: right;
+  display: inline-block;
+}
+.img_inside_two {
+  float: left;
+  display: inline-block;
+}
+h2 {
+  text-align: center;
+  color: #445561;
+  font-size: 20px;
+  font-family: 'helveticaneue-medium';
+}
+#timeline h3 {
+  font-size: 22px;
+  color: #363F4D;
+  font-family: 'helveticaneue-bold';
+  margin-bottom : 10px;
+}
+#timeline .textone h3 {
+  text-align: right;
+}
+#timeline p {
+  font-size: 16px;
+  color: #363F4D;
+  font-family: 'helveticaneue';
+}
+/* condition 3 */
+.line3 {
+  border-left:2px solid #914d8e;
+  height: calc(50% - 10px);
+  margin-left: calc(10px - 1px);
+}
+.circle3 {
+  width: 20px;
+  height: 20px;
+  background-color: #914d8e;
+  border-radius: 10px;
+}
+.cell3 {
+  margin-left:calc(50% - 10px);
+}
+.middle3 {
+  margin-right: 5px;
+}
+.text3 {
+  width: calc( 50% - 15px);
+  margin-left: 15px;
+  float: left;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.hide-picture-english {
+  display: none;
+}
+.cacher-images-francais {
+  display: none;
+}
+</style>
+  <div id="contenair">
+    <div id="contenair_inside">
+      <div id="ariane">
+        <a href="/">${_("Home")}</a> > <a href="#">${_("About")}</a>
+      </div>
+      <div id="title">${_("phileas, a learning community ...")}</div>
+      <!--
+      <div id="sub_title">${_("")}</div>
+      -->
+      <div id="fil">
+        <h2>${_("Discover Phileas")}</h2>
+        <div id="timeline">
+          <!-- cellule 1 -->
+          <div class="cell1">
+            <div class="textone">
+              <span class="text_inside_one">
+                <h3>${_("Simple login")} :</h3>
+                <p>${_("Phileas allows you to access your courses anywhere from an Amundi device. Sign in once with your Amundi login password")}<span class="${_('hide-picture-english')}">, “et voilà” !</span></p>
+              </span>
+            </div>
+            <div class="middle1">
+              <div class="line dashed"></div><div class="circleone"></div><div class="line"></div>
+            </div>
+          </div>
+          <div class="clear_left"></div>
+          <!-- cellule 2 -->
+            <div class="cell3">
+              <div class="middle3">
+                <div class="line3"></div><div class="circle3"></div><div class="line3"></div>
+              </div>
+              <div class="textwo">
+                <span class="text_inside_two">
+                  <h3>${_("Diversified content")} :</h3>
+                  <p>${_("Simple as a search engine")} ! ${_("Find the courses you need and access with a simple clic Some courses are located for English speakers For basics you dont need to registe. For others generally integrated in your development plan within the annual appraisal campaign  you may need your manager to validate it")}</p>
+                </span>
+              </div>
+            </div>
+          <div class="clear_left"></div>
+          <!-- cellule 3 -->
+          <div class="cell1">
+            <div class="textone">
+              <span class="text_inside_one">
+                <h3>${_("A flexible solution")} :</h3>
+                <p>${_("Phileas pragmatically answers to your needs. No time to finish your course")}? ${_("Resume and finish it later. Phileas meets your operational constraints.")}</p>
+              </span>
+            </div>
+            <div class="middle1">
+              <div class="line"></div><div class="circleone"></div><div class="line dashed"></div>
+            </div>
+          </div>
+          <div class="clear_left"></div>
+      </div>
+    </div>
+  </div>
+<script>
+function alignCircle() {
+  $('.cell1').each(function(){
+    var height = parseInt($(this).find('.textone').height()) + 60;
+    $(this).find('.middle1').css('height',height+'px');
+  })
+  $('.cell2').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    $(this).find('.middle2').css('height',height+'px');
+  })
+  $('.cell3').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    console.log($(this).find('.textwo').height());
+    $(this).find('.middle3').css('height',height+'px');
+  })
+}
+$(document).ready(function(){
+  alignCircle();
+})
+$(window).resize(function(){
+  alignCircle();
+})
+</script>

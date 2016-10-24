@@ -8,6 +8,9 @@ from django.core.urlresolvers import reverse
 
 <%block name="pagetitle">${_("News")}</%block>
 <style>
+  .news {
+    width: 800px;
+  }
   .news h1 {
     font-size: 30px;
     color: #8A4185;
@@ -17,10 +20,13 @@ from django.core.urlresolvers import reverse
     text-align: left;
     margin-top: 30px;
   }
+  .container {
+    min-width: 0px;
+  }
   .news .news_content {
     color: #445561;
     font-size: 20px;
-    font-family: 'helveticaneue-light';
+    font-family: 'helveticaneue';
   }
   .summary {
     font-size: 20px;
@@ -35,16 +41,79 @@ from django.core.urlresolvers import reverse
   :focus {
       outline: none;
   }
+
   .ariane_news a,.ariane_news a:hover,.ariane_news a:focus{
     font-size: 14px;
     color: #3D4857;
     font-family: 'helveticaneue';
   }
-  .container {
-    min-width: 0px;
+  .font-gris {
+    width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #F5F6F8;
+  }
+  .news_picture {
+    width: 800px;
+    height: 400px;
+    margin-top: -70px;
+    background: url('${news.jacket.url}') no-repeat center;
+    -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+    background-size: cover; /* version standardisée */
+  }
+  #texts_news p{
+    width: 800px;
+  }
+  @media(max-width:1440px) {
+    .news_picture {
+      width: 55vw;
+      height: 28vw;
+    }
+    #texts_news p{
+      width: 55vw;
+    }
+    .news {
+      width: 55vw;
+    }
+    .font-gris {
+      width: 100vw;
+    }
+  }
+  @media(max-width: 768px) {
+    .container {
+      width: 98vw;
+      margin-left: 1vw;
+      margin-right: 1vw;
+      padding: 0;
+    }
+    .news_picture {
+      margin-top: 25px;
+    }
+    .summary {
+      height: auto;
+      padding-top: 15px;
+      padding-bottom: 15px;
+    }
+    .container.about {
+      padding: 0;
+    }
+    .news_picture {
+      width: 100%;
+      height: 45vw;
+    }
+    #texts_news p{
+      width: 100%;
+    }
+    .news {
+      width: 100%;
+    }
+    .font-gris {
+      width: 100vw;
+    }
   }
 </style>
 <script>
+/*
 function TailleImage() {
   var Taille = $('#picture').width();
   var Ecran = $('.news').width();
@@ -57,6 +126,7 @@ function TailleImage() {
     $('#picture').attr('style','');
   }
 }
+
 $(document).ready(function(){
   $('#itemHref').attr('href',window.location.href);
   TailleImage();
@@ -64,23 +134,43 @@ $(document).ready(function(){
 $(window).resize(function(){
   TailleImage();
 })
+*/
+function resizeP(){
+  var doc = parseInt($(document).width());
+  if(doc < 768) {
+    $('p').attr('style','');
+    $('span').attr('style','');
+    $('#texts_news').find('span').css('font-family','helveticaneue');
+  }
+}
+$(document).ready(function(){
+  $('#texts_news').find('span').css('font-family','helveticaneue');
+  resizeP();
+})
+$(window).resize(function(){
+  resizeP();
+})
 </script>
 <main id="main" aria-label="Content" tabindex="-1">
-    <section class="container about">
       % if news:
+      <section class="container about">
         <div class="news">
             <div class="ariane_news"><a href="/">${_('Home')}</a> > <a href="/news/">${_('News')}</a> > <a href="" id="itemHref">${_('Item')}</a></div>
             <h1>${_(news.title)}</h1>
             <p class="summary">${HTML(news.summary)}</p>
             <p class="author_date"><span>${HTML(news.created.strftime("%d %B %Y"))}</span> <span>${_('by')}</span> <span>${HTML(news.author)}</span></p>
-            <p class="news_picture"><img src="${news.jacket.url}" id="picture"/></p>
-            <p class="news_content">${HTML(news.content)}</p>
-        </div>
+      </section>
+      <div class="font-gris">
+        <section class="container about" id="texts_news">
+                <p class="news_picture"></p>
+                <p class="news_content">${HTML(news.content)}</p>
+              <div>
+        </section>
+      </div>
       %endif
         <!--
         <div class="back-link">
             <a href="${reverse('news')}">${_("Back to news")}</a>
         </div>
       -->
-    </section>
 </main>

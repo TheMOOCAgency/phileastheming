@@ -73,21 +73,17 @@ course_org = course_overview.org
 <% style_overrides_file = static.get_value('css_overrides_file') %>
 <li class="course-item">
 <script>
-function gestionOption() {
-  $('#button-option-action').click(function(){
-    $('#social2-on').toggle();
-  })
-}
 function gestionDisplayOption() {
   var largeurDoc = $(document).width();
   if(parseInt(largeurDoc) > 563) {
-    if($('#social2-on').show()) {
-      $('#social2-on').hide();
-    }
+    $('.social2-on').each(function(){
+      if($('#social2-on').show()) {
+        $('#social2-on').hide();
+      }
+    })
   }
 }
 $(document).ready(function(){
-  gestionOption();
   gestionDisplayOption();
 })
 $(window).resize(function(){
@@ -95,12 +91,29 @@ $(window).resize(function(){
 })
 </script>
 <script>
+function articleHeight(){
+  $('.course-info').each(function(){
+    var doc = parseInt($(document).width());
+    var cible = parseInt($(this).height());
+    if(doc < 595 && $(this).css('display') != 'none' ) {
+      if(cible <= 50) {
+        $(this).parent().parent().css('height','460px');
+      }else {
+        $(this).parent().parent().css('height','520px');
+      }
+    }else{
+      $(this).parent().parent().attr('style','');
+    }
+  })
+}
 function lienHeightTitle(){
   $('.course-title').each(function(){
     if($(this).height() > 53 && $(this).height() <= 106) {
       $(this).find('a').css('line-height','30px');
     }else if($(this).height() > 106 && $(this).height() <= 159) {
       $(this).find('a').css('line-height','30px');
+    }else if($(this).height() > 159 ) {
+      $(this).find('a').css('line-height','20px');
     }else{
       $(this).find('a').attr('style','');
     }
@@ -108,9 +121,11 @@ function lienHeightTitle(){
 }
 $(window).resize(function(){
   lienHeightTitle();
+  articleHeight();
 })
 $(document).ready(function(){
   lienHeightTitle();
+  articleHeight();
   $('.course-actions').each(function(){
         var Url = '${href_sso}'+'&vodeclic_id=';
         var num = $(this).data('number');
@@ -147,10 +162,7 @@ $(document).ready(function(){
 
 })
 </script>
-<LINK href="/static/css/dashboard-courses.css" rel="stylesheet" type="text/css">
-<%block name="headextra">
-  <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
-</%block>
+
   % if settings.FEATURES.get('ENABLE_VERIFIED_CERTIFICATES'):
     <%
         course_verified_certs = enrollment_mode_display(
@@ -167,52 +179,6 @@ $(document).ready(function(){
   % else:
     <% mode_class = '' %>
   % endif
-  <!-- GEOFFREY -->
-<style>
-.dashboard .my-courses .course .details .wrapper-course-actions {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-}
-.dashboard .my-courses .course .details .wrapper-course-image {
-  min-height: 230px;
-}
-.dashboard .my-courses .course .details .course-info .info-date-block img {
-  margin-bottom: 3px;
-}
-.dashboard .my-courses .course .details .wrapper-course-image .cover .imageVodeclick {
-  width: 187.5px;
-  height: 187.5px;
-  margin-left: auto;
-  margin-right: auto;
-}
-.course-info p {
-  height: 40px;
-}
-
-@media(max-width:1018px) {
-  .dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses .course .details .wrapper-course-image a.fade-cover  {
-    max-height:200px;
-  }
-}
-@media(max-width: 563px) {
-  .dashboard .my-courses .course {
-    height: 410px;
-  }
-  .wrapper-course-image,.dashboard .my-courses .course .details .wrapper-course-image .cover, .dashboard .my-courses {
-    min-height: 187.5px;
-  }
-}
-@media(max-width: 415px) {
-  .dashboard .my-courses .listing-courses .course-item .course-container {
-    min-height: 480px;
-  }
-  .dashboard .my-courses .course {
-    height: 100%;
-  }
-}
-</style>
-<!-- FIN GEOFFREY -->
 <div class="course-container">
  % if course_program_info and course_program_info.get('category')=='xseries':
   <div class="label-xseries-association">
@@ -230,29 +196,34 @@ $(document).ready(function(){
       % if show_courseware_link:
         % if not is_course_blocked:
             <a href="${course_target}" data-course-key="${enrollment.course_id}" class="cover dash-img
+            % if course_org == 'Vodeclic':
+              imageVodeclick
+            % else:
+              noImageVodeclick
+            % endif
             ">
-              <img src="${course_overview.course_image_url}" class="
-              % if course_org == 'Vodeclic':
-                imageVodeclick
-              % else:
-                noImageVodeclick
-              % endif
-              " alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
+              <img src="${course_overview.course_image_url}" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
               "/>
             </a>
         % else:
-            <a class="fade-cover dash-img">
-              <img src="${course_overview.course_image_url}" class="
-              % if course_org == 'Vodeclic':
-                imageVodeclick
-              % else:
-                noImageVodeclick
-              % endif
-              " alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style=""/>
+            <a class="fade-cover dash-img
+            % if course_org == 'Vodeclic':
+              imageVodeclick
+            % else:
+              noImageVodeclick
+            % endif
+            ">
+              <img src="${course_overview.course_image_url}"alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style=""/>
             </a>
         % endif
       % else:
-        <a class="cover dash-img">
+        <a class="cover dash-img
+        % if course_org == 'Vodeclic':
+          imageVodeclick
+        % else:
+          noImageVodeclick
+        % endif
+        ">
           <img src="${course_overview.course_image_url}" class="course-image" alt="${_('{course_number} {course_name} Cover Image').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}"  style="
           ">
         </a>
@@ -370,8 +341,8 @@ $(document).ready(function(){
             % if course_overview.display_org_with_default == "Vodeclic":
             ${_("Continuous formation")}
             % else:
-            ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
-            ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
+            ${_(" - Start :")}${_(" {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
+            ${_(" - End :")}${_(" {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
             % endif
           </span>
         </div>
@@ -396,15 +367,13 @@ $(document).ready(function(){
         </h3>
         <div class="course-info" id="course-info-pop2">
           <span class="info-date-block" data-tooltip="Hi">
-            <img src="/static/themes/phileastheming/images/icon_calendar.png" />
             % if course_overview.display_org_with_default == "Vodeclic":
-            <p>Formation permanente</p>
+            <p><img src="/static/themes/phileastheming/images/icon_calendar.png" /> Formation permanente</p>
             % else:
-            <p>
-              ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
+            <p><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Debut : {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
             </p>
             <p>
-              ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
+              <img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_(" - Fin : {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
             </p>
             % endif
           </span>
@@ -412,8 +381,8 @@ $(document).ready(function(){
         <p id="text-compl">
           <span>${course_overview.display_org_with_default}</span>
         </p>
-        <p id="button-option"><button id="button-option-action">options</button></p>
-        <div class="wrapper-action-more" data-course-key="${enrollment.course_id}"  id="social2-on">
+        <p class="button-option"><button class="button-option-action">options</button></p>
+        <div class="wrapper-action-more social2-on" data-course-key="${enrollment.course_id}">
           % if can_unenroll:
             <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
               <div class="social-sharing">
@@ -816,54 +785,6 @@ $(document).ready(function(){
      formatPopup()
    })
 </script>
-<style>
-.inner-wrapper {
-  position: relative;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  border: none;
-}
-#unenrollment-modal-title {
-  border-bottom-color: transparent;
-}
-.sr {
-  display: none;
-}
-.modal .inner-wrapper, .leanModal_box .inner-wrapper, body.discussion .wmd-prompt-dialog .inner-wrapper, .discussion-module .wmd-prompt-dialog .inner-wrapper, .discussion-user-threads .wmd-prompt-dialog .inner-wrapper {
-  border: none;
-  box-shadow: none;
-  padding: 0;
-}
-.modal .inner-wrapper header hr, .leanModal_box .inner-wrapper header hr, body.discussion .wmd-prompt-dialog .inner-wrapper header hr, .discussion-module .wmd-prompt-dialog .inner-wrapper header hr, .discussion-user-threads .wmd-prompt-dialog .inner-wrapper header hr {
-  display: none;
-}
-#unenrollment-modal-title {
-  color: #8a4186;
-  font-family: 'gothamrounded-medium';
-  font-size: 24px;
-  border-bottom: none;
-}
-.modal .inner-wrapper form .submit input[type="submit"]{
-  background: none;
-  box-shadow: none;
-  text-shadow: none;
-  border: none;
-  border-radius: 0px;
-  color: #8a4186;
-  border: 2px solid #8a4186;
-  width: auto;
-  font-family: 'helveticaneue-medium';
-}
-@media (max-width: 1192px) {
-.wrapper-action-more {
-    width: 100%;
-    clear: left;
-    position: relative;
-  }
-}
-</style>
 <script>
   function AjoutAhrefVide() {
     var Link1 = $('#counsulter1');

@@ -291,11 +291,28 @@ function h1Ie11() {
     $('h1').css('font-weight','bold');
   }
 }
+/* deplacement add a post */
+function clickPost() {
+  $('#button-modifier').click(function(){
+    $('.new-post-btn').trigger('click');
+  })
+}
+function addPost() {
+  var url = window.location.href;
+  if(url.indexOf('forum') != -1) {
+    $('.view-discussion-home').append('<button class="new-post-btn btn-neutral btn-small" id="button-modifier">Add a Post</button>');
+    $('.new-post-btn').hide();
+    $('#button-modifier').show();
+    $('#button-modifier').css('float','right');
+    clickPost();
+  }
+}
 $(document).ready(function(){
   CssLast();
   h1Ie11();
   couleurFont();
   addMarginNavForum();
+  addPost();
 })
 $(window).resize(function(){
   CssLast();
