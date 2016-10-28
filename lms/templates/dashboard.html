@@ -438,6 +438,23 @@ test = pprint.pprint(get_my_course_progress)
           position: relative;
           bottom: 0;
         }
+        .social2-on {
+          display:block;
+          margin-top: 5px;
+        }
+        .actions-item a:first-child, .actions-item a:last-child {
+          margin-left: 10px;
+          margin-right: 10px;
+        }
+        .actions-item a:first-child {
+          float: left;
+        }
+        .actions-item a:last-child {
+          float: right;
+        }
+        .dashboard .my-courses .course .details .course-info {
+          border-bottom: none;
+        }
       }
       @media(max-width: 415px) {
         .dashboard .my-courses .listing-courses .course-item .course-container {
@@ -633,16 +650,6 @@ test = pprint.pprint(get_my_course_progress)
     var replace = src.replace('_50','_120');
     $('.user-image-frame').attr('src',replace);
   }
-  function gestionOption() {
-    $('.button-option-action').each(function(){
-
-      $(this).click(function(){
-        var parents = $(this).parent().parent().parent();
-        var height = parseInt(parents.height());
-        $(this).parent().parent().find('.social2-on').toggle();
-      })
-    })
-  }
   function tradDes(){
     var test = '${_("trainings")}';
     $('.action-unenroll').click(function(){
@@ -664,7 +671,6 @@ test = pprint.pprint(get_my_course_progress)
     })
   }
   $(document).ready(function(){
-    gestionOption();
     changeResolutionImage();
     aligneCours();
     tradDes();

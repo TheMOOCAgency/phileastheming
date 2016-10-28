@@ -231,8 +231,8 @@ ${_('All courses')}
         background-size: 1px 3px;
         padding-top:18.75px;
         padding-bottom:18.75px;
-        padding-left:calc((100% - 180px)/2);
-        padding-right:calc((100% - 180px)/2);
+        padding-left:75px;
+        padding-right:75px;
       }
       input[type="submit"],input[type="submit"]:hover:not(:disabled),input[type="submit"]:focus:not(:disabled) {
       background-image: none;
@@ -321,6 +321,12 @@ ${_('All courses')}
       }
     }
     */
+    @media(max-width:996px) {
+      .Vodeclic img {
+        padding-left: calc((100% - 150px)/2);
+        padding-right: calc((100% - 150px)/2);
+      }
+    }
     @media(max-width: 768px) {
       /* nav */
       .nav-courseware-01 input[type="text"] {
@@ -410,10 +416,10 @@ ${_('All courses')}
     }
     @media(max-width: 429px) {
       .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n) {
-        margin-bottom: 30px;
+        margin-bottom: 80px;
       }
       .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1), .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item:nth-child(2n+1) {
-        margin-bottom: 30px;
+        margin-bottom: 80px;
       }
 
       .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item {
@@ -422,11 +428,6 @@ ${_('All courses')}
         margin-right: 5%;
       }
     }
-    @media(max-width: 415px) {
-     .ClassForm {
-     display: none;
-     }
-   }
     @media(max-width: 350px) {
       .cover-images {
         top: -110px;
@@ -435,8 +436,40 @@ ${_('All courses')}
         margin-top: 60px;
       }
     }
-
+    #messages_none {
+      display: none;
+      width: 100%;
+      height: auto;
+      margin-top: 100px;
+      text-align: center;
+      vertical-align: middle;
+      color: #8A4185;
+      font-size: 30px;
+      font-family: 'gothamrounded-medium';
+    }
+    #messages_none a,#messages_none a:hover,#messages_none a:visited {
+      color:#363F4E;
+    }
+    @media(max-width: 768px) {
+      #messages_none {
+        display: none;
+        width: 100%;
+        height: auto;
+        margin-top: 0;
+        text-align: center;
+        vertical-align: middle;
+        color: #8A4185;
+        font-size: 20px;
+        font-family: 'gothamrounded-medium';
+      }
+    }
+    .courses {
+      position: relative;
+    }
     </style>
+    <div id="messages_none">
+        ${_("No results. Please rephrase your request Or browse the")} <a href="/courses">${_("Courses Catalogue.")}</a>
+    </div>
       <ul class="courses-listing">
         %for course in courses:
 
@@ -617,6 +650,14 @@ $(document).ready(function(){
               })
             }
           }); // GET
+      }
+      if($('#discovery-message').text().indexOf('We couldn\'t find any results for') != -1 || $('#discovery-message').text().indexOf('Nous ne trouvons pas de résultat pour') != -1) {
+        $('.courses-listing').hide();
+        $('#messages_none').show();
+        //$('.wrapper-footer').css('position','fixed');
+        //$('.wrapper-footer').css('bottom','0');
+        //  $('.wrapper-footer').css('width','100vw');
+
       }
     });
   </script>

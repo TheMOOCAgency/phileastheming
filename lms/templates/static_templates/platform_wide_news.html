@@ -3,6 +3,7 @@
 from django.utils.translation import ugettext as _
 from django.core.urlresolvers import reverse
 from openedx.core.djangolib.markup import HTML
+from student.models import UserProfile
 %>
 <%inherit file="../main.html" />
 <%namespace name='static' file='../static_content.html'/>
@@ -184,6 +185,13 @@ main#main .news-list .news .news-wrapper {
     padding-left: 0px;
   }
 }
+.nav-courseware-01 input[type="text"] {
+  width: 258px;
+  padding-right: 0;
+  border: none;
+  box-shadow: none;
+  margin-right: 0px;
+}
 </style>
 <!--
 <script>
@@ -219,8 +227,7 @@ $(document).ready(function(){
             % for news in news_list:
             <div class="news">
                 % if news.jacket and 'undefined' not in news.jacket.url:
-                <div class="news-jacket">
-                    <img src="${news.jacket.url}" />
+                <div class="news-jacket" style="background-image:url('${news.jacket.url}');width:154px;height:120px;background-size:cover;background-position:center;bacbackground-repeat:no-repeat;display:inline-block;">
                 </div>
                 <div class="news-wrapper ${'minimum' if news.jacket else ''}">
                     <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
@@ -228,7 +235,7 @@ $(document).ready(function(){
                 </div>
                 <div>
                       <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
-                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="date_news">
                           ${_("On {publish_date} by {author}").format(
                               publish_date=news.created.strftime("%d %B %Y"),
@@ -243,7 +250,7 @@ $(document).ready(function(){
                 </div>
                 <div>
                       <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
-                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_yammer.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="date_news">
                           ${_("On {publish_date} by {author}").format(
                               publish_date=news.created.strftime("%d %B %Y"),
@@ -284,6 +291,19 @@ $(document).ready(function(){
 </main>
 <script>
 /* translate date */
+function alignJack() {
+  $('.news').each(function(){
+    var This = $(this);
+    if(This.find('.news-jacket').attr('style')) {
+      var height = This.find('.news-jacket').height();
+      var heightBis = This.find('.minimum').height();
+      if(parseInt(height) < parseInt(heightBis)) {
+        marginTop = (parseInt(heightBis) - parseInt(height)) / 2;
+        This.find('.news-jacket').css('margin-top',marginTop+'px');
+      }
+    }
+  })
+}
 function translateDate(){
   $('.date_news').each(function(){
     var text = $(this).text();
@@ -318,7 +338,11 @@ function translateDate(){
 }
 var translate = '${_("hide-picture-english")}';
 $(document).ready(function(){
+  alignJack()
   if(translate != 'hide-picture-english')
   {translateDate();}
+})
+$(window).resize(function(){
+  alignJack();
 })
 </script>

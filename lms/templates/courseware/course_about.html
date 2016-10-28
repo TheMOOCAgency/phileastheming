@@ -627,6 +627,11 @@ from openedx.core.lib.courses import course_image_url
     font-size: 25px;
   }
 }
+@media(max-width: 1280px) {
+  .about, .faq, .prerequisites {
+    width: 100%;
+  }
+}
 @media(max-width:950px) {
   .course-info .course-sidebar{
     width: calc(100% - 600px);
@@ -1067,10 +1072,10 @@ $(window).resize(function(){
   <div class="button-close">
     <button id="close-popup"><img src="/static/themes/phileastheming/images/icon_close.png" /></button>
   </div>
-  <h2>${_("Your enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h} ${_("is subject to validation")}</h2>
+  <h2>${_("Your enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h} ${_("is subject to validation")}</h2>
   <div class="link">
     <a href="#" class="register">
-      ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h}
+      ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h}
     </a>
   </div>
 </div>
@@ -1165,13 +1170,13 @@ $(window).resize(function(){
                   %>
                   <a href="${reg_href}" class="add-to-cart" id="${reg_element_id}">
                     ${_("Add {course_name} to Cart <span>({price} USD)</span>")\
-                      .format(course_name=course.display_number_with_default, price=course_price)}
+                      .format(course_name=course.display_name_with_default, price=course_price)}
 
                   </a>
                   <div id="register_error"></div>
                 %else:
                   <button href="#" class="registers">
-                    ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_number_with_default) | h}
+                    ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h}
                   </button>
                   <div id="register_error"></div>
                 %endif
@@ -1216,7 +1221,7 @@ $(window).resize(function(){
           </ol>
           <div class="picto-list-ol">
             <a href="mailto:"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
-            <a href="#"><img src="/static/themes/phileastheming/images/icon_yammer.png" /></a>
+            <a href="#"><img src="/static/themes/phileastheming/images/forums.png" /></a>
           </div>
         </section>
 

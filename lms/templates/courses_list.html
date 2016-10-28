@@ -6,7 +6,7 @@
 <style>
 .courses-container {
   max-width: 1440px;
-  width: 93%;;
+  width: 93%;
 }
 </style>
 <section class="courses-container">
@@ -35,7 +35,11 @@
       .courses{
         height: 500px;
       }
+      .courses-container {
+        height: 1500px;
+      }
     }
+    @media(max-width:)
     </style>
     <script>
     function Largeur(){
@@ -132,3 +136,26 @@
     }); // READY
   </script>
 % endif
+<script>
+$(document).ready(function(){
+  //TailleImage();
+  Ajax();
+  grille();
+  // creation du lien SHOW MORE DANS LES VIGNETTES
+  $('article').each(function(){
+        var org = $(this).data('org');
+       if(org == 'Vodeclic') {
+        $(this).addClass('register');
+        $(this).find('.learn-more').addClass('register');
+        $(this).find('.learn-more').css('color','#fff');
+      }else{
+        var Urls = $(this).attr('data-link');
+        $(this).find('.learn-more').attr('href', Urls);
+      }
+  })
+})
+$(window).resize(function(){
+  TailleImage();
+  grille();
+})
+</script>

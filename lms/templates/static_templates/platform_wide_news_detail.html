@@ -141,6 +141,10 @@ function resizeP(){
     $('p').attr('style','');
     $('span').attr('style','');
     $('#texts_news').find('span').css('font-family','helveticaneue');
+    $('#texts_news').find('p').each(function(){
+      $(this).css('font-family','helveticaneue');
+      $(this).css('color','#fff');
+    })
   }
 }
 $(document).ready(function(){
@@ -151,6 +155,16 @@ $(window).resize(function(){
   resizeP();
 })
 </script>
+<style>
+.container.about {
+  padding-bottom: 60px;
+}
+#texts_news p {
+  font-family:'helveticaneue';
+  font-size: 20px;
+  line-height: 30px;
+}
+</style>
 <main id="main" aria-label="Content" tabindex="-1">
       % if news:
       <section class="container about">
@@ -174,3 +188,17 @@ $(window).resize(function(){
         </div>
       -->
 </main>
+<script>
+function image() {
+  var img = $('.news_picture').css('background-image');
+  if(img.indexOf('undefined') != -1) {
+    $('.news_picture').hide();
+  }
+}
+$(document).ready(function(){
+  image();
+})
+$(window).resize(function(){
+  image();
+})
+</script>

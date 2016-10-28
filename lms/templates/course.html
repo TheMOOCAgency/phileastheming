@@ -49,7 +49,6 @@ VodeclicClass = 'VodeclicClass'
 function Ajax() {
   (function() {
     $("article").click(function(event) {
-      console.log('coin');
       var Url = '${href_sso}'+'&vodeclic_id=';
       var num = $(this).data('number');
       var org = $(this).data('org');
@@ -75,7 +74,6 @@ function TailleImage(){
     var imgWidth = img.width;
     var imgHeight = img.height;
     var Org = Taille.data('org');
-    console.log(Org);
     if(imgWidth < tailleWidth && imgHeight < tailleHeight && Org == 'Vodeclic')
     {
       //$('.cover-images').children('img').attr('style','width: 187.5px;height:187.5px;background-color: #fff;display:block;margin-left:auto;margin-right:auto;')
@@ -93,35 +91,6 @@ function grille() {
     }
   })
 }
-$(document).ready(function(){
-  console.log('date : ${dada}');
-  //TailleImage();
-  Ajax();
-  grille();
-  // creation du lien SHOW MORE DANS LES VIGNETTES
-  $('article').each(function(){
-        /*
-        var Url = '${href_sso}'+'&vodeclic_id=';
-        var num = $(this).data('number');
-        */
-        var org = $(this).data('org');
-       if(org == 'Vodeclic') {
-        /*var Urls = Url+num;*/
-        $(this).addClass('register');
-        $(this).find('.learn-more').addClass('register');
-        $(this).find('.learn-more').css('color','#fff');
-        //$(this).find('.learn-more').attr('href', Urls);
-      }else{
-        var Urls = $(this).attr('data-link');
-        $(this).find('.learn-more').attr('href', Urls);
-      }
-  })
-})
-$(window).resize(function(){
-  TailleImage();
-  grille();
-})
-
 </script>
 <!--
 <LINK href="/static/css/course.css" rel="stylesheet" type="text/css">
@@ -203,6 +172,7 @@ $(window).resize(function(){
     padding-bottom: 5px;
     background-color: #fff;
   }
+  /*
   .highlighted-courses .courses .course a {
     position: absolute;
     bottom: 0;
@@ -213,6 +183,10 @@ $(window).resize(function(){
   }
   .home .courses-container .courses .courses-listing .courses-listing-item {
     height: 300px;
+    background-color: #fff;
+  }
+  */
+  .home .courses-container .courses .courses-listing .courses-listing-item {
     background-color: #fff;
   }
 }

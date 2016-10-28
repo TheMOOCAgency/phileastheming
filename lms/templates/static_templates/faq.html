@@ -10,11 +10,23 @@
   margin-left: auto;
   margin-right: auto;
 }
-#contenair_inside {
+#contenair_inside,#contenair_inside_2,#contenair_title {
   width: 1180px;
-  margin-left: auto;
-  margin-right: auto;
+  padding-left: calc((100% - 1180px) / 2);
+  padding-right: calc((100% - 1180px) / 2);
   height: auto;
+}
+#contenair_inside {
+  background-color: #F5F6F8;
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+#contenair_inside_2 {
+  padding-top: 50px;
+}
+#contenair_title {
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 #ariane,#title,#sub_title,#fil {
   width: 100%;
@@ -25,7 +37,6 @@
   margin-bottom: 15px;
   width: 100%;
   font-weight: 600;
-  height: 28px;
   line-height: 28px;
   vertical-align: middle;
   text-transform: uppercase;
@@ -41,8 +52,15 @@
   text-decoration: none;
 }
 @media(max-width:1440px) {
+  #contenair_inside,#contenair_inside_2,#contenair_title {
+    width : calc(100% - 10px);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   #contenair {
-    width : 100vw;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 @media(max-width: 1180px) {
@@ -126,6 +144,9 @@ h2 {
   font-size: 20px;
   font-family: 'helveticaneue-medium';
 }
+#contenair_inside_2 h2 {
+  text-align: left;
+}
 #timeline h3 {
   font-size: 22px;
   color: #363F4D;
@@ -171,9 +192,133 @@ h2 {
 .cacher-images-francais {
   display: none;
 }
+@media(max-width:983px) {
+  .textwo {
+    margin-left: 5px;
+  }
+}
+@media(max-width:983px) {
+  .textwo {
+    margin-left: 5px;
+    width: 88%;
+  }
+}
+@media(max-width:768px) {
+  .textwo {
+    margin-left: 5px;
+    width: 84%;
+  }
+}
+@media(max-width:425px) {
+  .textwo {
+    margin-left: 5px;
+    width: 80%;
+  }
+}
+#menu_info {
+  width: 70%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+  .menu_top {
+    width: calc(100% - 16px);
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 60px;
+    vertical-align: middle;
+    background-color: #009DE0;
+    color: #fff;
+    font-family: 'helveticaneue-medium';
+  }
+  .menu_down {
+    width: calc(100% - 20px);
+    height: auto;
+    display:none;
+    padding: 10px;
+    color: #445561;
+    font-family: 'helveticaneue-light';
+  }
+  .menu_down p {
+    padding: 0;
+    margin: 0;
+  }
+  .marge {
+    width: 100%;
+    height: 5px;
+  }
+  @media(max-width: 768px) {
+    #menu_info {
+      width: calc(100% - 10px);
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
 </style>
+<script>
+function lineHeight() {
+  $('.menu_top').each(function(){
+    var This = $(this);
+    var height = This.css('height');
+    var line = This.css('line-height');
+    var rapport = '';
+      if(parseInt(height) > 60) {
+        rapport = 60 / (parseInt(height) / 60);
+        This.css('line-height',rapport+'px');
+      }
+  })
+}
+function Slide() {
+  $('.menu_top').each(function(){
+    var This = $(this);
+    var height = This.css('height');
+    var line = This.css('line-height');
+    var data = This.data('number');
+    This.click(function(){
+      $('.menu_down').each(function(){
+        var Me = $(this);
+        var dat = Me.data('number');
+        if(dat == data) {
+          if(Me.is( ":hidden" )) {
+            Me.slideDown("slow");
+          }else{
+            Me.slideUp("slow");
+          }
+        }
+      })
+    })
+    /* ajustement line-height */
+  })
+}
+function alignCircle() {
+  $('.cell1').each(function(){
+    var height = parseInt($(this).find('.textone').height()) + 60;
+    $(this).find('.middle1').css('height',height+'px');
+  })
+  $('.cell2').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    $(this).find('.middle2').css('height',height+'px');
+  })
+  $('.cell3').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    $(this).find('.middle3').css('height',height+'px');
+  })
+}
+$(document).ready(function(){
+  alignCircle();
+  Slide();
+  lineHeight();
+})
+console.log()
+$(window).resize(function(){
+  alignCircle();
+  lineHeight();
+})
+$(document).on('DOMNodeInserted', function(e) {
+  lineHeight();
+})
+</script>
   <div id="contenair">
-    <div id="contenair_inside">
+    <div id="contenair_title">
       <div id="ariane">
         <a href="/">${_("Home")}</a> > <a href="#">${_("About")}</a>
       </div>
@@ -181,6 +326,8 @@ h2 {
       <!--
       <div id="sub_title">${_("")}</div>
       -->
+     </div>
+     <div id="contenair_inside">
       <div id="fil">
         <h2>${_("Discover Phileas")}</h2>
         <div id="timeline">
@@ -226,26 +373,66 @@ h2 {
       </div>
     </div>
   </div>
-<script>
-function alignCircle() {
-  $('.cell1').each(function(){
-    var height = parseInt($(this).find('.textone').height()) + 60;
-    $(this).find('.middle1').css('height',height+'px');
-  })
-  $('.cell2').each(function(){
-    var height = parseInt($(this).find('.textwo').height()) + 60;
-    $(this).find('.middle2').css('height',height+'px');
-  })
-  $('.cell3').each(function(){
-    var height = parseInt($(this).find('.textwo').height()) + 60;
-    console.log($(this).find('.textwo').height());
-    $(this).find('.middle3').css('height',height+'px');
-  })
-}
-$(document).ready(function(){
-  alignCircle();
-})
-$(window).resize(function(){
-  alignCircle();
-})
-</script>
+  <div id="contenair_inside_2">
+    <h2>${_("Q&A")}</h2>
+    <div id="menu_info">
+      <div class="menu_top" data-number="1">
+        ${_("How to connect to Phileas")} ?
+      </div>
+      <div class="menu_down" data-number="1">
+        <p>${_("By connecting with your current Windows login/password every morning, you are automatically connected to Phileas.")}</p>
+        <p>${_("Personal devices are not yet connected, but will be in the near future.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="2">
+        ${_("What kind of courses are available in Phileas")} ?
+      </div>
+      <div class="menu_down" data-number="2">
+        <p>${_("You will find trainings for softwares and digital tools (MS Office, Adobe, social networks, etc...). These modules are available in French and English.")}</p>
+        <p>${_("Phileas also provide Languages tools such as testing your level. ")}</p>
+        <p>${_("You will also find courses directly linked to our business and transversal thematics.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="3">
+        ${_("Does Phileas replace the action plans notified by my manager during the annual appraisal or professional interview")} ?
+      </div>
+      <div class="menu_down" data-number="3">
+        <p>${_("No, the two approaches are complementary. They both provide an answer to the skills development needs. Phileas training modules are digital only. training actions related to the professional interviews development plans are mix presential and digital approaches.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="4">
+        ${_("I am asked to sign up for a specific courses on Phileas and my manager will arbitrate. Why")} ?
+      </div>
+      <div class="menu_down" data-number="4">
+        <p>${_("Some training modules effectively requires validation of manager or training service. This is the case for time consuming courses or if the cost of the training has to  be arbitrated.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="5">
+        ${_("I have been invited by email to attend a course with Phileas, why")} ?
+      </div>
+      <div class="menu_down" data-number="5">
+      <p>${_("Mandatory courses hosted on Phileas can be monitored directly from the tool by the training service. Of course, Phileas offers free access to content directly linked with operational topics. But it does not replace the managerial responsibility in terms of development of skills, such as building action plans.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="6">
+        ${_("Why regulatory trainings are note available on Phileas but in another platform")} ?
+      </div>
+      <div class="menu_down" data-number="6">
+        <p>${_("All regulatory trainings from Credit Agricole S.A. are hosted on the Group platform Syfadys.")}</p>
+      </div>
+      <div class="marge"></div>
+
+      <div class="menu_top" data-number="7">
+        ${_("Who should I contact for issues with Phileas")} ?
+      </div>
+      <div class="menu_down" data-number="7">
+        <p>${_("Please contact your local HR training team for content issues within the modules.")}</p>
+        <p>${_("For technical questions related to the operation of Phileas, the IT helpdesk will be your main contact.")}</p>
+      </div>
+    </div>
+  </div>

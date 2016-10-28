@@ -31,49 +31,58 @@ button {
 }
 @font-face {
 font-family: 'gothamrounded-book';
-src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBook.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBook.otf');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'gothamrounded-medium';
 src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.otf');
+src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'gothamrounded-bold';
-src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBold.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBold.otf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBold.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'gothamrounded-light';
-src: url('/static/themes/phileastheming/fonts/custom/GothamRoundelight.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundelight.otf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundelight.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'helveticaneue-bold';
 src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue-Bold.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue-Bold.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'helveticaneue';
 src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'helveticaneue-light';
 src: url('/static/themes/phileastheming/fonts/custom/Helvetica-Light.otf');
+src: url('/static/themes/phileastheming/fonts/custom/Helvetica-Light.woff');
 font-weight: normal;
 font-style: normal;
 }
 @font-face {
 font-family: 'helveticaneue-medium';
 src: url('/static/themes/phileastheming/fonts/custom/HelveticaBQ-Medium.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaBQ-Medium.woff');
 font-weight: normal;
 font-style: normal;
 }
@@ -272,7 +281,16 @@ function addMarginNavForum(){
 }
 /* fin action page discution */
 function couleurFont() {
-  $('.content-wrapper').css('background-color', '#FAFAFA');
+  if(window.location.href.indexOf('/login') != -1) {
+    if(parseInt($(window).width()) <= 425) {
+      $('.content-wrapper').css('background-color', '#FFF');
+    }else{
+      $('.content-wrapper').css('background-color', '#FAFAFA');
+    }
+  }else{
+    $('.content-wrapper').css('background-color', '#FAFAFA');
+  }
+
   $('#global-navigation').css('background-color', '#FAFAFA');
 }
 function CssLast() {
@@ -307,15 +325,56 @@ function addPost() {
     clickPost();
   }
 }
+/* fix ipad */
+function inputSearchFixIpad() {
+  var width = parseInt($(window).width());
+  var url = window.location.href;
+  if((width == 1024) && (url.indexOf('/dashboard') != -1)) {
+    $('#input_search_nav').css('height','34px');
+    $('#input_search_nav').css('line-height','34px');
+    $('#input_search_nav').css('padding-top','0');
+    $('#input_search_nav').css('margin-top','0');
+    $('#input_search_nav').css('margin-bottom','0');
+    $('#input_search_nav').css('padding-bottom','0');
+    $('form').css('height','34px');
+  }else{
+    $('#input_search_nav').attr('style','height:24px;margin-top:5px;');
+  }
+}
+/* fix ipad */
+/* fix iphone */
+/* customise account Form */
+function acountForm() {
+  var url = window.location.href;
+  if(url.indexOf('/account') != -1) {
+    $(document).on('DOMNodeInserted', function(e) {
+      $('.u-field-nam').hide();
+      $('.u-field-nam').html('');
+      $('.u-field-email').hide();
+      $('.u-field-email').html('');
+      $('.u-field-password').hide();
+      $('.u-field-password').html('');
+      $('.u-field-country').hide();
+      $('.u-field-country').html('');
+      if($('.section').text().indexOf("Additional Information") != -1) {
+        $('.section:last-child').hide();
+        $('.section:last-child').html('');
+      }
+    })
+  }
+}
 $(document).ready(function(){
+  acountForm();
   CssLast();
   h1Ie11();
   couleurFont();
   addMarginNavForum();
   addPost();
+  inputSearchFixIpad();
 })
 $(window).resize(function(){
   CssLast();
+  inputSearchFixIpad();
   couleurFont();
 })
 </script>

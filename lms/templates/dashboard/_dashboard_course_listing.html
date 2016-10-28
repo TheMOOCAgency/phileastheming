@@ -72,24 +72,7 @@ course_org = course_overview.org
 <%namespace name='static' file='../static_content.html'/>
 <% style_overrides_file = static.get_value('css_overrides_file') %>
 <li class="course-item">
-<script>
-function gestionDisplayOption() {
-  var largeurDoc = $(document).width();
-  if(parseInt(largeurDoc) > 563) {
-    $('.social2-on').each(function(){
-      if($('#social2-on').show()) {
-        $('#social2-on').hide();
-      }
-    })
-  }
-}
-$(document).ready(function(){
-  gestionDisplayOption();
-})
-$(window).resize(function(){
-  gestionDisplayOption();
-})
-</script>
+
 <script>
 function articleHeight(){
   $('.course-info').each(function(){
@@ -97,9 +80,9 @@ function articleHeight(){
     var cible = parseInt($(this).height());
     if(doc < 595 && $(this).css('display') != 'none' ) {
       if(cible <= 50) {
-        $(this).parent().parent().css('height','460px');
+        $(this).parent().parent().css('height','430px');
       }else {
-        $(this).parent().parent().css('height','520px');
+        $(this).parent().parent().css('height','480px');
       }
     }else{
       $(this).parent().parent().attr('style','');
@@ -381,7 +364,9 @@ $(document).ready(function(){
         <p id="text-compl">
           <span>${course_overview.display_org_with_default}</span>
         </p>
+      <!--
         <p class="button-option"><button class="button-option-action">options</button></p>
+      -->
         <div class="wrapper-action-more social2-on" data-course-key="${enrollment.course_id}">
           % if can_unenroll:
             <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">

@@ -410,12 +410,14 @@ callForAllUser = function(){
 
 </script>
 <script>
-function ActionSiUneSection() {
-  var nombre = $('.menu-item').length;
-  if(parseInt(nombre) <= 1) {
-    $('.course-index').hide();
-  }
-}
+
+$(document).on('DOMNodeInserted', function(e) {
+    var nombre = $('.menu-item').length;
+    if(parseInt(nombre) <= 1) {
+      console.log('nombre : '+nombre);
+      $('.course-index').hide();
+    }
+});
 function menuPhone() {
     $('#active_menu').click(function(){
             if($('.course-index').css('display') == 'none') {
@@ -428,7 +430,7 @@ function menuPhone() {
   }
 
 function sizeMenu() {
-    if(parseInt($(window).width()) > 768) {
+    if((parseInt($(window).width()) > 768) && (parseInt($(window).width()) != 1024)) {
             $('.course-index').attr('style','');
       }
 }
@@ -462,13 +464,29 @@ $('fieldset').ready(function(){
     customRadioLabel();
   })
 })
+/* ipad fix */
+  function ipadCourse() {
+    var width = parseInt($(window).width());
+    var url = window.location.href;
+    if((width == 1024) && (url.indexOf('/courseware/') != -1)) {
+      $('.course-index').css('width','310px');
+      $('#active_menu').css('width','310px');
+      $('#course-content').css('width','714px');
+      $('#active_menu').hide();
+    }else{
+      $('.course-index').attr('style','');
+      $('#active_menu').attr('style','');
+    }
+  }
+/* end ipad fix */
 $(document).ready(function(){
   clearMarginFooter();
   menuPhone();
-  ActionSiUneSection();
+  ipadCourse();
 })
 $(window).resize(function(){
   sizeMenu();
+  ipadCourse();
 })
 </script>
 <style>

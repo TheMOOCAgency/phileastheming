@@ -11,7 +11,7 @@
   line-height: 38px;
   }
   #login-anchor {
-  background-color: #fff;
+  background-color: transparent;
   }
   .login-register, .financial-assistance-wrapper .financial-assistance-form {
     background-color: #fff;
@@ -20,10 +20,22 @@
     #login-anchor {
     height: auto;
     }
+    body {
+    background-color: #fff;
+    }
+  }
+  @media(max-width:425px) {
+  #login-anchor,.content-wrapper {
+  background-color: #fff;
+  }
+  body {
+  background-color: #fff;
+  }
   }
   @media(max-width:360px) {
     #login-anchor {
     height: calc(100vh - 175px);
+    background-color: #fff;
     }
     .login-register form {
         background-color: transparent;

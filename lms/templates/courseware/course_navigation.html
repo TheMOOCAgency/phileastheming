@@ -275,3 +275,32 @@ include_special_exams = settings.FEATURES.get('ENABLE_SPECIAL_EXAMS', False) and
     bottomOl();
   })
 </script>
+<script>
+function lineHeightTitle() {
+  var height = $('#titre_baniere_courseware').height();
+  var mesureHeight = $('.baniere_courseware').height();
+  var test = '';
+  var heightLine = parseInt($('.baniere_courseware').css('line-height'));
+  if(parseInt(height) > parseInt(mesureHeight)) {
+    var i = 0;
+    var n = 1;
+    for(i ; i < parseInt(mesureHeight) ; i++) {
+      var heights = $('#titre_baniere_courseware').height();
+      var mesureHeights = $('.baniere_courseware').height();
+      if(parseInt(heights) > parseInt(mesureHeights)) {
+        test = heightLine / (n + 1);
+        $('.baniere_courseware').css('line-height',test+'px');
+        n = n +1;
+      }else{
+        i = parseInt(mesureHeight);
+      }
+    }
+  }
+}
+$(document).ready(function(){
+  lineHeightTitle();
+})
+$(window).ready(function(){
+  lineHeightTitle();
+})
+</script>
