@@ -233,6 +233,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     .index-actualite {
       height: 1250px;
     }
+    .section3:last-child {
+      clear: none;
+    }
 
     .section3 {
       width: 99%;
@@ -252,12 +255,50 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       margin-top: 20px;
       margin-bottom: 20px;
     }
+
     .section2_down img {
       margin-left: auto;
       margin-right: auto;
     }
     .section1-marge {
       background-color: #fff;
+    }
+  }
+  @media(max-width:768px) and (min-width:768px) {
+    .heading-group {
+      margin-top: 15px;
+    }
+    .baniere-img {
+      height: 250px;
+    }
+    .pic-front-head {
+      display:block;
+      top: 430px;
+    }
+    .h1-span {
+      padding-top: 15px;
+      font-size: 34px;
+    }
+    .index-actualite {
+      height: 850px;
+    }
+    .section3 {
+      width: 49%;
+    }
+    .section3:last-child {
+      clear: none;
+      margin-top: 140px;
+      width: 44%;
+    }
+    .text_section3_down_up {
+      width: 75%;
+    }
+    .text_section3_down_down {
+      width: 90%;
+    }
+    .section3_down {
+      padding-top: 25px;
+      padding-bottom: 25px;
     }
   }
   @media(max-width:630px) {
@@ -556,7 +597,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     var News = '';
     var nombreNews = '';
     var This = $('.index-actualite-sous-section-1');
-    var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all of news")}</a></div>';
+    var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all the news")}</a></div>';
     $.ajax({
       type: "GET",
       url: '/api/news/',
@@ -753,6 +794,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
   #toute-les-actualite {
     margin-left: 0px;
   }
+  .zonebas {
+    padding-top: 20px;
+  }
   </style>
     <header class="baniere-img" style="">
       <div class="title" style="">
@@ -921,7 +965,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             </div>
           </div>
           % if user.is_authenticated():
-          <div class="color-grey">
+          <div class="color-grey zonebas">
             <!-- baniere -->
             <div class="section1-up">
               <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">

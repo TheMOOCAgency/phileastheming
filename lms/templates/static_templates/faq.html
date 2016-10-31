@@ -52,11 +52,6 @@
   text-decoration: none;
 }
 @media(max-width:1440px) {
-  #contenair_inside,#contenair_inside_2,#contenair_title {
-    width : calc(100% - 10px);
-    padding-left: 5px;
-    padding-right: 5px;
-  }
   #contenair {
     width: 100%;
     margin-left: 0;
@@ -64,6 +59,11 @@
   }
 }
 @media(max-width: 1180px) {
+  #contenair_inside,#contenair_inside_2,#contenair_title {
+    width : calc(100% - 10px);
+    padding-left: 5px;
+    padding-right: 5px;
+  }
   #contenair_inside {
     width: 100%;
   }
@@ -279,6 +279,7 @@ function Slide() {
         var dat = Me.data('number');
         if(dat == data) {
           if(Me.is( ":hidden" )) {
+            $('.menu_down').slideUp("slow");
             Me.slideDown("slow");
           }else{
             Me.slideUp("slow");
@@ -322,20 +323,20 @@ $(document).on('DOMNodeInserted', function(e) {
       <div id="ariane">
         <a href="/">${_("Home")}</a> > <a href="#">${_("About")}</a>
       </div>
-      <div id="title">${_("phileas, a learning community ...")}</div>
+      <div id="title">${_("Discover Phileas")}</div>
       <!--
       <div id="sub_title">${_("")}</div>
       -->
      </div>
      <div id="contenair_inside">
       <div id="fil">
-        <h2>${_("Discover Phileas")}</h2>
+        <h2></h2>
         <div id="timeline">
           <!-- cellule 1 -->
           <div class="cell1">
             <div class="textone">
               <span class="text_inside_one">
-                <h3>${_("Simple login")} :</h3>
+                <h3>${_("Simple login")}</h3>
                 <p>${_("Phileas allows you to access your courses anywhere from an Amundi device. Sign in once with your Amundi login password")}<span class="${_('hide-picture-english')}">, “et voilà” !</span></p>
               </span>
             </div>
@@ -351,7 +352,7 @@ $(document).on('DOMNodeInserted', function(e) {
               </div>
               <div class="textwo">
                 <span class="text_inside_two">
-                  <h3>${_("Diversified content")} :</h3>
+                  <h3>${_("Diversified content")}</h3>
                   <p>${_("Simple as a search engine")} ! ${_("Find the courses you need and access with a simple clic Some courses are located for English speakers For basics you dont need to registe. For others generally integrated in your development plan within the annual appraisal campaign  you may need your manager to validate it")}</p>
                 </span>
               </div>
@@ -361,7 +362,7 @@ $(document).on('DOMNodeInserted', function(e) {
           <div class="cell1">
             <div class="textone">
               <span class="text_inside_one">
-                <h3>${_("A flexible solution")} :</h3>
+                <h3>${_("A flexible solution")}</h3>
                 <p>${_("Phileas pragmatically answers to your needs. No time to finish your course")}? ${_("Resume and finish it later. Phileas meets your operational constraints.")}</p>
               </span>
             </div>
@@ -379,7 +380,7 @@ $(document).on('DOMNodeInserted', function(e) {
       <div class="menu_top" data-number="1">
         ${_("How to connect to Phileas")} ?
       </div>
-      <div class="menu_down" data-number="1">
+      <div class="menu_down" data-number="1" style="display:block;">
         <p>${_("By connecting with your current Windows login/password every morning, you are automatically connected to Phileas.")}</p>
         <p>${_("Personal devices are not yet connected, but will be in the near future.")}</p>
       </div>
@@ -390,13 +391,13 @@ $(document).on('DOMNodeInserted', function(e) {
       </div>
       <div class="menu_down" data-number="2">
         <p>${_("You will find trainings for softwares and digital tools (MS Office, Adobe, social networks, etc...). These modules are available in French and English.")}</p>
-        <p>${_("Phileas also provide Languages tools such as testing your level. ")}</p>
+        <p>${_("Phileas also provide Languages tools such as testing your level.")}</p>
         <p>${_("You will also find courses directly linked to our business and transversal thematics.")}</p>
       </div>
       <div class="marge"></div>
 
       <div class="menu_top" data-number="3">
-        ${_("Does Phileas replace the action plans notified by my manager during the annual appraisal or professional interview")} ?
+        ${_("Does Phileas replace the action plans notified by my manager during the annual appraisal or professional interview (France)")} ?
       </div>
       <div class="menu_down" data-number="3">
         <p>${_("No, the two approaches are complementary. They both provide an answer to the skills development needs. Phileas training modules are digital only. training actions related to the professional interviews development plans are mix presential and digital approaches.")}</p>

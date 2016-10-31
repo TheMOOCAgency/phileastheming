@@ -51,7 +51,7 @@ if(org == 'Vodeclic') {
         </form>
         </header>
         <section class="course-info" aria-hidden="true">
-            <h2 class="course-name" style="height:56px;font-family: 'helveticaneue-bold';text-transform: none;"><%- content.display_name %>
+            <h2 class="course-name" style="height:auto;font-family: 'helveticaneue-bold';text-transform: none;"><%- content.display_name %>
             </h2>
               <div class="course-ratings"></div>
             <p style="text-align: center;width: 100%;">

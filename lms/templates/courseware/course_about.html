@@ -127,7 +127,6 @@ from openedx.core.lib.courses import course_image_url
     difheight = parseInt(nombLi) - 130;
     marginTotal = 130 + (parseInt(difheight) / 2);
     $('.white-up').css('margin-top','-'+marginTotal+'px');
-    console.log(marginTotal);
   }
 
   function confirmSubscribe() {
@@ -172,9 +171,6 @@ from openedx.core.lib.courses import course_image_url
     upWhiteUp();
     confirmSubscribe();
     positionSubscribe();
-    console.log('')
-    console.log('${reverse('add_course_to_cart', args=[course.id.to_deprecated_string()])}');
-    console.log('${cart_link}');
   })
   $(window).resize(function(){
     positionSubscribe();
@@ -186,6 +182,9 @@ from openedx.core.lib.courses import course_image_url
 
 <%block name="pagetitle">${course.display_name_with_default}</%block>
 <style>
+  .course-info .details .inner-wrapper .course-staff .teacher .teacher-image {
+    border: none;
+  }
   .intro-inner-wrapper {
     width: 400px;
   }
@@ -477,7 +476,7 @@ from openedx.core.lib.courses import course_image_url
 }
 .course-info .course-sidebar {
   position: absolute;
-  z-index: 100000;
+  z-index: 10;
   top: -250px;
   right: 0;
 }
@@ -1045,7 +1044,6 @@ from openedx.core.lib.courses import course_image_url
 function bougerDiv() {
   var Details = $('.details');
   var DMenu = $('.course-sidebar');
-  console.log(Details);
   if(parseInt($(document).width()) < 769) {
     $('.details').before($('.course-sidebar'));
   }else{
@@ -1104,7 +1102,7 @@ $(window).resize(function(){
         text-decoration: none;
       ">${_("Asset management")}</a>
       <h2 class="titre-page">${course.display_name_with_default}</h2>
-      <p>Comprenez les principes théoriques et identifiez les meilleurs pratiques sur la gestion des risques financiers.</p>
+      <p>${get_course_about_section(request, course, 'short_description')}</p>
     </div>
   </div>
   <section class="container grey">
@@ -1127,7 +1125,14 @@ $(window).resize(function(){
           <section class="course-summary">
             <header>
               <div class="img-about-top">
+                % if get_course_about_section(request, course, "video"):
+                <a href="#video-modal" class="media" rel="leanModal">
+                    <img src="${course_image_url(course)}" alt="" />
+                    <div class="play-intro"></div>
+                </a>
+                %else:
                 <img src="${course_image_url(course)}" alt="" />
+                % endif
               </div>
               <div>
                 %if user.is_authenticated() and registered:
@@ -1140,7 +1145,7 @@ $(window).resize(function(){
                     <a href="${course_welcome}">
                   %endif
                   %if show_courseware_link:
-                    <strong>${_("View Courseware")}</strong>
+                    <strong>${_("Start the training")}</strong>
                     </a>
                   %endif
 
@@ -1189,6 +1194,25 @@ $(window).resize(function(){
             % if not course.start_date_is_still_default:
               <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
             % endif
+            % if get_course_about_section(request, course, "end_date") or course.end:
+            <li class="important-dates-item">
+                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes End")}</p>
+                <span class="important-dates-item-text final-date">
+                    % if get_course_about_section(request, course, "end_date"):
+                        ${get_course_about_section(request, course, "end_date")}
+                    % else:
+                        ${course.end_datetime_text()}
+                    % endif
+                </span>
+            </li>
+            % endif
+            % if get_course_about_section(request, course, "effort"):
+              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+            % endif
+            <li class="important-dates-item">
+              <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
+              <span class="important-dates-item-text">${_("French, English")}</span>
+            </li>
             % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
               <li class="important-dates-item">
                 <span id="total-reviews" style="float: left;"> </span>
@@ -1196,31 +1220,11 @@ $(window).resize(function(){
                 <span id="course-rate" style="float: left; margin-top: -5px; margin-left: 25px;"></span>
               </li>
             % endif
-              <li class="important-dates-item">
-                <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
-                <span class="important-dates-item-text">${_("French, English")}</span>
-              </li>
-
-              % if get_course_about_section(request, course, "effort"):
-                <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
-              % endif
               ## We plan to ditch end_date (which is not stored in course metadata),
               ## but for backwards compatibility, show about/end_date blob if it exists.
-              % if get_course_about_section(request, course, "end_date") or course.end:
-              <li class="important-dates-item">
-                  <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes End")}</p>
-                  <span class="important-dates-item-text final-date">
-                      % if get_course_about_section(request, course, "end_date"):
-                          ${get_course_about_section(request, course, "end_date")}
-                      % else:
-                          ${course.end_datetime_text()}
-                      % endif
-                  </span>
-              </li>
-              % endif
           </ol>
           <div class="picto-list-ol">
-            <a href="mailto:"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
+            <a href="mailto:" id="mailtoo"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
             <a href="#"><img src="/static/themes/phileastheming/images/forums.png" /></a>
           </div>
         </section>
@@ -1281,7 +1285,13 @@ $(window).resize(function(){
 % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
   <script src="${static.url('js/jquery.rateyo.js')}"></script>
   <script>
+    function SizeImg() {
+      var width = $('.img-about-top').width();
+      var height = parseInt(width) * (203.72/382);
+      $('.img-about-top').find('img').css('height',height+'px');
+    }
     $(document).ready(function(){
+            SizeImg();
             var course_id = "${course.id}";
             $.get({
               url: "/course_ratings_handler/" + course_id + "/",
@@ -1365,5 +1375,20 @@ $(window).resize(function(){
       });
 
     });
+    $(window).resize(function(){
+      SizeImg();
+    })
   </script>
 % endif
+<script>
+function mailTo() {
+  var title = '';
+  var href = window.location.href;
+  var doc = "J'ai pensé que cette formation pourrait vous intéresser";
+  var text = 'mailto:?subject=${course.display_name_with_default}&body='+doc+'   https://'+href;
+  $('#mailtoo').attr('href',text);
+}
+$(document).ready(function(){
+  mailTo();
+})
+</script>

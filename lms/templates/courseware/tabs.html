@@ -178,7 +178,7 @@ tab_class = ''
 }
 </style>
 
-<li class="tab"><img src="/static/themes/phileastheming/images/welcome.png"><a href="${_(welcome_url)}" class="${_(tab_class)}">${_(welcome_name)}</a></li>
+<li class="tab"><img src="/static/themes/phileastheming/images/welcome.png"><a href="${_(welcome_url)}" class="${_(tab_class)}">${_("Index")}</a></li>
 
 <li class="tab"><img src="/static/themes/phileastheming/images/course.png"><a href="${_(course_url)}" class="${_(tab_class)}">${_(course_name)}</a></li>
 
@@ -235,10 +235,21 @@ tab_class = ''
       }
     })
   }
+  function renamecours() {
+    $('.tab').find('a').each(function(){
+      var This = $(this);
+      var text = $(this).text();
+      if(text.indexOf('Cours') != -1 && text.indexOf('Course') == -1) {
+        console.log('coin');
+        This.text('Formation');
+      }
+    })
+  }
   $(document).ready(function(){
     Active_course_navigation();
     apparitionBouton();
     addMarginNavForum();
+    renamecours();
     /*
     alignerImg();
     */
