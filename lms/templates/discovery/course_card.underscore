@@ -41,12 +41,18 @@ if(org == 'Vodeclic') {
           }
         %>
         <!--
+
+        -->
+        <% if(org != 'Vodeclic') {
+        %>
         <a href="<%- lienvodeclick %>" class="ClassLien">
             <div class="cover-images">
                 <img src="<%- image_url %>" alt="<%- content.display_name %> <%- content.number %>" />
             </div>
         </a>
-        -->
+        <%
+        }else{
+        %>
         <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment" >
           <fieldset class="enroll_fieldset">
             <legend class="sr">Enroll</legend>
@@ -61,6 +67,10 @@ if(org == 'Vodeclic') {
             </button>
           </div>
         </form>
+        <%
+        }
+        %>
+
         </header>
         <section class="course-info" aria-hidden="true">
             <h2 class="course-name" style="height:auto;font-family: 'helveticaneue-bold';text-transform: none;"><%- content.display_name %>
@@ -81,9 +91,14 @@ if(org == 'Vodeclic') {
             <%
             }
             %>
-        <!--
+        <%if(org != 'Vodeclic'){
+        %>
+        <div style="position: absolute;z-index:1000;width: 100%;" class="ClassForm">
         <a href="<%- lienvodeclick %>" class="learn-more liens_oust" style="<%- liensA %>"><%- showMore %></a>
-        -->
+        </div>
+        <%
+        }else{
+        %>
         <div style="position: absolute;z-index:1000;width: 100%;" class="ClassForm">
           <form class="class_enroll_form<%- content.number %>" method="post" data-remote="true" action="/change_enrollment">
             <fieldset class="enroll_fieldset">
@@ -96,4 +111,7 @@ if(org == 'Vodeclic') {
             </div>
           </form>
         </div>
+        <%
+        }
+        %>
 </article>

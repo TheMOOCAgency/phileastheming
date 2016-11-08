@@ -205,6 +205,14 @@ ${_('All courses')}
         top: 126px;
         text-transform:uppercase;
       }
+      .learn-more {
+        margin-top: 30px;
+      }
+      @media(max-width:768px) {
+        .learn-more {
+          margin-top: 0;
+        }
+      }
       @media(max-width:1440px) {
         .lang_stat {
           top: 96px;
@@ -234,9 +242,9 @@ ${_('All courses')}
       }
       .imgFont img{
         max-width: 300px;
+        height: auto;
         max-height: 187.5px;
         width: 100%;
-        height: auto;
         min-width: 0;
         min-height: 0;
         background: linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px);
@@ -638,15 +646,16 @@ function imgAutre() {
     var This = $(this);
     var Img = This.find('img');
     var width = parseInt(This.width());
+    var height = parseInt(This.height());
     var imgWidth = parseInt(Img.width());
     var imgheight = (width/375)*200;
-    if(imgWidth < 300) {
+    var paddingLeft = 0;
+    if(imgWidth < 300 && height < 187.5) {
       paddingLeft = (width - imgWidth)/2;
     }else{
       paddingLeft = 0;
     }
     paddingTop = (187.5 - imgheight)/2;
-    console.log(Img.width());
     Img.css('padding-top',paddingTop+'px');
     Img.css('padding-bottom',paddingTop+'px');
     Img.css('padding-left',paddingLeft+'px');
