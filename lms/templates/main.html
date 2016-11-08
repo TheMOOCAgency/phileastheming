@@ -294,7 +294,7 @@ function couleurFont() {
   $('#global-navigation').css('background-color', '#FAFAFA');
 }
 function CssLast() {
-  $('.course-name').css('height','56px');
+  //$('.course-name').css('height','56px');
   if($(document).width() <= 786)
   {
     $('#table_search').css('position','relative');
@@ -348,6 +348,7 @@ function acountForm() {
   var url = window.location.href;
   if(url.indexOf('/account') != -1) {
     $(document).on('DOMNodeInserted', function(e) {
+      $('#u-field-select-account_privacy').disable = false;
       $('.u-field-nam').hide();
       $('.u-field-nam').html('');
       $('.u-field-email').hide();
@@ -362,9 +363,14 @@ function acountForm() {
       }
     })
   }
+  if(url.indexOf('/u/') != -1) {
+    $(document).on('DOMNodeInserted', function(e) {
+      $('#u-field-select-account_privacy').prop('disabled', false);
+    })
+  }
 }
 $(document).ready(function(){
-  acountForm();
+  //acountForm();
   CssLast();
   h1Ie11();
   couleurFont();

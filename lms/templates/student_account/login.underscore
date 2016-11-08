@@ -7,6 +7,13 @@
   .btn-blue:hover, .dashboard-banner .wrapper-msg .has-actions.msg .donate-actions .action-donate:hover, .login-register .action-primary:hover, .financial-assistance-wrapper .financial-assistance-form .action-primary:hover, .verification-process .action-primary-blue:hover, .verification-process .carousel .wrapper-task .controls .control .action:hover, .verification-process .carousel .wrapper-task .msg .list-actions .action-retakephotos a:hover, .verification-process .carousel #wrapper-review .review-task-name .list-actions .action-editname a:hover, .step-select-track.verification-process .register-choice-audit .action-select input:hover, .step-confirmation.verification-process .course-info .options .action-course:hover, .step-confirmation.verification-process .course-info .course-actions .action-dashboard:hover, .reverify-blocked .action-primary:hover, .wrapper-auto-cert.wrapper-msg .auto-cert-message .has-actions .msg-actions .btn:hover, .btn-blue:active, .dashboard-banner .wrapper-msg .has-actions.msg .donate-actions .action-donate:active, .login-register .action-primary:active, .financial-assistance-wrapper .financial-assistance-form .action-primary:active, .verification-process .action-primary-blue:active, .verification-process .carousel .wrapper-task .controls .control .action:active, .verification-process .carousel .wrapper-task .msg .list-actions .action-retakephotos a:active, .verification-process .carousel #wrapper-review .review-task-name .list-actions .action-editname a:active, .step-select-track.verification-process .register-choice-audit .action-select input:active, .step-confirmation.verification-process .course-info .options .action-course:active, .step-confirmation.verification-process .course-info .course-actions .action-dashboard:active, .reverify-blocked .action-primary:active, .wrapper-auto-cert.wrapper-msg .auto-cert-message .has-actions .msg-actions .btn:active, .btn-blue:focus, .dashboard-banner .wrapper-msg .has-actions.msg .donate-actions .action-donate:focus, .login-register .action-primary:focus, .financial-assistance-wrapper .financial-assistance-form .action-primary:focus, .verification-process .action-primary-blue:focus, .verification-process .carousel .wrapper-task .controls .control .action:focus, .verification-process .carousel .wrapper-task .msg .list-actions .action-retakephotos a:focus, .verification-process .carousel #wrapper-review .review-task-name .list-actions .action-editname a:focus, .step-select-track.verification-process .register-choice-audit .action-select input:focus, .step-confirmation.verification-process .course-info .options .action-course:focus, .step-confirmation.verification-process .course-info .course-actions .action-dashboard:focus, .reverify-blocked .action-primary:focus, .wrapper-auto-cert.wrapper-msg .auto-cert-message .has-actions .msg-actions .btn:focus {
    line-height: 38px;
   }
+  .content-wrapper {
+  margin:0;
+  padding:0;
+  background: url('/static/themes/phileastheming/images/PageConnexion.jpg') no-repeat center fixed;
+  -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+  background-size: cover;
+  }
   .login .form-actions button[type="submit"],.login-register .action-primary, .financial-assistance-wrapper .financial-assistance-form .action-primary {
   line-height: 38px;
   }
@@ -21,16 +28,51 @@
     height: auto;
     }
     body {
-    background-color: #fff;
+    background-color: transparent;
+    }
+    .login-register, .financial-assistance-wrapper .financial-assistance-form {
+    background: transparent;
     }
   }
-  @media(max-width:425px) {
+  @media(max-width: 767px) {
+    #login-form {
+    padding: 5px;
+    margin-top: 20px;
+    }
+  }
+  @media(max-width:740px) {
   #login-anchor,.content-wrapper {
-  background-color: #fff;
+  background-color: transparent;
+  }
+  .wrapper-footer,#register-anchor,#password-reset-anchor,#institution_login-anchor,#hinted-login-anchor {
+  display: none;
+  }
+  .content-wrapper {
+  height: 100vh;
+  }
+  #login-form {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 20px;
   }
   body {
-  background-color: #fff;
+  background-color: transparent;
   }
+  #login {
+    padding-top: 1%;
+    padding-bottom: 50px;
+    margin-top: 50px;
+    padding-left: 15px;
+   padding-right: 15px;
+
+  }
+  }
+  @media(max-width:428px) {
+    #login-form {
+    padding-left: 0;
+    padding-right: 0;
+    margin-top: 20px;
+    }
   }
   @media(max-width:360px) {
     #login-anchor {

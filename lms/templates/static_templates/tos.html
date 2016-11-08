@@ -1,0 +1,524 @@
+<%page expression_filter="h"/>
+<%! from django.utils.translation import ugettext as _ %>
+<%inherit file="../main.html" />
+
+<%block name="pagetitle">${_("Terms of Service")}</%block>
+<style>
+* {
+   outline: 0;
+}
+.container, section.outside-app, .view-profile .profile-self .wrapper-profile-field-account-privacy .u-field-account_privacy, .view-profile .wrapper-profile-sections, .view-profile .badge-set-display {
+  min-width: 0px;
+}
+#title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  width: 100%;
+  font-weight: 600;
+  line-height: 28px;
+  vertical-align: middle;
+  text-transform: uppercase;
+  background-color: transparent;
+  color: #914d8e;
+  font-size: 30px;
+  font-family: 'gothamrounded-medium';
+}
+.about h3,h2 {
+  text-align: justify;
+  font-family: 'helveticaneue-medium';
+  padding-top: 20px;
+  padding-bottom: 20px;
+  width: 70%;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  text-transform: uppercase;
+  font-size: 20px;
+  color: ##A7A7A7;
+}
+.about h2 {
+  color: #A7A7A7;
+  font-size: 24px;
+}
+#menu_info {
+  width: 70%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+  .menu_top {
+    width: calc(100% - 16px);
+    padding-left: 8px;
+    padding-right: 8px;
+    line-height: 60px;
+    vertical-align: middle;
+    background-color: #009DE0;
+    color: #fff;
+    font-family: 'helveticaneue-medium';
+  }
+  .menu_down {
+    width: calc(100% - 20px);
+    height: auto;
+    display:none;
+    padding: 10px;
+    color: #445561;
+    font-family: 'helveticaneue-light';
+  }
+  .menu_down p {
+    padding: 0;
+    margin: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align:justify;
+  }
+  .marge {
+    width: 100%;
+    height: 5px;
+  }
+  @media(max-width: 768px) {
+    #menu_info {
+      width: calc(100% - 10px);
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+</style>
+<main id="main" aria-label="Content" tabindex="-1">
+    <section class="container about">
+      <div id="title">Conditions
+      Générales d'Utilisation («&nbsp;CGU&nbsp;») du Service de
+      formation à distance – Plateforme PHILEAS</div>
+      <div id="contenair_inside_2">
+        <div id="menu_info">
+          <div class="menu_top" data-number="1">
+            PREAMBULE
+          </div>
+          <div class="menu_down" data-number="1" style="display:block;">
+            <p>L’acceptation
+            des présentes Conditions Générales d’Utilisation est nécessaire
+            pour accéder au service de formation professionnelle à distance via
+            la plateforme de formation PHILEAS (la «&nbsp;Plateforme&nbsp;» ou
+            le «&nbsp;Service&nbsp;»). Les CGU ne peuvent être acceptées
+            qu’après avoir pris connaissance de leur contenu.</p>
+            <p>Cette
+            Plateforme est mise en place par Amundi Asset Management («&nbsp;Amundi&nbsp;»)
+            et mise à disposition des salariés (le «&nbsp;Stagiaire&nbsp;»).</p>
+            <p>Le
+            Service permet aux Stagiaires de bénéficier, dans le cadre de la
+            formation professionnelle continue, de modules de formation à
+            distance.</p>
+            <p>Sur
+            demande de l’Entreprise et selon les besoins exprimés par
+            celle-ci, le service permet aux Stagiaires, après identification, de
+            bénéficier d’une formation à distance sous forme de modules
+            thématiques.</p>
+          </div>
+          <div class="marge"></div>
+          <div class="menu_top" data-number="12">
+            ARTICLE 1 - Objet
+          </div>
+          <div class="menu_down" data-number="12">
+          <p>L'objet
+          des présentes conditions générales d’utilisation est de définir
+          les modalités d'accès au Service ainsi que les conditions de
+          fonctionnement qui y sont proposés. Le Service est réservé aux
+          Stagiaires.</p>
+          <p>En
+          utilisant le Service, le stagiaire reconnaît avoir pris pleinement
+          connaissance et approuver l'ensemble des conditions générales
+          d’utilisation du Service et du Site.</p>
+          <p>Il
+          n'y a pas de délai de rétractation, le Stagiaire peut à tout
+          moment cesser d'utiliser le Service.</p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="2">
+            ARTICLE 2- Conditions d'accès
+          </div>
+          <div class="menu_down" data-number="2">
+          <p>Seules
+          les personnes autorisées pourront accéder au Service. La connexion
+          s’effectuant sur la base des identifiants habituels des stagiaires
+          au sein d’Amundi.</p>
+          <p>Le
+          Stagiaire est informé par l’Entreprise, du recueil, de l’usage
+          et de la transmission à Amundi  des données personnelles le
+          concernant. Il est également informé que conformément à la Loi
+          Informatique et Libertés de 1978, il dispose d’un droit d’accès,
+          de modification et d’opposition.</p>
+          <p>La
+          mise à disposition du Service implique l'utilisation d'un matériel
+          informatique approprié disposant d’une connexion internet. Il est
+          entendu que l’Entreprise et/ou le Stagiaire fait son affaire
+          personnelle de la location ou de l'achat, du choix, de la
+          sécurisation et de l'entretien de ce matériel.</p>
+          <p>L’accès
+          au Service a lieu depuis l’espace sécurisé du site Amundi. En
+          cliquant sur Connexion, le Stagiaire est alors redirigé vers la
+          Plateforme de formation PHILEAS. Ses identifiants et mot de passe
+          correspondent à ses identifiants Windows Amundi. Ces Données
+          d'accès sont strictement confidentielles et le Stagiaire doit
+          prendre toutes les mesures nécessaires en vue de conserver cette
+          confidentialité. Le Stagiaire est responsable de la confidentialité
+          des données fournies dans le cadre de l'utilisation du Service et
+          des Données d'accès.<br>Il s'engage, en conséquence, à ce que les
+          Données d'accès demeurent secrètes.
+          </p>
+          <p>L'attention
+          du Stagiaire est attirée sur la nécessité de se déconnecter du
+          Service à la fin de chaque utilisation. La responsabilité d’Amundi
+          ne pourra pas être engagée en cas d'usage frauduleux ou abusif ou
+          dû à une divulgation volontaire ou involontaire à quiconque des
+          Données d'accès confiées au Stagiaire. Le Stagiaire reconnaît, en
+          conséquence, que toute opération réalisée au moyen des Données
+          d'accès, quelle qu'en soit l'origine, lui sera, en tout état de
+          cause, personnellement et définitivement attribuée, sauf preuve
+          contraire.</p>
+          <p>En
+          cas d'oubli ou de perte de son mot de passe, le Stagiaire peut
+          demander l'attribution d'un nouveau mot de passe.</p>
+          <p>L’on
+          entend par Stagiaire, au sens des présentes mentions légales, le
+          salarié Amundi, dont l’accès au Service est actif, soit parce
+          qu’il exécute une formation, soit parce qu’il peut accéder au
+          Service à l’issu de sa période de formation, en consultation
+          libre uniquement.
+          </p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="3">
+            ARTICLE 3 - Fonctionnalités
+          </div>
+          <div class="menu_down" data-number="3">
+          <p>Le
+          stagiaire reconnaît être informé que le Service est accessible 24
+          H/24 H et 7 jours/7 jours, à l'exception des cas de force majeure,
+          des difficultés informatiques, des difficultés liées à la
+          structure du réseau de télécommunication ou des autres difficultés
+          techniques. Le Service pourra notamment faire l'objet d'interruptions
+          temporaires, pour des raisons de maintenance. Dans un premier temps,
+          le contenu est accessible uniquement depuis un matériel informatique
+          professionnel fourni par Amundi.</p>
+          <p>Les
+          informations contenues dans le Service proviennent de documents
+          considérés comme étant fiables et sont régulièrement mises à
+          jour. Toutefois, Amundi ne saurait garantir que leur transcription
+          sur la Plateforme s'effectue sans risque d'erreurs matérielles. Bien
+          qu’Amundi  s'engage à corriger leurs éventuelles erreurs dès
+          qu'elles sont portées à sa connaissance, sa responsabilité ne
+          saurait être engagée pour toute décision prise  sur la base de la
+          Plateforme et/ou des informations diffusées.</p>
+          <p>Amundi
+          n'est pas responsable des conséquences d'un dysfonctionnement ou
+          d'une interruption de service. Amundi fournit ses meilleurs efforts
+          en vue de rendre le service accessible à tout moment.</p>
+          <p>Dans
+          la mesure du possible, Amundi s'efforcera d'avertir immédiatement
+          les utilisateurs, s’il en a connaissance, de tous problèmes
+          affectant le Service (virus etc…).</p>
+          <p>Le
+          Service ne délivre aucune forme de conseil (ex&nbsp;: conseil
+          juridique, fiscal, en investissement…etc.).</p>
+          <p>Toutes
+          informations juridiques, financières, fiscales, etc… ainsi que les
+          simulations éventuelles ne sont qu'indicatives.
+          </p>
+          <p>Les
+          contenus diffusés sur la Plateforme PHILEAS ne peuvent être
+          utilisées qu’à des fins strictement personnelles. Sauf conditions
+          contraires d’utilisation  en ligne, le Stagiaire ne peut pas
+          reproduire et/ou utiliser les marques et logos présents sur la
+          Plateforme, il ne peut pas modifier, assembler, décompiler, sous
+          licencier, transférer, copier, traduire, vendre, publier, exploiter
+          et diffuser, sous quelque forme que ce soit, tout ou partie du
+          contenu mis à disposition sur la Plateforme.</p>
+          <p>Amundi
+          se réserve le droit de supprimer tout commentaire sur le forum de
+          discussion, notamment en cas d’infraction au regard de la loi
+          Française ou de réclamation d’un tiers. Il ne peut être tenu
+          responsable de la diffusion de ces contenus, sauf dans l’hypothèse
+          où il aurait été informé et aurait agi tardivement pour le
+          supprimer.</p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="4">
+            ARTICLE 4 - Responsabilité
+          </div>
+          <div class="menu_down" data-number="4">
+          <p>Amundi
+          veille à ce que les supports électroniques sur lesquels sont
+          stockées les Données qui leur sont transmises bénéficient d'une
+          protection suffisante par rapport aux exigences légales.
+          </p>
+          <p>Il
+          s’engage à apporter ses meilleurs soins en vue d'assurer et
+          conserver l'intégrité et la sécurité de la Plateforme et du
+          Service.</p>
+          <p>Amundi
+          est responsable vis-à-vis du Stagiaire de la bonne exécution des
+          obligations résultant des présentes conditions générales sous
+          réserve des dispositions qui suivent.</p>
+          <p>Il
+          ne peut cependant pas être tenu pour responsable des dommages
+          directs ou indirects, tels que perte financière, perte de données,
+          virus, bogues, perte ou manque à gagner sur toute opération,
+          résultant d'une erreur ou d'une information consultée, ou
+          téléchargée sur le Service. En particulier, les informations
+          fournies sont  purement indicatives, la responsabilité d’Amundi ne
+          saurait être engagée pour toute décision prise par le Stagiaire
+          sur la base de ce Service ou des informations divulguées par son
+          biais.
+          </p>
+          <p>La
+          responsabilité d’Amundi ne pourra être engagée pour
+          l'inexécution ou mauvaise exécution du Service consécutive à la
+          négligence du Stagiaire dans la garde confidentielle de ses Données
+          d'accès ou à un mauvais fonctionnement du matériel ou du réseau
+          de télécommunications dont ils n'ont pas la maîtrise.</p>
+          <p>Il
+          est rappelé que le secret des correspondances n'est pas garanti sur
+          les réseaux et qu'il appartient à chaque utilisateur de prendre les
+          mesures appropriées de façon à protéger ses propres données
+          et/ou logiciels de l'intrusion de personnes tierces et de la
+          contamination d'éventuels virus. Dans la mesure du possible Amundi
+          s'efforcera d'avertir immédiatement le Stagiaire s'il a connaissance
+          de problèmes affectant le Service (virus etc.).</p>
+          <p>Amundi
+          n’est pas responsable du transport des informations sur les
+          réseaux. Il ne saurait être également tenus responsable en cas de
+          mauvaise utilisation du Service par le Stagiaire, en cas
+          d'indisponibilité des réseaux de télécommunications et d'une
+          manière générale, en cas de trouble quelconque, qui pourrait
+          résulter de difficultés liées au fonctionnement des Services (cas
+          de force majeure, difficultés liées à la structure du réseau de
+          télécommunications ou difficultés techniques, période de
+          maintenance ou de défaillance quelle qu'elle soit).</p>
+          <p>Amundi
+          est responsable vis-à-vis du Stagiaire de la bonne exécution des
+          obligations résultant des présentes mentions légales, sauf si
+          Amundi apportent la preuve que l'inexécution de l'une quelconque de
+          ses obligations est imputable au Stagiaire ou à un fait imprévisible
+          et insurmontable d'un tiers étranger à la fourniture du Service ou
+          en cas de force majeure.
+          </p>
+          <p>
+          Le
+          Stagiaire est responsable du contenu de ses discussions dans l’espace
+          de communication entre Stagiaires et formateurs (forum de
+          discussion). Il est précisé qu’Amundi ne garantit pas la
+          véracité, la complétude, l’exactitude des commentaires&nbsp;; et
+          qu’il se réserve le droit de supprimer tout commentaire quelqu’il
+          soit, et notamment contraire aux lois et règlements de droit
+          français.
+          </p>
+          <p>
+          Il
+          est par conséquent formellement interdit de tenir&nbsp;des propos à
+          caractère raciste, xénophobe, antisémite, homophobe,
+          négationniste, pornographique, pédophile, pédopornographique…&nbsp;;
+          des propos injurieux, diffamatoires, ou portant atteinte à la vie
+          privée, et plus généralement aux droits de la personnalité de
+          quiconque&nbsp;; des propos portant atteinte à la dignité humaine&nbsp;;
+          des propos incitant à la violence, au suicide, au terrorisme, à
+          l’utilisation, la fabrication ou la distribution de substances
+          illicites&nbsp;; des propos incitant aux crimes ou aux délits ou qui
+          en font l’apologie et plus particulièrement les crimes contre
+          l’humanité&nbsp;; de porter atteinte aux droits de propriété
+          intellectuelle de tiers (notamment textes, photographies) ou au droit
+          à l’image des personnes pour lesquels le Stagiaire ne dispose pas
+          des autorisations nécessaires des auteurs et/ou ayants droit&nbsp;;
+          de publier intentionnellement du contenu faux, erroné ou trompeur&nbsp;;
+          de publier des contenus faisant la promotion de services à but
+          lucratif (liste non exhaustive).</p>
+          <p>Il
+          est rappelé d’autre part que l’usage des contenus mis à
+          disposition des Stagiaires sur la Plateforme relève de leur seule
+          responsabilité. Les faits, actes et décisions que le Stagiaire
+          accompli en considération de ces contenus relèvent de sa seule
+          responsabilité.</p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="5">
+            ARTICLE 5 - Interruption du Service
+          </div>
+          <div class="menu_down" data-number="5">
+          <p>Le
+          Stagiaire est informé que le Service a vocation à être accessible
+          24 H / 24 H et 7 jours sur 7 jours, à l'exception des cas de force
+          majeure, des difficultés informatiques, des difficultés liées à
+          la structure du réseau de télécommunications ou des autres
+          difficultés techniques. Le Service pourra notamment faire l'objet
+          d'interruptions temporaires, pour des raisons de maintenance.</p>
+          <p>Amundi
+          fournit ses meilleurs efforts en vue de rendre le Service accessible
+          à tout moment. Dans la mesure du possible, le Stagiaire sera
+          préalablement informé de toute interruption de Service et sera tenu
+          informé des éventuels dysfonctionnements pouvant toucher tout ou
+          partie du Service.</p>
+          <p>Amundi
+          n’est pas responsable des conséquences d'un dysfonctionnement ou
+          d'une interruption de Service. En cas d'interruption ou de
+          dysfonctionnement pour quelque raison que ce soit, dès qu'il en a
+          connaissance, Amundi s'engage à faire son possible dans les plus
+          brefs délais pour que le Service soit rétabli.
+          </p>
+          <p>En
+          tout état de cause, toute interruption ou tout dysfonctionnement ne
+          constitue pas un manquement aux obligations contractuelles d’Amundi
+          résultant des conventions conclues avec l'Entreprise.
+          </p>
+          <p>Amundi
+          s'engage en tout état de cause à faire son possible pour éviter un
+          retard dû à une interruption du Service qu'il fournit ou à un
+          dysfonctionnement dans l'exécution des prestations objet de ce
+          Service qui pourrait être préjudiciable au Stagiaire.</p>
+          <p>En
+          cas de dysfonctionnement ou indisponibilité constatés par le
+          Stagiaire, il peut contacter le service help desk d’Amundi.
+          </p>
+          <p>En
+          cas de non-respect des présentes mentions légales du Site, Amundi
+          se réserve le droit de suspendre ou interrompre l’accès du
+          Stagiaire de façon temporaire ou définitive, sans contrepartie ou
+          notification.</p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="6">
+            ARTICLE 6 - Tarification
+          </div>
+          <div class="menu_down" data-number="6">
+          <p>L'accès
+          au Service est gratuit pour le Stagiaire et collaborateur Amundi. Le
+          coût des communications sera supporté par l'Entreprise (ou le cas
+          échéant par le Stagiaire) en fonction de ses propres modalités
+          d'accès à Internet.</p>
+          <p>Il
+          est porté à l’attention des Stagiaires que certaines formations
+          payantes pourront ne pas être prise en charge en totalité ou en
+          partie par l’entreprise et qu’il pourra notamment être demandé
+          l’utilisation de son Compte Personnel Formation le cas échéant
+          pour le financement de formation non prévues au plan de formation.</p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="7">
+            ARTICLE 7 -  Modification des conditions générales
+          </div>
+          <div class="menu_down" data-number="7">
+          <p>Le
+          Service est susceptible d'être complété ou modifié à tout moment
+          notamment pour ajouter des fonctions, ou en fonction des évolutions
+          technologiques ou de la réglementation. En conséquence, compte tenu
+          notamment des extensions et améliorations possibles du Service, les
+          dispositions des présentes conditions générales pourront être
+          modifiées.</p>
+          <p>Les
+          CGU pourront être modifiées à tout moment, sans information
+          préalable du Stagiaires. La date de mise à jour est mentionnée. Le
+          Stagiaire est invité à consulter régulièrement leur dernière
+          version à jour. La version en vigueur des conditions générales
+          d'utilisation des Services est consultable en ligne à tout moment.
+          </p>
+          </div>
+          <div class="marge"></div>
+          <div class="menu_top" data-number="8">
+            ARTICLE 8 – Durée
+          </div>
+          <div class="menu_down" data-number="8">
+          <p>L’accès
+          au Service par le Stagiaire peut être supprimé ou suspendu en cas
+          de non-respect des présentes conditions générales d’utilisation.
+          L’accès au Service est susceptible de prendre fin sur demande de
+          l’Entreprise.
+          </p>
+          </div>
+          <div class="marge"></div>
+
+          <div class="menu_top" data-number="9">
+            ARTICLE 9 - Droit applicable - Langue
+          </div>
+          <div class="menu_down" data-number="9">
+          <p>Le
+          Service a pour langue officielle le français. Certains modules de
+          formation peuvent toutefois être réalisés en anglais.</p>
+          <p>L’utilisation
+          du Service en tant que tel, ainsi que toutes les activités qui
+          peuvent être développées sont régies par le droit français. Tous
+          les litiges nés de l’utilisation de ce Service seront de la
+          compétence exclusive des tribunaux de Paris, même en cas de
+          pluralité de défendeurs.
+          </p>
+          </div>
+          <div class="marge"></div>
+        </div>
+      </div>
+    </section>
+</main>
+<script>
+function lineHeight() {
+  $('.menu_top').each(function(){
+    var This = $(this);
+    var height = This.css('height');
+    var line = This.css('line-height');
+    var rapport = '';
+      if(parseInt(height) > 60) {
+        rapport = 60 / (parseInt(height) / 60);
+        This.css('line-height',rapport+'px');
+      }
+  })
+}
+function Slide() {
+  $('.menu_top').each(function(){
+    var This = $(this);
+    var height = This.css('height');
+    var line = This.css('line-height');
+    var data = This.data('number');
+    This.click(function(){
+      $('.menu_down').each(function(){
+        var Me = $(this);
+        var dat = Me.data('number');
+        if(dat == data) {
+          if(Me.is( ":hidden" )) {
+            $('.menu_down').slideUp("slow");
+            Me.slideDown("slow");
+          }else{
+            Me.slideUp("slow");
+          }
+        }
+      })
+    })
+    /* ajustement line-height */
+  })
+}
+function alignCircle() {
+  $('.cell1').each(function(){
+    var height = parseInt($(this).find('.textone').height()) + 60;
+    $(this).find('.middle1').css('height',height+'px');
+  })
+  $('.cell2').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    $(this).find('.middle2').css('height',height+'px');
+  })
+  $('.cell3').each(function(){
+    var height = parseInt($(this).find('.textwo').height()) + 60;
+    $(this).find('.middle3').css('height',height+'px');
+  })
+}
+$(document).ready(function(){
+  alignCircle();
+  Slide();
+  lineHeight();
+})
+console.log()
+$(window).resize(function(){
+  alignCircle();
+  lineHeight();
+})
+$(document).on('DOMNodeInserted', function(e) {
+  lineHeight();
+})
+</script>

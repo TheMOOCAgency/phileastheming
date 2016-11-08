@@ -105,7 +105,11 @@ from openedx.core.djangolib.markup import HTML, Text
               <p class="chart-title">Score</p>
             </div>
             <div class="achievement">
-              <div class="badge ${'achieved' if badge else ''}"><span class="icon fa fa-certificate"></span></div>
+              %if badge == True:
+              <div class="badge ${'achieved' if badge else ''}"><img src="/static/themes/phileastheming/images/badge_1.png"/></div>
+              % else:
+              <div class="badge ${'achieved' if badge else ''}"><img src="/static/themes/phileastheming/images/badge_2.png"/></div>
+              % endif
               <p class="chart-title">Badge</p>
             </div>
           </div>
@@ -120,7 +124,10 @@ from openedx.core.djangolib.markup import HTML, Text
           </div>
           <div class="social">
             <div class="social-circle">
-              <a href=""><span class="icon fa fa-envelope-o"></span></a>
+              <a href="mailto:"><span class="icon fa fa-envelope-o"></span></a>
+            </div>
+            <div class="social-circle social-right-most">
+              <a href="#"><span class="icon fa fa-facebook"></span></a>
             </div>
           </div>
         </div>
@@ -169,19 +176,10 @@ from openedx.core.djangolib.markup import HTML, Text
       $('#voile').hide();
     })
   }
-  function mailTo() {
-    var title = $('#titre_baniere_courseware').text();
-    var url = $('.about').find('a').attr('href');
-    var href = window.location.host;
-    var doc = "J'ai pensé que cette formation pourrait vous intéresser";
-    var text = 'mailto:?subject='+title+'&body='+doc+' https://'+href+url;
-    $('.social-circle').find('a').attr('href',text);
-  }
   $(document).ready(function(){
     analysisMarge();
     donnesStat();
     voile();
-    mailTo();
   });
   $(window).resize(function(){
     analysisMarge();

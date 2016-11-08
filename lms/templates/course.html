@@ -8,21 +8,36 @@ from courseware.courses import get_course_about_section
 from django.conf import settings
 from edxmako.shortcuts import marketing_link
 from openedx.core.lib.courses import course_image_url
-
+from courseware.courses import get_course_by_id
+from student.models import UserProfile
 #import SSO test
 import json
 import requests
 import hashlib
 import datetime
 
+%>
+
+<%
+lang = get_course_by_id(course.id).language
+if lang == 'fr':
+  language = 'FRA'
+elif lang == 'en':
+  language = 'ENG'
+endif
+%>
+<%page args="course,user" expression_filter="h"/>
+<%
 now = datetime.datetime.now()
 
 date = now.strftime("%d%m%Y")
 datess = ("10102016")
-api = 'xGXMdnyltTAHZMSHPZHg'
-partenaire = 'CgFVrWdhuSVccijkVVwF'
-email = 'amundi3.admin@vodeclic.com'
-id_membre = 'amundi3.admin'
+api = 'uYUoVrzSEVityKwgNhHO'
+partenaire = 'LIkptrpdXajmLaJTRHYF'
+email = user.email
+first_name = user.first_name
+last_name = user.last_name
+id_membre = UserProfile.objects.get(user_id=user.id).rpid
 day = '08'
 month = '09'
 year = '2016'
@@ -33,7 +48,7 @@ d = hashlib.sha256(date+api).hexdigest()
 dada = hashlib.sha256(datess+api).hexdigest()
 url = 'https://lms.vodeclic.com/api/sso?'
 
-data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&email='+email+'&d='+d+''
+data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&prenom='+first_name+'&nom='+last_name+'&email='+email+'&d='+d+''
 
 href_sso = url+data_fr
 #fin import SSo
@@ -42,21 +57,22 @@ test_url = ''
 
 VodeclicClass = 'VodeclicClass'
 %>
-<%page args="course" expression_filter="h"/>
 <style>
 </style>
 <script>
 function Ajax() {
   (function() {
     $("article").click(function(event) {
-      var Url = '${href_sso}'+'&vodeclic_id=';
-      var num = $(this).data('number');
-      var org = $(this).data('org');
-      $(this).find("#class_enroll_form").submit();
-      event.preventDefault();
-      var Urls = Url+num;
-      //$(location).attr('href', Urls);
-      window.open(Urls);
+      if($(this).data('org') == 'Vodeclic'){
+        var Url = '${href_sso}'+'&vodeclic_id=';
+        var num = $(this).data('number');
+        var org = $(this).data('org');
+        $(this).find("#class_enroll_form").submit();
+        event.preventDefault();
+        var Urls = Url+num;
+        //$(location).attr('href', Urls);
+        window.open(Urls);
+      }
     });
   })(this)
 }
@@ -95,119 +111,6 @@ function grille() {
 <!--
 <LINK href="/static/css/course.css" rel="stylesheet" type="text/css">
 -->
-<%block name="headextra">
-  <link rel="stylesheet" type="text/css" href="${static.url('css/course.css')}">
-</%block>
-<style>
-.highlighted-courses .courses .course a {
-  display: absolute;
-}
-.VodeclicClass img{
-  width: 150px;
-  height: 150px;
-  background-color: #fff;
-  margin-top: 18.75px;
-  margin-bottom: 18.75px;
-}
-.VodeclicClass {
-  max-width: 300px;
-  margin-left: -150px;
-  height: auto;
-  left: 50%;
-  background: linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px);
-  background-size: 1px 3px;
-}
-.register {
-  color: #fff;
-}
-.courses-container .courses .course .course-info p {
-  margin-top: 6px;
-}
-.course-name {
-    text-align: center;
-    color: #555d68;
-    font-size: 24px;
-    font-family: 'helveticaneue-bold';
-    width: 100%;
-    margin-top: -20px;
-}
-.courses-container .courses .course {
-  background-color: #fff;
-}
-.jq-ry-container {
-  margin-left: auto;
-  margin-right: auto;
-}
-.jq-ry-container>.jq-ry-group-wrapper {
-  position: absolute;
-  top: -26px;
-  z-index: 10000000000;
-}
-@media(min-width: 1440px) {
-  .find-courses .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .university-profile .courses-container .courses.no-course-discovery .courses-listing .courses-listing-item, .home .courses-container .courses .courses-listing .courses-listing-item,.cover-images {
-        width: 426px;
-  }
-  .course-images, .course-image {
-    height: 187.5px;
-  }
-}
-@media(max-width: 1440px) {
-  .course-images, .course-image {
-    height: 187.5px;
-  }
-}
-@media (max-width: 486px) {
-  .cover-images {
-      width: 100%;
-      margin-left: auto;
-      margin-right: auto;
-  }
-  .courses-container .courses .course .course-info {
-    position: relative;
-    height: 182px;
-  }
-}
-@media(max-width: 414px) {
-  .courses-container .courses .course .course-info p {
-    padding-bottom: 5px;
-    background-color: #fff;
-  }
-  /*
-  .highlighted-courses .courses .course a {
-    position: absolute;
-    bottom: 0;
-    display: none;
-  }
-  .jq-ry-container {
-    display: none;
-  }
-  .home .courses-container .courses .courses-listing .courses-listing-item {
-    height: 300px;
-    background-color: #fff;
-  }
-  */
-  .home .courses-container .courses .courses-listing .courses-listing-item {
-    background-color: #fff;
-  }
-}
-@media screen and (max-width: 768px) and (min-width: 486px) {
-  .home .courses-container .courses .courses-listing .courses-listing-item:nth-child(2n) {
-       margin-right: 1.6vw;
-  }
-  .VodeclicClass img{
-    width: 120px;
-    height: 120px;
-    background-color: #fff;
-  }
-}
-@media(max-width:486px) {
-  .VodeclicClass img{
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-  }
-}
-</style>
   <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}" data-link="${reverse('about_course', args=[course.id.to_deprecated_string()])}" data-number="${course.display_number_with_default}" data-org="${course.display_org_with_default}">
       <header class="course-image" data-org="${course.display_org_with_default}">
         <div class="cover-images
@@ -215,6 +118,7 @@ function grille() {
           ${VodeclicClass}
         % endif
         ">
+          <div class="language">${language}</div>
           <img src="${course.course_image_url}" alt="${course.display_name_with_default} ${course.display_number_with_default}"  style="
 
           " />
@@ -228,7 +132,12 @@ function grille() {
         </p>
         % endif
         <p style="text-align: center;width: 100%;">
-          <img src="/static/themes/phileastheming/images/icon_acceslibre.png">
+        % if course.manager_only:
+          <img src="/static/themes/phileastheming/images/cle.png"><span style="font-family: 'helveticaneue';color: #808B93;letter-spacing: 0.8px;"> Accès réservé</span>
+        % endif
+        % if not course.manager_only:
+          <img src="/static/themes/phileastheming/images/cle.png"><span style="font-family: 'helveticaneue';color: #808B93;letter-spacing: 0.8px;"> Accès libre</span>
+        % endif
         </p>
 
     <a href="" class="learn-more" style="
@@ -248,3 +157,8 @@ function grille() {
       </form>
     </div>
   </article>
+<script>
+$(document).ready(function(){
+  console.log('data_fr : ${data_fr}');
+})
+</script>

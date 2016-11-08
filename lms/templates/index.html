@@ -624,28 +624,36 @@ all_active_user = User.objects.filter(is_active = 1,).count()
            $('.picto_section3_down').each(function(){
              var text = $(this).parent().find('.text_section3_down_down').text();
              var long = parseInt(text.length);
-             if(parseInt($(document).width())>768){
-               if(long > 50) {
-                 str = text.slice(50, -1);
+             var i = 0;
+             var n = 0;
+             var longueur = 0;
+             for(i;i<long;i++) {
+               var hauteur = $(this).parent().find('.text_section3_down').height();
+               hauteur = parseInt(hauteur);
+               var height = parseInt($(this).height());
+               var texts = $(this).parent().find('.text_section3_down_down').text();
+               var longs = parseInt(texts.length);
+               if(hauteur > 120) {
+                 n = n + 3;
+                 longueur = longs - n;
+                 str = text.slice(longueur, -1);
                  text = text.replace(str,' ..');
                  $(this).parent().find('.text_section3_down_down').html(text);
-                 //intNews();
-               }
-             }else {
-               if(long > 100) {
-                 str = text.slice(100, -1);
-                 text = text.replace(str,' ..');
-                 $(this).parent().find('.text_section3_down_down').html(text);
-                 //intNews();
+                 i++
+               }else{
+                 i = long + 1;
                }
              }
             if($(this).data('ordre') == '2') {
              $(this).css('float','right');
              $(this).parent().find('.text_section3_down_up').css('text-align','right');
-             $(this).parent().find('.text_section3_down_up').css('margin-left','21%');
+             $(this).parent().find('.text_section3_down_up').css('margin-left','26%');
+             $(this).parent().find('.text_section3_down_up').css('padding-left','2%');
+             $(this).parent().find('.text_section3_down_up').css('padding-right','2%');
              $(this).parent().find('.text_section3_down_down').css('text-align','right');
-             $(this).parent().find('.text_section3_down_down').css('margin-left','21%');
-
+             $(this).parent().find('.text_section3_down_down').css('margin-left','26%');
+             $(this).parent().find('.text_section3_down_down').css('padding-left','2%');
+             $(this).parent().find('.text_section3_down_down').css('padding-right','2%');
 
              if(parseInt($(document).width()) < 425) {
                $(this).parent().find('.text_section3_down_up').css('margin-left','0');
@@ -670,21 +678,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               }
             })
           }
-          /* marge sur les intitulé de news */
-          /*
-          function intNews() {
-            $('.text_section3_down_down').each(function(){
-             var This = $(this);
-             var width = parseInt($(this).height());
-             if(width <= 60) {
-              var margeTop = 60 - width;
-               This.css('margin-top',margeTop+'px');
-             }
-            })
-          }
-          */
           $(window).resize(function(){
             aligneTitresNews();
+            ActuFloats();
           })
           //intNews();
           ActuFloats();
@@ -705,11 +701,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       var This = $(this);
       var parentHeight = $(this).parent().height();
       var pictoHeight = $(this).height();
-      console.log('Largeur '+Largeur);
       if(parseInt(Largeur) <= 425) {
         var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) /2 ;
         This.css('margin-top',margintop+'px');
-        console.log('margintop '+margintop);
       }else{
         This.attr('style','');
       }
@@ -760,18 +754,47 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       }
     })
   }
+  function hauteurcours() {
+    var plug = 0;
+    if($(window).width() < 486 ){
+      var long = $('.courses-listing-item').length;
+      var height = parseInt($('.courses-listing-item').height());
+      console.log('longueur : '+long)
+      if(long == undefined ) {
+        console.log('test');
+        $('.color-greys').hide();
+      }else if(parseInt(long) == 1) {
+        plug = 120;
+      }else if(parseInt(long) == 2){
+        plug = 230;
+      }else{
+        plug = 300;
+      }
+      var longs = (long * height)+plug;
+      console.log('longueur '+long );
+      $('.courses-container').css('height',longs+'px');
+    }else{
+      plug = 100;
+      var height = parseInt($('.courses-listing-item').height());
+      var longs = height+100;
+      console.log('longueur '+long );
+      $('.courses-container').css('height',longs+'px');
+    }
+  }
   $(document).ready(function(){
-  marginNewsTitle();
+   marginNewsTitle();
    AnglaisFrancais();
    alignerPicto();
    callNews();
    policeOpti();
+   hauteurcours();
   })
   $(window).resize(function(){
    marginNewsTitle();
    AnglaisFrancais();
    alignerPicto();
    policeOpti();
+   hauteurcours();
   })
   </script>
   <style>
@@ -781,7 +804,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     height: auto;
   }
   .text_section3_down_down {
-    line-height: 23px;
+    line-height: 20px;
     font-family: 'helveticaneue';
     overflow: hidden;
     max-height: 60px;
@@ -814,7 +837,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
       </div>
     </header>
     <div class="pic-front-head">
-      <img src="/static/themes/phileastheming/images/logo2.png" />
+      <img src="/static/themes/phileastheming/images/LogoBanniere.png"/>
     </div>
   </div>
   </section>
@@ -837,7 +860,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               <div class="section1-up">
                 <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                   <div class="titre_section1">
-                    ${_("phileas, a learning community ...")}
+                    philéas${_(", a learning community ...")}
                   </div>
                   <div class="titre_section1 act-in">
                     ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -847,13 +870,12 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                     <div class="picto_section1_down" style="
 
               ">
-                      <img src="/static/themes/phileastheming/images/icon_medaille.png" style="
+                      <img src="/static/themes/phileastheming/images/PictoMonde51.png" style="
                   display: block;
-                  width: 33px;
-                  height: 45px;
+                  width: 51px;
+                  height: 51px;
                   margin-left: auto;
-                  margin-right: auto;
-              ">
+                  margin-right: auto;">
                     </div>
                     <div class="text_section1_down">
                       <div class="text_section1_down_up">
@@ -905,7 +927,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="bouton-decouverte">
-                    <a href="/faq" style="color: #914d8e;">${_("discover phileas")}</a>
+                    <a href="/faq" style="color: #914d8e;">${_("discover")} philéas</a>
                   </div>
                 </div>
               </div>
@@ -936,15 +958,55 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                 ${_("news")}
               </div>
             </div>
-            <div class="section3 img-post-actu">
-              <a href="/cpf" class="${_('hide-picture-english')}">
-              <img src="/static/themes/phileastheming/images/img3.png" />
+            % if user.is_authenticated():
+              % if LANGUAGE_CODE == 'fr':
+              <div class="section3 img-post-actu">
+                <img src="/static/themes/phileastheming/images/anglais.jpg" />
+              <a href="/courses?Vodeclic">
+                <img src="/static/themes/phileastheming/images/software.jpg" />
+              </a>
+              <a href="/cpf">
+              <img src="/static/themes/phileastheming/images/cpf.jpg" />
             </a>
-              <img src="/static/themes/phileastheming/images/img4.png" />
-            <a href="/courses?Vodeclic">
-              <img src="/static/themes/phileastheming/images/img5.png" />
-            </a>
-            </div>
+              </div>
+              % elif LANGUAGE_CODE == 'en':
+              <div class="section3 img-post-actu">
+                <img src="/static/themes/phileastheming/images/anglais.jpg" />
+              <a href="/courses?Vodeclic">
+                <img src="/static/themes/phileastheming/images/software.jpg" />
+              </a>
+              </div>
+              % endif
+            % else:
+              <style>
+              #videoiframe {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+              }
+              @media (max-width: 768px) and (min-width: 768px){
+                .section3 {
+                  clear: left;
+                  width: 100%;
+                  min-height: 810px;
+                }
+                .section3:last-child {
+                  clear: left;
+                  margin-top: 0px;
+                  width: 100%;
+                }
+                .index-actualite {
+                    height: 1440px;
+                }
+              }
+              </style>
+              <div class="section3 img-post-actu">
+                <div class="titre_section3" id="titleiframe" style="margin-top:50px">
+                  ${_("video")}
+                </div>
+                <iframe id="videoiframe" title="YouTube Video" width="90%" src="//www.youtube.com/embed/5BPNOOQO0oE?rel=0&amp;autoplay=1&amp;rel=0" frameborder="0" allowfullscreen=""></iframe>
+              </div>
+            % endif
           </div>
           <!-- Icones -->
           <div class="section1-marge" id="rond-1">
@@ -970,7 +1032,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             <div class="section1-up">
               <div class="section1 col-xs-12 col-md-12 col-sm-12 col-lg-12">
                 <div class="titre_section1">
-                  ${_("phileas, a learning community ...")}
+                  philéas${_(", a learning community ...")}
                 </div>
                 <div class="titre_section1 act-in">
                   ${_("With Phileas, find an additional way of training to improve your professional life.")}
@@ -980,10 +1042,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                   <div class="picto_section1_down" style="
 
             ">
-                    <img src="/static/themes/phileastheming/images/icon_medaille.png" style="
+                    <img src="/static/themes/phileastheming/images/PictoMonde51.png" style="
                 display: block;
-                width: 33px;
-                height: 45px;
+                width: 51px;
+                height: 51px;
                 margin-left: auto;
                 margin-right: auto;
             ">
@@ -1038,7 +1100,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="bouton-decouverte">
-                  <a href="/faq" style="color: #914d8e;">${_("discover phileas")}</a>
+                  <a href="/faq" style="color: #914d8e;">${_("discover")} philéas</a>
                 </div>
               </div>
             </div>
@@ -1092,3 +1154,30 @@ $(document).ready(function(){
   })
 })
 </script>
+% if not user.is_authenticated():
+<script>
+function iframeHeight(){
+  var iframe = $('#videoiframe');
+  var width = parseInt(iframe.width());
+  var height = width * 0.5625;
+  iframe.css('height',height+'px');
+}
+function marginTitleIframe() {
+  var title = $('#titleiframe');
+  var iframe = $('#videoiframe');
+  var margin = parseInt(iframe.css('margin-left'));
+  var width = parseInt(title.width());
+  width = width - margin;
+  title.css('width',width+'px');
+  title.css('margin-left',margin+'px');
+}
+$(document).ready(function() {
+  iframeHeight();
+  marginTitleIframe();
+})
+$(document).resize(function(){
+  iframeHeight();
+  marginTitleIframe();
+})
+</script>
+% endif

@@ -38,9 +38,8 @@ from openedx.core.lib.courses import course_image_url
           location.href = "${cart_link}";
         }
         if (jqXHR.status == 400) {
-          $("#register_error")
-            .html(jqXHR.responseText ? jqXHR.responseText : "${_("An error occurred. Please try again later.")}")
-            .css("display", "block");
+          course_welcome_mod = course_target.replace('info','')
+          course_welcome = course_welcome_mod+'welcome'
         }
         else if (jqXHR.status == 403) {
             location.href = "${reg_then_add_to_cart_link}";
@@ -78,7 +77,8 @@ from openedx.core.lib.courses import course_image_url
       } else if (xhr.status == 403) {
         location.href = "${reverse('course-specific-register', args=[course.id.to_deprecated_string()])}?course_id=${course.id | u}&enrollment_action=enroll";
       } else if (xhr.status == 400) { //This means the user did not have permission
-        $('#register_error').html("${perms_error}").css("display", "block");
+        course_welcome_mod = course_target.replace('info','')
+        course_welcome = course_welcome_mod+'welcome'
       } else {
         $('#register_error').html(
             (xhr.responseText ? xhr.responseText : "${_("An error occurred. Please try again later.")}")
@@ -102,9 +102,9 @@ from openedx.core.lib.courses import course_image_url
       } else if (xhr.status == 403) {
           location.href = "${reverse('register_user')}?course_id=${course.id | u}&enrollment_action=enroll";
       } else {
-        $('#register_error').html(
-            (xhr.responseText ? xhr.responseText : "${_("An error occurred. Please try again later.")}")
-        ).css("display", "block");
+        course_welcome_mod = window.location.href;
+        course_welcome_mod = course_welcome_mod.replace('/about','/welcome')
+        location.href = course_welcome_mod
       }
     });
 
@@ -188,6 +188,10 @@ from openedx.core.lib.courses import course_image_url
   .intro-inner-wrapper {
     width: 400px;
   }
+  .course-info .details .inner-wrapper .faq .responses {
+    width: calc(100% - 10px);
+    padding-right: 10px;
+  }
   .up_dashboard {
     width: 1180px;
     height: 300px;
@@ -263,12 +267,15 @@ from openedx.core.lib.courses import course_image_url
     vertical-align: middle;
     text-align: center;
   }
+  .course-summary .media a {
+    height: auto;
+  }
   .details h2,.course-staff h2,.avis-formation h2 {
     font-size: 20px;
     color: #445561;
     font-family: 'helveticaneue-medium';
   }
-.course-info .details p, .course-staff p,.avis-formation p {
+.course-info .details p, .course-staff p,.avis-formation p,.course-info .details li, .course-staff li,.avis-formation li {
     font-size: 18px;
     color: #445561;
     font-family: 'helveticaneue-light';
@@ -290,21 +297,16 @@ from openedx.core.lib.courses import course_image_url
     height: 134px;
     line-height: 134px;
     vertical-align: middle;
+    text-align:center;
     background-color: #fff;
   }
   .picto-list-ol a,.picto-list-ol a:hover,.picto-list-ol a:focus{
-    float: left;
     background-color: transparent;
     width: 67.9px;
     height: 67.9px;
     margin-top: 30px;
     margin-bottom: 32px;
-    margin-left: 3.8%;
-    margin-right: 27.8%;
-  }
-  .picto-list-ol a:first-child {
-    margin-left: 27.8%;
-    margin-right: 3.8%;
+    display:inline-block;
   }
   .picto-list-ol a img {
     display: block;
@@ -325,10 +327,20 @@ from openedx.core.lib.courses import course_image_url
     position: relative;
     z-index: 1000;
   }
+  .response h3 {
+    color: #fff;
+  }
+  .course-info .details .response p {
+    color: #fff;
+  }
+  .course-info .details .response li {
+    color: #fff;
+  }
   .about,.faq,.prerequisites {
     padding-left: 130px;
     padding-top: 15px;
     padding-bottom: 15px;
+    text-align:justify;
     width: calc(100% - 130px);
   }
   .faq h2 {
@@ -348,7 +360,7 @@ from openedx.core.lib.courses import course_image_url
       margin-left: auto;
       margin-right: auto;
       margin-top: -130px;
-      height:600px;
+      height:auto;
       background-color: #fff;
     }
 .window-wrap {
@@ -373,6 +385,7 @@ from openedx.core.lib.courses import course_image_url
   width: 126px;
   height: 126px;
   float: left;
+  position: relative;
 }
 .teacher-image img {
   display: block;
@@ -380,17 +393,30 @@ from openedx.core.lib.courses import course_image_url
   height: 100%;
   border-radius: 50%;
 }
+.teacher-image .teacher_mail {
+  position: absolute;
+  top:0;
+  right:0;
+}
+.teacher-image .teacher_mail img{
+  display: inline;
+  width: 44px;
+  height: 44px;
+}
 .teacher-up {
   width: calc(100% - 136px);
   height: 126px;
   float: left;
 }
 .teacher h3,.teacher p {
-  height: 63px;
-  line-height: 63px;
+  height: auto;
+  /*line-height: 50px;*/
   margin-left: 20px;
   vertical-align: bottom;
   width: calc(100% - 20px);
+}
+.teacher h3 {
+  margin-top: 23px;
 }
 .teacher p {
   vertical-align: top;
@@ -522,7 +548,7 @@ from openedx.core.lib.courses import course_image_url
     width: calc(100% - 900px);
   }
   .course-info .details {
-    width:900px;
+    width:880px;
     margin-right: 0px;
   }
   .course-info .course-sidebar>section.course-summary {
@@ -539,11 +565,9 @@ from openedx.core.lib.courses import course_image_url
   }
 }
 @media(max-width:1354px) {
-  .picto-list-ol a,.picto-list-ol a:first-child,.picto-list-ol a:last-child {
+  .picto-list-ol a {
     width: 45px;
     height: 45px;
-    margin-left: 36px;
-    margin-right: 36px;
   }
   .picto-list-ol {
     width: 234px;
@@ -554,16 +578,20 @@ from openedx.core.lib.courses import course_image_url
     padding-left: 50px;
   }
 }
-@media(max-width:1278px) {
+@media(max-width:1280px) {
   .course-info .course-sidebar>section.course-summary {
     width: 100%;
+  }
+  .up_dashboard {
+    margin-left: 50px;
+    width: 70%;
   }
   .course-info .course-sidebar{
     width: calc(100% - 880px);
     right: 5px;
   }
   .course-info .details {
-    width:700px;
+    width:950 px;
     padding-right: 100px;
     margin-right: 0px;
   }
@@ -582,13 +610,13 @@ from openedx.core.lib.courses import course_image_url
     margin-bottom: 1%;
   }
   .white-up {
-    height: 930px;
+    height: auto;
   }
 }
 @media(max-width: 1180px) {
   .up_dashboard {
     width: 95%;
-    margin-left: 5%;
+    margin-left: 50px;
   }
 }
 @media(max-width: 1100px) {
@@ -599,7 +627,7 @@ from openedx.core.lib.courses import course_image_url
     width: calc(100% - 805px);
   }
   .course-info .details {
-    width:700px;
+    width:850px;
     padding-right: 25px;
   }
   .important-dates-item-title {
@@ -614,7 +642,7 @@ from openedx.core.lib.courses import course_image_url
     width: calc(100% - 780px);
   }
   .course-info .details {
-    width:650px;
+    width:830px;
     padding-right: 50px;
   }
   .up_dashboard p {
@@ -628,7 +656,7 @@ from openedx.core.lib.courses import course_image_url
 }
 @media(max-width: 1280px) {
   .about, .faq, .prerequisites {
-    width: 100%;
+    width: calc(100% - 95px);
   }
 }
 @media(max-width:950px) {
@@ -719,11 +747,9 @@ from openedx.core.lib.courses import course_image_url
     vertical-align: middle;
     text-align: center;
   }
-  .picto-list-ol a,.picto-list-ol a:first-child {
+  .picto-list-ol a {
     width: 45px;
     height: 45px;
-    margin-left: 36px;
-    margin-right: 36px;
   }
 }
 @media(max-width:768px) {
@@ -774,10 +800,10 @@ from openedx.core.lib.courses import course_image_url
     padding-right: 1%;
     width: 98%;
   }
-  .img-about-top {
+  .img-about-top,.img-about-top a img {
     min-width: 200px
   }
-  .img-about-top img {
+  .img-about-top img,.img-about-top a img {
     width: 100%;
     height: auto;
   }
@@ -1073,7 +1099,7 @@ $(window).resize(function(){
   <h2>${_("Your enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h} ${_("is subject to validation")}</h2>
   <div class="link">
     <a href="#" class="register">
-      ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h}
+      ${_("Enroll")}
     </a>
   </div>
 </div>
@@ -1086,17 +1112,17 @@ $(window).resize(function(){
     text-align: left;
     ">
       <a href="/" style="
-      color: #3D4857;
+      color: #3D4850;
       font-size: 14px;
       font-family: helveticaneue;
       text-decoration:none;
       ">${_("Home")}</a> &gt;<a href="/courses" style="
-            color: #3D4857;
+            color: #3D4850;
             font-size: 14px;
             font-family: helveticaneue;
             text-decoration:none;
             ">${_("Courses")}</a> &gt;<a href="/dashboard" style="
-        color: #3D4857;
+        color: #3D4850;
         font-size: 14px;
         font-family: helveticaneue;
         text-decoration: none;
@@ -1126,10 +1152,10 @@ $(window).resize(function(){
             <header>
               <div class="img-about-top">
                 % if get_course_about_section(request, course, "video"):
-                <a href="#video-modal" class="media" rel="leanModal">
-                    <img src="${course_image_url(course)}" alt="" />
+                <a href="#video-modal" class="media" rel="leanModal" style="height:auto;">
+                    <img src="${course_image_url(course)}" alt="" class="media" rel="leanModal"/>
                     <div class="play-intro"></div>
-                </a>
+                  </a>
                 %else:
                 <img src="${course_image_url(course)}" alt="" />
                 % endif
@@ -1180,10 +1206,24 @@ $(window).resize(function(){
                   </a>
                   <div id="register_error"></div>
                 %else:
+                  %if manager_only == True:
+                    %if is_manager == True:
+                    <button href="#" class="registers">
+                      ${_("Enroll")}
+                    </button>
+                    <div id="register_error"></div>
+                    %else:
+                    <button href="#" class="registers_not">
+                      Accès réservé
+                    </button>
+                    <div id="register_error"></div>
+                    %endif
+                  %else:
                   <button href="#" class="registers">
-                    ${_("Enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h}
+                    ${_("Enroll")}
                   </button>
                   <div id="register_error"></div>
+                  %endif
                 %endif
               </div>
             </header>
@@ -1192,12 +1232,12 @@ $(window).resize(function(){
             ##<li class="important-dates-item"><i class="icon fa fa-clock-o"></i><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" /> ${_('Durée')}</p><span class="important-dates-item-text course-length">${_('{number} weeks').format(number=15)}</span></li>
 
             % if not course.start_date_is_still_default:
-              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date">${course.start_datetime_text()}</span></li>
+              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes Start")}</p><span class="important-dates-item-text start-date datecustom">${course.start_datetime_text()}</span></li>
             % endif
             % if get_course_about_section(request, course, "end_date") or course.end:
             <li class="important-dates-item">
                 <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_calendar.png" /> ${_("Classes End")}</p>
-                <span class="important-dates-item-text final-date">
+                <span class="important-dates-item-text final-date datecustom">
                     % if get_course_about_section(request, course, "end_date"):
                         ${get_course_about_section(request, course, "end_date")}
                     % else:
@@ -1207,11 +1247,18 @@ $(window).resize(function(){
             </li>
             % endif
             % if get_course_about_section(request, course, "effort"):
-              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Efforts")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
+              <li class="important-dates-item"><p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_clock.png" />  ${_("Effort")}</p><span class="important-dates-item-text effort">${get_course_about_section(request, course, "effort")}</span></li>
             % endif
             <li class="important-dates-item">
               <p class="important-dates-item-title"><img src="/static/themes/phileastheming/images/icon_langues.png" />${_("Languages")}</p>
-              <span class="important-dates-item-text">${_("French, English")}</span>
+            %if course_details.language != '':
+              % if course_details.language == 'en':
+              <span class="important-dates-item-text" id="langues_insert">${_("English")}</span>
+              % else:
+              <span class="important-dates-item-text" id="langues_insert">${_("French")}</span>
+              % endif
+            % endif
+
             </li>
             % if settings.FEATURES.get('TMA_ENABLE_COURSE_RATING'):
               <li class="important-dates-item">
@@ -1225,7 +1272,6 @@ $(window).resize(function(){
           </ol>
           <div class="picto-list-ol">
             <a href="mailto:" id="mailtoo"><img src="/static/themes/phileastheming/images/icon_mail.png" /></a>
-            <a href="#"><img src="/static/themes/phileastheming/images/forums.png" /></a>
           </div>
         </section>
 
@@ -1291,7 +1337,7 @@ $(window).resize(function(){
       $('.img-about-top').find('img').css('height',height+'px');
     }
     $(document).ready(function(){
-            SizeImg();
+            //SizeImg();
             var course_id = "${course.id}";
             $.get({
               url: "/course_ratings_handler/" + course_id + "/",
@@ -1376,7 +1422,7 @@ $(window).resize(function(){
 
     });
     $(window).resize(function(){
-      SizeImg();
+      //SizeImg();
     })
   </script>
 % endif
@@ -1385,10 +1431,148 @@ function mailTo() {
   var title = '';
   var href = window.location.href;
   var doc = "J'ai pensé que cette formation pourrait vous intéresser";
-  var text = 'mailto:?subject=${course.display_name_with_default}&body='+doc+'   https://'+href;
+  var text = "mailto:?subject=Philéas - ${course.display_name_with_default}&body="+doc+'   https://'+href;
   $('#mailtoo').attr('href',text);
 }
+function formateur() {
+  $('.teacher-up').find('h3').each(function(){
+    var height = parseInt($(this).height());
+    var lineHieght = parseInt($(this).css('line-height'));
+    var borne = 50;
+    var i = 0;
+    var n = 0;
+    if(height > 50) {
+      for(i;i<50;i++) {
+        var heights = parseInt($(this).height());
+        var lineHieghts = parseInt($(this).css('line-height'));
+        if(heights > 50) {
+          lineHieghts = lineHieghts - (n + 1);
+          $(this).css('line-height',lineHieghts+'px');
+          n++;
+          i++;
+        }else{
+          i = 51;
+        }
+      }
+    }else if(height < 50) {
+      for(i;i<50;i++) {
+        var heights = parseInt($(this).height());
+        var lineHieghts = parseInt($(this).css('line-height'));
+        if(heights < 50) {
+          lineHieghts = lineHieghts + (n + 1);
+          $(this).css('line-height',lineHieghts+'px');
+          n++;
+          i++;
+        }else{
+          i = 51;
+        }
+      }
+    }
+  })
+  $('.teacher-up').find('p').each(function(){
+    var height = parseInt($(this).height());
+    var lineHieght = parseInt($(this).css('line-height'));
+    var borne = 50;
+    var i = 0;
+    var n = 0;
+    if(height > 50) {
+      for(i;i<50;i++) {
+        var heights = parseInt($(this).height());
+        var lineHieghts = parseInt($(this).css('line-height'));
+        if(heights > 50) {
+          lineHieghts = lineHieghts - (n + 1);
+          $(this).css('line-height',lineHieghts+'px');
+          n++;
+          i++;
+        }else{
+          i = 51;
+        }
+      }
+    }else if(height < 50) {
+      for(i;i<50;i++) {
+        var heights = parseInt($(this).height());
+        var lineHieghts = parseInt($(this).css('line-height'));
+        if(heights < 50) {
+          lineHieghts = lineHieghts + (n + 1);
+          $(this).css('line-height',lineHieghts+'px');
+          n++;
+          i++;
+        }else{
+          i = 51;
+        }
+      }
+    }
+  })
+}
+function callAjax() {
+  $.ajax({
+    type: "POST",
+    url: '/search/course_discovery/',
+    data:{
+      id:'${course.id}',
+    },
+    dataType: 'json',
+    success: function(data) {
+      var lang = data.results[0].data.language
+      if(lang) {
+        if(lang == 'fr') {
+           $('#langues_insert').html('${_("French")}');
+        }else if(lang == 'en') {
+          $('#langues_insert').html('${_("English")}');
+        }else{
+          $('#langues_insert').html('');
+        }
+      }
+    }
+  })
+}
+function getEmail() {
+  $('.teacher-image').each(function(){
+    var This = $(this);
+    console.log(This.data('email'));
+    if(This.data('email')) {
+      This.append('<a href="mailto:'+This.data('email')+'" class="teacher_mail"><img src="/static/themes/phileastheming/images/icon_mail2.png"></a>');
+    }
+  })
+}
 $(document).ready(function(){
+  //formateur();
   mailTo();
+  getEmail();
+  $('.course-staff').append('<article style="clear:left;"></article>');
+  //callAjax();
+  console.log('${course_details.language}');
+})
+$(window).resize(function(){
+  //formateur();
+})
+$(document).on('DOMNodeInserted', function(e) {
+  //formateur();
+});
+</script>
+<!-- GEOFFREY -->
+<%
+language = LANGUAGE_CODE
+%>
+% if language == 'fr':
+<script>
+function translateDate() {
+  $('.datecustom').each(function(){
+    var This = $(this);
+    var text = This.text();
+    var search = text.split(/,(.+)?/)[0];
+    var year = text.split(/,(.+)?/)[1];
+    var int = search.match(/\d+/)[0]
+    var str = search.replace(int,'');
+    var str = str.replace(' ','');
+    var int = int.replace(' ','');
+    var year = year.replace(' ','');
+    var retour = int+' '+str+','+year;
+    This.text(retour);
+  })
+}
+$(document).ready(function(){
+  translateDate();
 })
 </script>
+% endif

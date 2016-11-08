@@ -11,7 +11,7 @@ from third_party_auth import pipeline
 from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
 from django.db import connection
 from django.db import models
-
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
 %>
 
 <%
@@ -24,9 +24,45 @@ import pprint
 
 test = pprint.pprint(get_my_course_progress)
 
+from django.db.models import Count
+from course_welcome.purple import get_final_score
+from courseware import grades
+from course_progress.models import StudentCourseProgress
+from util.db import outer_atomic
+import requests
+
+student = request.user
+
+all_courses = StudentCourseProgress.objects.filter(student_id = student,).values('course_id')
+
+courses_id = []
+courselength = ""
+i = 0
+
+for (i, item) in enumerate(all_courses):
+  courses_id.insert(i, SlashSeparatedCourseKey.from_deprecated_string(item.get('course_id')))
+  courselength = i
+
+grade_summary = {}
+final_grade = []
+
+j = 0
+
+#final_grade = get_final_score(request,courses_id[1])
+#with outer_atomic():
+  #grade_summary = grades.grade(student, request, courses_id[0])
+#final_grade = grade_summary.get('percent', 60)
+
+"""
+
+"""
+
 %>
 
-
+<!-- GEOFFREY -->
+<%
+language = LANGUAGE_CODE
+%>
 <%block name="pagetitle">${_("Dashboard")}</%block>
 <%block name="bodyclass">view-dashboard is-authenticated</%block>
 <!--
@@ -50,7 +86,28 @@ test = pprint.pprint(get_my_course_progress)
   <script src="${static.url('js/commerce/credit.js')}"></script>
   <%static:js group='dashboard'/>
   <script type="text/javascript">
+  function ajaxCallFinalGrade() {
+    var number = 0;
+    $('.course-item').each(function(){
+      var This = $(this);
+      var id = This.find('.dash-img').data('course-key');
+      $.ajax({
+        url:'/final_grades/'+id,
+        type:'GET',
+        dataType: 'json',
+        success:function(result) {
+          length = length + 1;
+          grade = result.Grade
+          if(grade >= 0.6) {
+            number = number + 1;
+          }
+          $('.formation_reussit').find('.nonbre_indic').html(number);
+        }
+      })
+    })
+  }
     $(document).ready(function() {
+      ajaxCallFinalGrade();
       edx.dashboard.legacy.init({
         dashboard: "${reverse('dashboard')}",
         signInUser: "${reverse('signin_user')}",
@@ -61,7 +118,6 @@ test = pprint.pprint(get_my_course_progress)
       $('#sub-menu-low-rez').click(function(){
         $('#profile-sidebar').toggle();
       })
-      console.log('largeur : '+parseInt($(document).width()));
     })
     $(window).resize(function(){
       if(parseInt($(document).width()) > 768) {
@@ -182,6 +238,9 @@ test = pprint.pprint(get_my_course_progress)
       left: calc(100% - 335px);
       margin: 0px;
     }
+    .dashboard-englobe {
+      margin-top: 40px;
+    }
   }
   @media(max-width:563px) {
     .dashboard .my-courses .course {
@@ -244,7 +303,7 @@ test = pprint.pprint(get_my_course_progress)
               %>
               <img class="user-image-frame" src="${profile_image_url}" alt="${_('Profile image for {username}').format(username=username)}">
               <div class="label-username">${username}</div>
-              <div class="label-other">${username}</div>
+            <!--  <div class="label-other">${username}</div> -->
           </li>
           <li class="primary">
             <div class="formation_en_cours">
@@ -253,7 +312,7 @@ test = pprint.pprint(get_my_course_progress)
               </span>${_("courses in progress")}
             </div>
             <div class="formation_reussit">
-              <span class="nonbre_indic">4 </span>${_("courses succeed")}
+              <span class="nonbre_indic"></span>${_("courses succeed")}
             </div>
           </li>
           <li class="primary">
@@ -271,6 +330,9 @@ test = pprint.pprint(get_my_course_progress)
         <link rel="stylesheet" type="text/css" href="${static.url('css/dashboard-courses.css')}">
       <!-- GEOFFREY -->
       <style>
+      .wrapper-course-image img {
+        max-height: 187.5px;
+      }
       .dashboard .profile-sidebar .user-info>ul li span {
         display: inline-block;
         margin-right: 5px;
@@ -361,6 +423,16 @@ test = pprint.pprint(get_my_course_progress)
         width: auto;
         font-family: 'helveticaneue-medium';
       }
+      .language {
+        position: absolute;
+        z-index: 1000;
+        background-color: grey;
+        color: #fff;
+        font-size: 18px;
+        padding: 2px;
+        bottom: 3px;
+        text-transform: uppercase;
+      }
       @media (max-width: 1192px) {
       .wrapper-action-more {
           width: 100%;
@@ -405,6 +477,9 @@ test = pprint.pprint(get_my_course_progress)
           width: 100px;
           display: block;
           outline: none;
+        }
+        .dashboard .my-courses .course .details .enter-course {
+          width: 200px;
         }
         .formation_en_cours,.formation_reussit {
           text-align:center;
@@ -675,7 +750,6 @@ test = pprint.pprint(get_my_course_progress)
         if($('.unenroll-modal').find('#track-info').text() != ''){
           var info = $('.unenroll-modal').find('#track-info').text();
           var replace = info.replace(/\(.[^(]*\)/g,'');
-          console.log(test);
           if(test.indexOf('trainings') != -1) {
             $('.unenroll-modal').find('#track-info').text(replace);
             clearInterval(interval);
@@ -688,9 +762,87 @@ test = pprint.pprint(get_my_course_progress)
       },10)
     })
   }
+  function nombreReussit() {
+    var nombre_reussit = 0;
+    $('.course-container').each(function(){
+      var This = $(this);
+      var id = This.data('id');
+      $.ajax({
+        type: "POST",
+        url: '/search/course_discovery/',
+        data:{
+          id:id,
+        },
+        dataType: 'json',
+        success: function(data) {
+          nombre_reussit = nombre_reussit + 1;
+        }
+      })
+    })
+  }
+  function imageNo(){
+    $('.noImageVodeclick').each(function(){
+      var This = $(this);
+      var widthThis = parseInt(This.width());
+      var Img = This.find('img');
+      var width = parseInt(Img.width());
+      var height = parseInt(Img.height());
+      var paddingLeft = 0;
+      var paddingTop = 0;
+      if(width < widthThis) {
+        paddingLeft = (widthThis - width)/2;
+        This.css('background','linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px)');
+        This.css('background-size','1px 3px');
+      }else{
+        paddingLeft = 0;
+      }
+      if(height < 187.5) {
+        paddingTop = (187.5 - height)/2;
+        This.css('background','linear-gradient(transparent 2px, rgba(105,105,105,0.2) 2px)');
+        This.css('background-size','1px 3px');
+      }else{
+        paddingTop = 0;
+      }
+      Img.css('padding-left',paddingLeft+'px');
+      Img.css('padding-right',paddingLeft+'px');
+      Img.css('padding-top',paddingTop+'px');
+      Img.css('padding-bottom',paddingTop+'px');
+    })
+  }
   $(document).ready(function(){
     changeResolutionImage();
     aligneCours();
     tradDes();
+    nombreReussit();
+    imageNo();
+  })
+  $(window).resize(function(){
+    imageNo();
   })
 </script>
+
+% if language == 'fr':
+<script>
+function translateDate() {
+  $('.start_end_date_time').each(function(){
+    var This = $(this);
+    var text = This.text();
+    if(text.indexOf(',') != -1){
+      var search = text.split(/,(.+)?/)[0];
+      var year = text.split(/,(.+)?/)[1];
+      var int = search.match(/\d+/)[0]
+      var str = search.replace(int,'');
+      var str = str.replace(' ','');
+      var int = int.replace(' ','');
+      var year = year.replace(' ','');
+      var retour = int+' '+str+','+year;
+      This.text(retour);
+    }
+  })
+}
+$(document).ready(function(){
+  translateDate();
+  console.log('${courses_id}');
+})
+</script>
+% endif

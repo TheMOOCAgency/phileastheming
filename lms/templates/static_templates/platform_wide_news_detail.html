@@ -30,6 +30,7 @@ from django.core.urlresolvers import reverse
   }
   .summary {
     font-size: 20px;
+    line-height: 30px;
     color: #445561;
     font-family: 'helveticaneue-light';
   }
@@ -194,8 +195,62 @@ function image() {
     $('.news_picture').hide();
   }
 }
+function translateDate(){
+  $('.author_date').children('span').each(function(){
+    var text = $(this).text();
+    console.log(text);
+    var replace = text.replace('On','Le');
+    replace = replace.replace('by','par');
+    if(text.indexOf('January') !=-1) {
+      replace = replace.replace('January','Janvier');
+    }else if(text.indexOf('March') !=-1) {
+      replace = replace.replace('March','Mars');
+    }else if(text.indexOf('April') !=-1) {
+      replace = replace.replace('April','Avril');
+    }else if(text.indexOf('May') !=-1) {
+      replace = replace.replace('May','mai');
+    }else if(text.indexOf('June') !=-1) {
+      replace = replace.replace('June','juin');
+    }else if(text.indexOf('July') !=-1) {
+      replace = replace.replace('July','Juillet');
+    }else if(text.indexOf('August') !=-1) {
+      replace = replace.replace('August','Aout');
+    }else if(text.indexOf('September') !=-1) {
+      replace = replace.replace('September','Septembre');
+    }else if(text.indexOf('October') !=-1) {
+      replace = replace.replace('October','Octobre');
+    }else if(text.indexOf('November') !=-1) {
+      replace = replace.replace('November','Novembre');
+    }else if(text.indexOf('December') !=-1) {
+      replace = replace.replace('December','Décembre');
+    }
+    $(this).text(replace);
+  })
+}
+var translate = '${_("hide-picture-english")}';
 $(document).ready(function(){
   image();
+  $('.summary').css('text-align','justify');
+  $('h1').css('text-align','justify');
+  if(translate != 'hide-picture-english')
+    {translateDate();}
+  $('#texts_news').find('p').each(function(){
+    if(!$(this).hasClass('news_picture')){
+      $(this).css('font-size','18px');
+      $(this).css('margin-top','20px');
+      $(this).css('margin-bottom','20px');
+      $(this).css('line-height','24px');
+      $(this).html($(this).html().replace(/&nbsp;/g, ''));
+      if($(this).html() != '') {
+        $(this).css('margin-bottom','10px');
+      }
+    }
+      $(this).css('text-align','justify');
+  })
+  $('#texts_news').find('span').each(function(){
+    $(this).css('font-size','18px');
+    $(this).css('line-height','24px');
+  })
 })
 $(window).resize(function(){
   image();

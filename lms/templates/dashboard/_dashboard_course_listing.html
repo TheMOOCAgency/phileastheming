@@ -10,6 +10,7 @@ from markupsafe import escape
 from course_modes.models import CourseMode
 from courseware.courses import get_course_about_section
 from course_modes.helpers import enrollment_mode_display
+from student.models import UserProfile
 from student.helpers import (
   VERIFY_STATUS_NEED_TO_VERIFY,
   VERIFY_STATUS_SUBMITTED,
@@ -31,10 +32,12 @@ now = datetime.datetime.now()
 
 date = now.strftime("%d%m%Y")
 
-api = 'xGXMdnyltTAHZMSHPZHg'
-partenaire = 'CgFVrWdhuSVccijkVVwF'
-email = 'amundi3.admin@vodeclic.com'
-id_membre = 'amundi3.admin'
+api = 'uYUoVrzSEVityKwgNhHO'
+partenaire = 'LIkptrpdXajmLaJTRHYF'
+email = request.user.email
+first_name = request.user.first_name
+last_name = request.user.last_name
+id_membre = UserProfile.objects.get(user_id=request.user.id).rpid
 day = '08'
 month = '09'
 year = '2016'
@@ -45,7 +48,7 @@ d = hashlib.sha256(date+api).hexdigest()
 
 url = 'https://lms.vodeclic.com/api/sso?'
 
-data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&email='+email+'&d='+d+''
+data_fr = 'partenaire='+partenaire+'&encrypted_id='+crypt+'&id='+id_membre+'&first_name='+first_name+'&last_name='+last_name+'&email='+email+'&d='+d+''
 
 href_sso = url+data_fr
 #fin import SSo
@@ -55,6 +58,19 @@ course_org = course_overview.org
 
 %>
 <!-- GEOFFREY -->
+<%
+language = LANGUAGE_CODE
+
+from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from courseware.courses import get_course_by_id
+course_id = course_overview.id
+lang = get_course_by_id(course_id).language
+if lang == 'fr':
+  lang = 'FRA'
+elif lang == 'en':
+  lang = 'ENG'
+endif
+%>
 <%
   cert_name_short = course_overview.cert_name_short
   if cert_name_short == "":
@@ -71,6 +87,14 @@ course_org = course_overview.org
 
 <%namespace name='static' file='../static_content.html'/>
 <% style_overrides_file = static.get_value('css_overrides_file') %>
+<style>
+@media(max-width:800px) {
+  .dashboard .my-courses .course .details .enter-course {
+    width: 200px;
+  }
+}
+
+</style>
 <li class="course-item">
 
 <script>
@@ -107,6 +131,7 @@ $(window).resize(function(){
   articleHeight();
 })
 $(document).ready(function(){
+  console.log('rpid : ${id_membre}')
   lienHeightTitle();
   articleHeight();
   $('.course-actions').each(function(){
@@ -162,7 +187,7 @@ $(document).ready(function(){
   % else:
     <% mode_class = '' %>
   % endif
-<div class="course-container">
+<div class="course-container" data-id="${enrollment.course_id}">
  % if course_program_info and course_program_info.get('category')=='xseries':
   <div class="label-xseries-association">
     <i class="xseries-icon"></i>
@@ -185,6 +210,7 @@ $(document).ready(function(){
               noImageVodeclick
             % endif
             ">
+              <div class="language">${lang}</div>
               <img src="${course_overview.course_image_url}" alt="${_('{course_number} {course_name} Home Page').format(course_number=course_overview.number, course_name=course_overview.display_name_with_default)}" style="
               "/>
             </a>
@@ -230,7 +256,7 @@ $(document).ready(function(){
         % if can_unenroll:
           <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
             <div class="social-sharing">
-                <a href="mailto:?subject=Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
+                <a href="mailto:?subject=Philéas - Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
                   <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend this Course")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
                 </a>
             </div>
@@ -324,8 +350,14 @@ $(document).ready(function(){
             % if course_overview.display_org_with_default == "Vodeclic":
             ${_("Continuous formation")}
             % else:
-            ${_(" - Start :")}${_(" {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
-            ${_(" - End :")}${_(" {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
+
+              ${_(" - Start :")} <span class="start_end_date_time">${_(" {start_date}").format(start_date=course_overview.start_datetime_text("SHORT_DATE"))}
+              </span>
+                % if course_overview.end_datetime_text("SHORT_DATE") != '':
+
+                  ${_(" - End :")} <span class="start_end_date_time">${_(" {end_date}").format(end_date=course_overview.end_datetime_text("SHORT_DATE"))}
+                  </span>
+                % endif
             % endif
           </span>
         </div>
@@ -371,7 +403,7 @@ $(document).ready(function(){
           % if can_unenroll:
             <div class="actions-item" id="actions-item-unenroll-${dashboard_index}">
               <div class="social-sharing">
-                  <a href="mailto:?subject=Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
+                  <a href="mailto:?subject=Philéas - Suivez%20un%20cours%20en%20ligne%20avec%20Phileas&amp;body=Je%20viens%20de%20m'inscrire%20pour%20${course_overview.display_name_with_default}%20via%20http://ec2-52-29-194-206.eu-central-1.compute.amazonaws.com${course_target}" class="share">
                     <img src="/static/themes/phileastheming/images/icon_recommandation.png" style="width:16px; height: auto; float:left; margin-right: 5px;" />${_("Recommend to a friend")}<span class="sr">${_("Envoyez par e-mail que vous etes inscrits a ce cours")}</span>
                   </a>
               </div>
@@ -729,14 +761,14 @@ $(document).ready(function(){
 </div>
 </li>
 <script>
-           $( document ).ready(function() {
+   $( document ).ready(function() {
 
-               if("${is_course_blocked}" == "True"){
-                   $( "#unregister_block_course" ).click(function() {
-                       $('.disable-look-unregister').click();
-                   });
-               }
+       if("${is_course_blocked}" == "True"){
+           $( "#unregister_block_course" ).click(function() {
+               $('.disable-look-unregister').click();
            });
+       }
+   });
    function popUp() {
      var Id = $('#unenroll-modal');
      var Children = Id.find('.inner-wrapper');

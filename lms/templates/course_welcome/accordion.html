@@ -17,12 +17,25 @@
 <div class="line"></div>
 % for section in chapter['sections']:
   <div class="section">
-    <div class="dot ${'green'  if section['passed'] else 'gray'}"></div>
-    <div class="circle">
-      % if section['paused']:
+    <div class="dot ${'green'  if section['passed'] else 'gray'}" style="background-color: transparent;"></div>
+
+      % if section['paused'] and not section['passed']:
+      <div class="circle">
         <span class="icon fa fa-play"></span>
+      </div>
+      % elif section['paused'] and section['passed']:
+      <div class="circle" style="background-color: #8A4186;">
+        <img src="/static/themes/phileastheming/images/icon_check.png" style="width: 26px; height: 26px; margin-bottom: 3px;"/>
+      </div>
+      % elif section['passed']:
+      <div class="circle" style="background-color: #8A4186;">
+        <img src="/static/themes/phileastheming/images/icon_check.png" style="width: 26px; height: 26px; margin-bottom: 3px;"/>
+      </div>
+      % else:
+      <div class="circle">
+
+      </div>
       % endif
-    </div>
     <div class="section-title ${'paused' if section['paused'] else ''}">
     <a href="${reverse('courseware_section', args=[course_id, chapter['url_name'], section['url_name']])}">
       ${section['section_index']} / ${section['display_name']}

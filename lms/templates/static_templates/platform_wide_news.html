@@ -9,70 +9,11 @@ from student.models import UserProfile
 <%namespace name='static' file='../static_content.html'/>
 
 <%block name="pagetitle">${_("News")}</%block>
-
+<!--
 <%block name="header_extras">
 <link rel="stylesheet" type="text/css" href="${static.url('css/tma_news.css')}">
 </%block>
 <style>
-main#main .news-list {
-  width: 100%;
-  margin: 0;
-}
-.baniere {
-  padding:0;
-  width: 1440px;
-  height: 350px;
-  margin-left: auto;
-  margin-right: auto;
-  font-family: 'gothamrounded-book';
-}
-.baniere-img {
-background-image:url('/static/themes/phileastheming/images/img_index_desktop.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: relative;
-background-color: #272530;
-height: 102px;
-padding-top:124px;
-padding-bottom:124px;
-position: relative;
-}
-.h1-span {
-    display: block;
-    width: 100%;
-    height: 45px;
-    color: #fff;
-    font-family: 'gothamrounded-book';
-    font-size: 50px;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-.ariane_news {
-  position: absolute;
-  width: 100%;
-  top: 25px;
-  left: 170px;
-  z-index: 10;
-}
-.ariane_news a,.ariane_news a:hover,.ariane_news a:focus {
-  color: #fff;
-  display: inline;
-  text-transform: none;
-}
-.separation {
-  display: inline-block;
-  padding-left: 5px;
-  padding-right: 5px;
-  color: #fff;
-}
-.heading-group p {
-  color: #fff;
-  width: 100%;
-  text-align: center;
-  font-size: 23px;
-  font-family: 'helveticaneue-light';
-}
 :focus {
     outline: none;
 }
@@ -134,13 +75,13 @@ main#main .news-list .news .news-wrapper {
 .date_news {
   padding-left: 15px;
 }
-@media(max-width: 1440px) {
-  .baniere {
-    width: 100vw;
-    margin: 0;
-  }
-  .ariane_news {
-    left: 10px;
+.news-next a {
+  font-family: 'helveticaneue-light';
+}
+@media(max-width: 1280px) {
+  .container {
+    width: 75%;
+    margin-left: 15px;
   }
 }
 @media(max-width: 768px) {
@@ -193,6 +134,7 @@ main#main .news-list .news .news-wrapper {
   margin-right: 0px;
 }
 </style>
+-->
 <!--
 <script>
 $(document).ready(function(){
@@ -204,6 +146,158 @@ $(document).ready(function(){
 })
 </script>
 -->
+<style>
+* {
+   outline: 0;
+}
+.container, section.outside-app, .view-profile .profile-self .wrapper-profile-field-account-privacy .u-field-account_privacy, .view-profile .wrapper-profile-sections, .view-profile .badge-set-display {
+  min-width: 0px;
+}
+main#main .news-list .news h3 a,main#main .news-list .news h3 a:hover,main#main .news-list .news h3 a:visited{
+  font-size: 22px;
+  color: #363F4D;
+  font-family: 'helveticaneue-bold';
+  font-weight: 400;
+  text-align: justify;
+}
+main#main .news-list .news h3 {
+  padding-bottom: 20px;
+  padding-top:30px;
+}
+.date_news {
+  font-size: 14px;
+  color: #445561;
+  font-family: 'helveticaneue-light';
+  text-align: justify;
+}
+.mail_low_rez a img {
+  width: 40px;
+  height: 40px;
+}
+main#main .news-list {
+  width: 65%;
+  margin: 0;
+}
+.news {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  padding-bottom: 30px;
+  padding-left: 40px;
+  border-bottom: 1px solid rgba(54, 63, 77,0.2);
+}
+.news-next {
+  float: right;
+}
+.news-prev {
+  float:left;
+}
+.news-next a,.news-prev a,.news-next a:hover,.news-prev a:hover,.news-next a:visited,.news-prev a:visited{
+  font-size: 16px;
+  color: #8A4185;
+  font-family: 'helveticaneue-medium';
+  text-align: justify;
+}
+.heading-group p {
+  color: #fff;
+  width: 100%;
+  text-align: center;
+  font-size: 23px;
+  font-family: 'helveticaneue-light';
+}
+.h1-span {
+    display: block;
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    font-family: 'gothamrounded-book';
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.separation {
+  display: inline-block;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #fff;
+}
+.ariane_news {
+  position: absolute;
+  width: 40vw;
+  top: 25px;
+  left: 170px;
+  z-index: 10;
+}
+.ariane_news a,.ariane_news a:hover,.ariane_news a:focus {
+  color: #fff;
+  display: inline;
+  text-transform: none;
+}
+.baniere {
+  padding:0;
+  width: 1440px;
+  height: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'gothamrounded-book';
+  text-align: justify;
+}
+.baniere-img {
+  background-image:url('/static/themes/phileastheming/images/img_index_desktop.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: relative;
+  background-color: #272530;
+  height: 102px;
+  padding-top:124px;
+  padding-bottom:124px;
+  position: relative;
+}
+.h1-span {
+    display: block;
+    width: 100%;
+    height: 45px;
+    color: #fff;
+    font-family: 'gothamrounded-book';
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.picto_yammer {
+  display: none;
+}
+@media(max-width: 1440px) {
+  .ariane_news {
+    left: 15px;
+  }
+  .baniere {
+    width: 100vw;
+    margin: 0;
+  }
+}
+@media(max-width:768px) {
+  .ariane_news {
+    left: 40px;
+  }
+}
+@media(max-width:414px) {
+  .ariane_news {
+    left: 5px;
+  }
+  .news {
+    width: calc(100% - 10px);
+    margin-left: 5px;
+    margin-right: 5px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  main#main .news-list {
+    width: 100%;
+  }
+}
+</style>
 <main id="main" aria-label="Content" tabindex="-1">
     <div class="baniere">
       <header class="baniere-img" style="">
@@ -227,15 +321,15 @@ $(document).ready(function(){
             % for news in news_list:
             <div class="news">
                 % if news.jacket and 'undefined' not in news.jacket.url:
-                <div class="news-jacket" style="background-image:url('${news.jacket.url}');width:154px;height:120px;background-size:cover;background-position:center;bacbackground-repeat:no-repeat;display:inline-block;">
+                <div class="news-jacket" style="background-image:url('${news.jacket.url}');width:231px;height:180px;background-size:cover;background-position:center;bacbackground-repeat:no-repeat;display:inline-block;">
                 </div>
                 <div class="news-wrapper ${'minimum' if news.jacket else ''}">
                     <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
                     <p class="news-content">${HTML(news.summary)}</p>
                 </div>
                 <div>
-                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
-                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="mailto:?subject=Philéas - ${_(news.title)}&body=j'ai pensé que cette actualité pourrait vous intéresser https://preprod9-phileas.themoocagency.com/news/?page=2${reverse('news_in_detail', args=[news.id])}"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="mailto:?subject=Philéas - ${_(news.title)}&body=j'ai pensé que cette actualité pourrait vous intéresser https://preprod9-phileas.themoocagency.com/news/?page=2${reverse('news_in_detail', args=[news.id])}"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="date_news">
                           ${_("On {publish_date} by {author}").format(
                               publish_date=news.created.strftime("%d %B %Y"),
@@ -246,11 +340,11 @@ $(document).ready(function(){
                 % else:
                 <div class="news-jacket">
                     <h3><a href="${reverse('news_in_detail', args=[news.id])}">${_(news.title)}</a></h3>
-                    <p class="news-content">${HTML(news.content)}</p>
+                    <p class="news-content">${HTML(news.summary)}</p>
                 </div>
                 <div>
-                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
-                      <span class="picto_yammer"><a href="#"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="mail_low_rez" style="padding-right: 10px;"><a href="mailto:?subject=Philéas - ${_(news.title)}&body=j'ai pensé que cette actualité pourrait vous intéresser https://preprod9-phileas.themoocagency.com/news/?page=2${reverse('news_in_detail', args=[news.id])}"><img src="${static.url('images/icon_mail.png')}" /></a></span>
+                      <span class="picto_yammer"><a href="mailto:?subject=Philéas - ${_(news.title)}&body=j'ai pensé que cette actualité pourrait vous intéresser https://preprod9-phileas.themoocagency.com/news/?page=2${reverse('news_in_detail', args=[news.id])}"><img src="${static.url('images/icon_mail.png')}" /></a></span>
                       <span class="date_news">
                           ${_("On {publish_date} by {author}").format(
                               publish_date=news.created.strftime("%d %B %Y"),
@@ -265,13 +359,13 @@ $(document).ready(function(){
                 % if news_list.has_previous():
                 <div class="news-prev">
                     <span class="icon fa fa-angle-left"></span>
-                    <a href="?page=${ news_list.previous_page_number() }" class="nav-link">${_("PREVIOUS")}</a>
+                    <a href="?page=${ news_list.previous_page_number() }" class="nav-link">${_("Previous")}</a>
                 </div>
                 % endif
 
                 % if news_list.has_next():
                 <div class="news-next">
-                    <a href="?page=${ news_list.next_page_number() }" class="nav-link">${_("NEXT")}</a>
+                    <a href="?page=${ news_list.next_page_number() }" class="nav-link">${_("Next")}</a>
                     <span class="icon fa fa-angle-right"></span>
                 </div>
                 % endif
@@ -303,6 +397,15 @@ function alignJack() {
       }
     }
   })
+}
+function arianeLeft() {
+  var width = parseInt($(window).width());
+  if((width < 1440) && (width > 1180)) {
+    marge = $('.container').css('margin-left');
+    padding = $('.container').css('padding-left');
+    retour = parseInt(marge)+40;
+    $('.ariane_news').css('left',retour+'px');
+  }
 }
 function translateDate(){
   $('.date_news').each(function(){
@@ -338,11 +441,30 @@ function translateDate(){
 }
 var translate = '${_("hide-picture-english")}';
 $(document).ready(function(){
+  arianeLeft();
   alignJack()
   if(translate != 'hide-picture-english')
   {translateDate();}
+  $('.news').find('p').each(function(){
+    $(this).css('font-family','helveticaneue');
+    $(this).css('text-align','justify');
+    $(this).css('font-size','18px');
+    $(this).css('margin-top','0');
+    $(this).css('height','auto');
+    $(this).css('line-height','24px');
+    $(this).css('color','#363F4D');
+    $(this).html($(this).html().replace(/&nbsp;/g, ''));
+    if($(this).html() != '') {
+      $(this).css('margin-bottom','10px');
+    }
+  })
+
 })
 $(window).resize(function(){
   alignJack();
+  arianeLeft();
+})
+$(document).on('DOMNodeInserted', function(e) {
+
 })
 </script>

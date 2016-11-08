@@ -23,6 +23,15 @@ body.view-in-course .wrapper-footer {
 .wrapper-footer{
   background-color: #FAFAFA;
 }
+.wrapper-logo {
+  margin-left: 47px;
+  width: 99px;
+}
+.wrapper-logo img {
+  width: 99px;
+  height: 52px;
+  display: inline-block;
+}
 @media(max-width:415px) {
   #nav {
     height: 145px;
@@ -68,8 +77,8 @@ body.view-in-course .wrapper-footer {
 }
 @media(max-width:391px) {
   .wrapper-logo img {
-    width: 37px;
-    height: 46px;
+    width: 99px;
+    height: 52px;
     display: inline-block;
   }
   .nav div {
@@ -111,7 +120,7 @@ $(document).ready(function(){
     <div class="colophon">
       <div class="wrapper-logo">
         <a href="/">
-          <img alt="organization logo" src="/static/themes/phileastheming/images/logo_rh.png">
+          <img alt="organization logo" src="/static/themes/phileastheming/images/Amundi_compact.jpg">
         </a>
       </div>
       <nav class="nav">
@@ -119,14 +128,16 @@ $(document).ready(function(){
             <div>
               <a href="mailto:phileas-training@amundi.com ">${_("Contact")}</a>
             </div>
+            <!--
             <div>
               <a href="/about">${_("Site map")}</a>
             </div>
+            -->
             <div>
-              <a href="/tos">${_("Legal Notices")}</a>
+              <a href="/tos">${_("Legal notices")}</a>
             </div>
             <div>
-              <a href="https://www.amundi-ee.com/" target="_blank">©Amundi</a>
+              <a href="https://www.amundi.fr" target="_blank">©Amundi</a>
             </div>
         </div>
       </nav>

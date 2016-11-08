@@ -239,7 +239,7 @@ ${HTML(fragment.foot_html())}
     if(mUsageIds.length > 0){
 
       $.post({
-        url: "/track_html_component",
+        url: "/track_html_component/",
         data: {
           'usage_ids': JSON.stringify(mUsageIds),
           'course_id': mCourseId
@@ -263,6 +263,8 @@ ${HTML(fragment.foot_html())}
         var chaptersCompleted = data['completion_status']['chapters_completed'];
         for (var chapterIndex in chaptersCompleted) {
           var chapterName = chaptersCompleted[chapterIndex];
+          chapterName = chapterName.replace(/:/g, "");
+          chapterName = chapterName.replace(/  /, " ");
           var ChapterID = "#" + (chapterName.split(" ").join("-").toLowerCase() + "-parent");
           $(ChapterID).children().find(".completed").remove();
           $(ChapterID).children().append(circleGreen);
@@ -410,14 +412,12 @@ callForAllUser = function(){
 
 </script>
 <script>
-
-$(document).on('DOMNodeInserted', function(e) {
-    var nombre = $('.menu-item').length;
-    if(parseInt(nombre) <= 1) {
-      console.log('nombre : '+nombre);
-      $('.course-index').hide();
-    }
-});
+function ActionSiUneSection() {
+  var nombre = $('.menu-item').length;
+  if(parseInt(nombre) <= 1) {
+    $('.course-index').hide();
+  }
+}
 function menuPhone() {
     $('#active_menu').click(function(){
             if($('.course-index').css('display') == 'none') {
@@ -482,6 +482,7 @@ $('fieldset').ready(function(){
 $(document).ready(function(){
   clearMarginFooter();
   menuPhone();
+  ActionSiUneSection();
   ipadCourse();
 })
 $(window).resize(function(){
