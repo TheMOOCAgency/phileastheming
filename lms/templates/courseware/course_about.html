@@ -164,6 +164,25 @@ from openedx.core.lib.courses import course_image_url
       PopUp.css('left','0px');
     }
   }
+  function upHead() {
+    $('.up_dashboard').each(function(){
+      var This = $(this);
+      var p = This.find('p');
+      var h2 = This.find('h2');
+      var div = This.find('div');
+      var heightp = parseInt(p.height());
+      var heighth2 = parseInt(h2.height());
+      var heightdiv =parseInt(div.height());
+      var width = parseInt($(window).width());
+      var height = 0;
+      if(width <= 768) {
+        height = 70 + heightp + heighth2 + heightdiv;
+        This.css('height',height+'px');
+      }else{
+        This.attr('style','');
+      }
+    })
+  }
   $(document).ready(function(){
     //equilibre_div();
     $('.course-staff').children('h2').html('LES FORMATEURS');
@@ -171,9 +190,11 @@ from openedx.core.lib.courses import course_image_url
     upWhiteUp();
     confirmSubscribe();
     positionSubscribe();
+    upHead();
   })
   $(window).resize(function(){
     positionSubscribe();
+    upHead();
   })
   </script>
 
