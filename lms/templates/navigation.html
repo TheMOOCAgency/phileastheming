@@ -64,9 +64,6 @@ function rightMenuUser() {
   //var marginCorp = parseInt(parseInt(largeurEcran) - parseInt(widthCorp)) / 2;
   var marginCorp = parseInt($('#nav-up-up').css('margin-right'));
   var url = window.location.href;
-  if(url.indexOf('/courses') != -1 && url.indexOf('/courses/') == -1) {
-    marginCorp = marginCorp - 6;
-  }
   var Right = marginCorp - 2;
   if(parseInt(largeurEcran) > 1440) {
     $('.menu-for-user').css('right',Right+'px');

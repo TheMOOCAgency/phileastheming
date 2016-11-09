@@ -40,10 +40,17 @@ date = now.strftime("%d%m%Y")
 
 api = 'uYUoVrzSEVityKwgNhHO'
 partenaire = 'LIkptrpdXajmLaJTRHYF'
-email = request.user.email
-first_name = request.user.first_name
-last_name = request.user.last_name
-id_membre = UserProfile.objects.get(user_id=request.user.id).rpid
+first_name = ''
+last_name = ''
+id_membre = ''
+email = ''
+if request.user.is_authenticated():
+  email = request.user.email
+  first_name = request.user.first_name
+  last_name = request.user.last_name
+  id_membre = UserProfile.objects.get(user_id=request.user.id).rpid
+
+
 day = '08'
 month = '09'
 year = '2016'
