@@ -42,7 +42,7 @@ day = '08'
 month = '09'
 year = '2016'
 
-crypt = hashlib.sha256(id_membre+api).hexdigest()
+crypt = hashlib.sha256(id_membre.lower()+api).hexdigest()
 
 d = hashlib.sha256(date+api).hexdigest()
 dada = hashlib.sha256(datess+api).hexdigest()
@@ -159,6 +159,6 @@ function grille() {
   </article>
 <script>
 $(document).ready(function(){
-  console.log('data_fr : ${data_fr}');
+  //console.log('date encrypt : ${crypt}');
 })
 </script>

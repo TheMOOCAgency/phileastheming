@@ -346,6 +346,11 @@ function inputSearchFixIpad() {
 /* customise account Form */
 function acountForm() {
   var url = window.location.href;
+      if(url.indexOf('/u/') != -1){
+	$(document).on('DOMNodeInserted', function(e) {
+	 $('input[type="file"]').hide();
+	})
+      }
   if(url.indexOf('/account') != -1) {
     $(document).on('DOMNodeInserted', function(e) {
       $('#u-field-select-account_privacy').disable = false;
@@ -369,7 +374,19 @@ function acountForm() {
     })
   }
 }
+function accentDeconnexion() {
+ var url = window.location.href;
+ $('.menu-for-user').find('a').each(function(){
+  var This = $(this);
+  var text = This.text();
+  if(text.indexOf('Deconnexion') != -1) {
+   This.text('Déconnexion');
+  }
+ })
+}
+
 $(document).ready(function(){
+  //accentDeconnexion();
   //acountForm();
   CssLast();
   h1Ie11();
@@ -395,3 +412,8 @@ $(window).resize(function(){
   $('#input_search_nav').css('margin-right','0');
 })
 </script>
+<style>
+ .view-profile .profile-image-field .image-wrapper .upload-button-input {
+  display:none;
+ }
+</style>

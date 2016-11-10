@@ -1,5 +1,5 @@
 <%
-if(facet != 'id') {
+if(facet != 'id' && facet != 'modes') {
 %>
 <li>
     <button data-facet="<%- facet %>" data-value="<%- term %>" data-text="<%- name %>" class="facet-option discovery-button <%- selected ? 'selected' : '' %>">

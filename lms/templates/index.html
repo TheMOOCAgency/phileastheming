@@ -106,7 +106,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     margin-top: 0;
   }
   .img-post-actu a img:first-child {
-    margin-top: 5px;
+    margin-top: 10px;
     margin-bottom: 5px;
   }
   .img-post-actu .r-a-s img:first-child {
@@ -961,7 +961,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             % if user.is_authenticated():
               % if LANGUAGE_CODE == 'fr':
               <div class="section3 img-post-actu">
+	      <a href="/courses/course-v1:Intercountry+2016-003+2016-003-T4/about" class="r-a-s">
                 <img src="/static/themes/phileastheming/images/anglais.jpg" />
+	      </a>
               <a href="/courses?Vodeclic">
                 <img src="/static/themes/phileastheming/images/software.jpg" />
               </a>
@@ -971,7 +973,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               </div>
               % elif LANGUAGE_CODE == 'en':
               <div class="section3 img-post-actu">
+	      <a href="#" class="r-a-s">
                 <img src="/static/themes/phileastheming/images/anglais.jpg" />
+	      </a>
               <a href="/courses?Vodeclic">
                 <img src="/static/themes/phileastheming/images/software.jpg" />
               </a>
@@ -1004,7 +1008,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
                 <div class="titre_section3" id="titleiframe" style="margin-top:50px">
                   ${_("video")}
                 </div>
-                <iframe id="videoiframe" title="YouTube Video" width="90%" src="//www.youtube.com/embed/5BPNOOQO0oE?rel=0&amp;autoplay=1&amp;rel=0" frameborder="0" allowfullscreen=""></iframe>
+                <iframe id="videoiframe" title="YouTube Video" width="90%" src="https://www.youtube.com/embed/LM4iq3zSI8Y" frameborder="0" allowfullscreen=""></iframe>
               </div>
             % endif
           </div>
