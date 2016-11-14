@@ -90,9 +90,12 @@
     #login-anchor {
       height: 200px;
     }
-  }
-  </style>
-<div class="status already-authenticated-msg hidden">
+  }  
+  .login-register .form-field {display:none;}
+  .login-register .action-primary{display:none;}
+  .login-register .section-title.lines span {display:none;}
+  .login-register .section_title.lines h2 span {display:block;}
+ </style> <div class="status already-authenticated-msg hidden">
     <% if (context.currentProvider) { %>
         <p class="message-copy">
             <%- _.sprintf( gettext("You have successfully signed into %(currentProvider)s, but your %(currentProvider)s account does not have a linked %(platformName)s account. To link your accounts, sign in now using your %(platformName)s password."), context ) %>
@@ -127,7 +130,7 @@
 
     <div class="section-title lines">
         <h2>
-            <span class="text titre_connection"><%- signIn %></span>
+            <span class="text titre_connection" style="display:block;"><%- signIn %></span>
         </h2>
     </div>
 
@@ -146,7 +149,7 @@
 
     <% if ( context.providers.length > 0 && !context.currentProvider || context.hasSecondaryProviders ) { %>
     <div class="login-providers">
-        <div class="section-title lines">
+        <div class="section-title lines" style="display:none;">
             <h2>
                 <span class="text"><%- gettext("or sign in with") %></span>
             </h2>

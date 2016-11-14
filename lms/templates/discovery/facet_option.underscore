@@ -1,3 +1,4 @@
+<% console.log(facet) %>
 <%
 if(facet != 'id' && facet != 'modes') {
 %>

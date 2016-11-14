@@ -37,7 +37,7 @@ partenaire = 'LIkptrpdXajmLaJTRHYF'
 email = request.user.email
 first_name = request.user.first_name
 last_name = request.user.last_name
-id_membre = UserProfile.objects.get(user_id=request.user.id).rpid
+id_membre = UserProfile.objects.get(user_id=request.user.id).rpid.lower()
 day = '08'
 month = '09'
 year = '2016'

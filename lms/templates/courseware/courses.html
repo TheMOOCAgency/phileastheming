@@ -48,7 +48,7 @@ if request.user.is_authenticated():
   email = request.user.email
   first_name = request.user.first_name
   last_name = request.user.last_name
-  id_membre = UserProfile.objects.get(user_id=request.user.id).rpid
+  id_membre = UserProfile.objects.get(user_id=request.user.id).rpid.lower()
 
 
 day = '08'
@@ -315,7 +315,7 @@ ${_('All courses')}
     }
     @media(max-width: 1280px) {
       .course-name {
-        margin-top: 60px;
+        margin-top: 80px;
         margin-bottom: 0px;
       }
     }

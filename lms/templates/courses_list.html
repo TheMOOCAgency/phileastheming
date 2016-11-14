@@ -241,6 +241,7 @@ from xmodule.modulestore.django import modulestore
                 width: 100%;
                 margin-left: auto;
                 margin-right: auto;
+                left: 0;
             }
             .cover-images img {
                   width: 300px;
@@ -458,6 +459,7 @@ function languagePos(){
      Img = This.find('img');
      width = parseInt(Img.width());
      height = parseInt(Img.height());
+     console.log('hauteur : '+Img);
      left = parseInt(Img.css('margin-left'));
      if(!This.hasClass("VodeclicClass")) {
         This.find('.language').css('left',left+'px');
@@ -479,6 +481,7 @@ $(document).on('DOMNodeInserted', function(e) {
     }
 })
 $(document).ready(function(){
+  //coverImg();
   //TailleImage();
   Ajax();
   grille();
@@ -500,6 +503,7 @@ $(document).ready(function(){
   })
 })
 $(window).resize(function(){
+  //coverImg();
   TailleImage();
   grille();
   lineH2();
