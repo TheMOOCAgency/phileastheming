@@ -168,14 +168,33 @@
                           <label class="label setting-label" for="metadata-summary">News Summary</label>
                           <textarea class="input setting-input" id="metadata-summary" value=""></textarea>
                         </div>
-                        <span class="tip setting-help">This image appears before the news summary.</span>
+                        <span class="tip setting-help">This text appears as the summary of the news.</span>
                       </li>
                       <li class="field comp-setting-entry metadata_entry">
-                        <div class="wrapper-comp-setting">
-                          <label class="label setting-label" for="metadata-jacket">News Jacket</label>
-                          <input class="input setting-input" type="file" id="metadata-jacket" value="Empty">
+                        <p class="id-jacket-title">News Jacket</p>
+                        <div class="jacket-wrapper">
+                            <img src="" class="jacket-frame" name="imgbox" id="imgbox" />
+                            <div class="p-field-actions">
+                                <label class="p-field-upload-button">
+                                    <span class="jacket-upload-button-icon" aria-hidden="true"><span class="icon fa fa-camera" aria-hidden="true"></span></span>
+                                    <span class="jacket-upload-button-title" aria-live="polite">Upload an image</span>
+                                    <input class="jacket-upload-button-input" type="file" name="file" id="id_change" />
+                                </label>
+                                <div class="jacket-uploading">
+                                    <span class="jacket-uplaoding-icon" aria-hidden="true"><span class="icon fa fa-spinner fa-pulse" aria-hidden="true"></span></span>
+                                    <br/>
+                                    <span class="jacket-uploading-title" aria-live="polite">Uploading</span>
+                                </div>
+                                <button class="p-field-remove-button" type="button" id="id_remove">
+                                    <span class="jacket-remove-button-icon" aria-hidden="true"><span class="icon fa fa-remove" aria-hidden="true"></span></span>
+                                    <span class="jacket-remove-button-title" aria-live="polite">Remove</span>
+                                </button>
+                                <button class="jacket-removing" type="button">
+                                    <span class="jacket-removing-icon" aria-hidden="true"><span class="icon fa fa-spinner fa-pulse" aria-hidden="true"></span></span>
+                                    <span class="jacket-removing-title" aria-live="polite">Removing</span>
+                                </button>
+                            </div>
                         </div>
-                        <span class="tip setting-help">This image appears before the news summary.</span>
                       </li>
                     </ul>
                   </div>

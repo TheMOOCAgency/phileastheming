@@ -16,7 +16,10 @@ from openedx.core.djangolib.markup import HTML, Text
 <%block name="requirejs">
     require(["${static.url('js/settings_customize.js')}"], function (settings_customize) {});
 </%block>
-
+<%
+i = 0;
+grade = 100;
+%>
 
 <%block name="content">
 <div class="wrapper-mast wrapper">
@@ -68,6 +71,25 @@ from openedx.core.djangolib.markup import HTML, Text
                         </li>
                     </ol>
                 </section>
+                <!-- maj geoffrey -->
+                <header>
+                    <h2 class="title-2">${_("Course Score")}</h2>
+                </header>
+                <ol class="list-input">
+                    <li class="field" id="field-course-mangager">
+                        <select name="grade_badge">
+                        % for i in range(101):
+                           % if i == grade_badge:
+                              <option value="${i}" selected>${i}</option>
+                           % else:
+                              <option value="${i}">${i}</option>
+                           % endif
+                        % endfor
+                        </select>
+                            <span class="tip tip-stacked">${_("Grade value")}</span>
+                    </li>
+                </ol>
+            </section>
             </form>
             <button id="btn_submit" style="float:right;border: 1px solid #007fb8;border-radius: 3px;background-color: #009fe6;color:white;padding:5px 10px;font-weight:600;">${_("Save")}</button>
         </article>

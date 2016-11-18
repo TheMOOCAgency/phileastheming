@@ -1,3 +1,4 @@
+<% console.log(displayName);  %>
 <% if(name != 'id' && name != 'modes') {%>
 <h3 class="header-facet">
     <%- displayName %>

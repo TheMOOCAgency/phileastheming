@@ -77,9 +77,8 @@
           contentType: 'application/json'
       }).success(function(data) {
           var pageID = data["page_id"];
-          var pageSummary = data["page_summary"];
           var $el = ' \
-            <li class="course-nav-item news-page component is-movable" data-page-summary="'+pageSummary+'" data-page-id="'+pageID+'"> \
+            <li class="course-nav-item news-page component is-movable" data-page-id="'+pageID+'"> \
               <div class="course-nav-item-header"> \
                 <h3 class="title">Empty</h3> \
               </div> \
@@ -174,7 +173,7 @@
       }
 
       var newsData = new FormData();
-      newsData.append('jacket', $("#metadata-jacket").prop('files')[0]);
+      newsData.append('jacket', $("#id_change").prop('files')[0]);
       newsData.append('title', newsTitle);
       newsData.append('summary', newsSummary);
       newsData.append('content', tinyMCE.activeEditor.getContent());
@@ -190,7 +189,6 @@
           $("#edit-news-modal, #lean_overlay").css({'display': 'none'});
           $("li.news-page[data-page-id="+pageID+"]"
           ).children('.course-nav-item-header').children("h3.title").text(newsTitle);
-          $("li.news-page[data-page-id="+pageID+"]").data('page-summary', newsSummary);
           return saving.hide();
       });  // ajax
 
@@ -200,18 +198,17 @@
       var checkbox_element, page_element;
       checkbox_element = event.target;
       page_element = $(checkbox_element).closest('.news-page');
-      var pageTitle = $(page_element).children('.course-nav-item-header').children('h3.title').text();
       $(".modal-editor").css({'top': '90px', 'position': 'absolute'});
       var pageID = $(page_element).data('page-id');
-      var pageSummary = $(page_element).data('page-summary');
       var contentURL = '/get_news_content/'+ pageID + "/"
+      $(".modal-editor").data('page-id', pageID);
       $.getJSON( contentURL, function( data ) {
         tinyMCE.activeEditor.setContent(data.content);
+        $("input#metadata-title").val(data.title);
+        $("#metadata-summary").val(data.summary);
+        $("#imgbox").attr('src', data.jacket);
+        window.defaultJacketURL = data.default_jacket;
       });
-      $(".modal-editor").data('page-id', pageID);
-      $("input#metadata-title").val(pageTitle);
-      $("#metadata-summary").val(pageSummary);
-      $("#metadata-jacket").val('');
     });  // click
 
     // draggable
@@ -264,7 +261,31 @@
         $("#tab-0").addClass("is-inactive");
         $("#tab-1").addClass("is-active");
       }
+    }); // editor/settings tabs
+
+    // jacket handler
+    function readURL(input) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+              $("#imgbox").attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#id_change").change(function() {
+      readURL(this);
+      $(".p-field-remove-button").show();
     });
+    $("#id_remove").click(function() {
+        $(".p-field-remove-button").hide();
+        $(".removing").show();
+        $("#imgbox").attr('src', window.defaultJacketURL);
+        $(".removing").hide();
+    }); // jacket handler over
 
   });  // function
 

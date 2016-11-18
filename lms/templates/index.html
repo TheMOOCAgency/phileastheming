@@ -23,6 +23,8 @@ from django.contrib.auth.models import User
 
 all_active_user = User.objects.filter(is_active = 1,).count()
 
+all_active_user = UserProfile.objects.all().count()
+
 %>
 <!--
 <LINK href="/static/css/index.css"   rel="stylesheet" type="text/css">
@@ -832,7 +834,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
           <a href="/courses" class="btn btn-secondary">${_("Explore courses")}</a>
           <a href="/dashboard" class="btn btn-secondary">${_("Your courses")}</a>
         % else:
-          <a href="/login" class="btn btn-secondary">${_("connect")}</a>
+          <a href="https://www.phileasamundi.com/login" class="btn btn-secondary">${_("connect")}</a>
         % endif
       </div>
     </header>

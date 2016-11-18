@@ -62,6 +62,11 @@ j = 0
 <!-- GEOFFREY -->
 <%
 language = LANGUAGE_CODE
+vodeclic_stat = ''
+if 'fr' in language:
+  vodeclic_stat = '(Hors Vodeclic)'
+else:
+  vodeclic_stat = '(Without Vodeclic)'
 %>
 <%block name="pagetitle">${_("Dashboard")}</%block>
 <%block name="bodyclass">view-dashboard is-authenticated</%block>
@@ -102,6 +107,7 @@ language = LANGUAGE_CODE
             number = number + 1;
           }
           $('.formation_reussit').find('.nonbre_indic').html(number);
+          aligneCours();
         }
       })
     })
@@ -301,7 +307,11 @@ language = LANGUAGE_CODE
               username = user.username
               profile_image_url = get_profile_image_urls_for_user(user)['medium']
               %>
+              % if 'default' in profile_image_url:
+              <img class="user-image-frame" src="/static/themes/phileastheming/images/profiles/default_120.png" alt="${_('Profile image for {username}').format(username=username)}">
+              % else:
               <img class="user-image-frame" src="${profile_image_url}" alt="${_('Profile image for {username}').format(username=username)}">
+              % endif
               <div class="label-username">${username}</div>
             <!--  <div class="label-other">${username}</div> -->
           </li>
