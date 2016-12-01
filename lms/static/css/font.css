@@ -1,0 +1,60 @@
+@font-face {
+font-family: 'gothamrounded-book';
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBook.otf');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'gothamrounded-medium';
+src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.otf');
+src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/gotham-medium.woff');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'gothamrounded-bold';
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBold.otf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundedBold.woff');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'gothamrounded-light';
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundelight.otf');
+src: url('/static/themes/phileastheming/fonts/custom/GothamRoundelight.woff');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'helveticaneue-bold';
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue-Bold.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue-Bold.woff');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'helveticaneue';
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.ttf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaNeue.woff');
+font-weight: normal;
+font-style: normal;
+} 
+@font-face {
+font-family: 'helveticaneue-light';
+src: url('/static/themes/phileastheming/fonts/custom/Helvetica-Light.otf');
+src: url('/static/themes/phileastheming/fonts/custom/Helvetica-Light.woff');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'helveticaneue-medium';
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaBQ-Medium.otf');
+src: url('/static/themes/phileastheming/fonts/custom/HelveticaBQ-Medium.woff');
+font-weight: normal;
+font-style: normal;
+}
+#content {
+  outline: none;
+}

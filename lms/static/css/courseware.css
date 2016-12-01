@@ -1,0 +1,197 @@
+.path {
+  display: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav,.xmodule_display.xmodule_SequenceModule nav.sequence-bottom {
+  display : none;
+}
+input[type="radio"] {
+  display: none;
+}
+body.view-in-course .wrapper-footer {
+  padding: 0;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect:hover {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label:hover {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct:hover{
+  border: 2px solid transparent;
+}
+.content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+  width: calc(68% - 50px);
+  padding-right: 25px;
+  padding-left: 25px;
+  background-color: #F5F6F8;
+}
+.container>div {
+  background-color: #F5F6F8;
+}
+body, h1, h2, h3, h4, h5, h6, p, label,.xmodule_display.xmodule_HtmlModule p {
+  color: #363F4D;
+  font-size: 16px;
+  font-family: 'helveticaneue';
+}
+.action button,.action button:hover, .action button:focus {
+  background-color: #fff;
+  background-image: none;
+  color: #8a4185;
+  border: 2px solid #8a4185;
+  box-shadow: none;
+}
+.xblock .xblock h3,.xmodule_display.xmodule_HtmlModule h2 {
+  color: #8a4185;
+  font-family: 'gothamrounded-bold';
+}
+.xmodule_display.xmodule_HtmlModule h2 {
+  font-size: 30px;
+}
+.wrapper-course-material {
+  width: 1440px;
+  background-color: #F5F6F8;
+}
+body.view-in-course .wrapper-course-material .course-material .course-tabs {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.container>div {
+  border: none;
+  width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.view-in-course .container {
+  padding: 0;
+}
+.course-index {
+  border: none;
+  width: 32%;
+}
+.wrapper-course-modes {
+  display: none;
+}
+.group-heading {
+  padding: 0;
+  background-color: #009DE0;
+  color: #fff;
+}
+.course-index .accordion .course-navigation .button-chapter.active .group-heading {
+  color: #fff;
+  font-size: 18px;
+  font-family: 'helveticaneue-medium';
+  font-weight: normal;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button:hover {
+  width: 40px;
+  height: 46px;
+  box-shadow: none;
+}
+
+.course-index .accordion .course-navigation .chapter-content-container .chapter-menu .menu-item.active a p{
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.menu-item {
+  padding-bottom: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-next,.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-previous,#active_menu {
+  border-radius: 0px;
+  background-color: #009DE0;
+  background-image: none;
+  color: #fff;
+}
+#active_menu {
+  width: calc(100%);
+  height: 42px;
+  padding: 0;
+  padding-left: 15px;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  line-height: 42px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 18px;
+  font-family: 'helveticaneue-medium';
+  font-weight: normal;
+  text-shadow: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav .sequence-list-wrapper {
+  border: 1px solid #009DE0;
+  background-color: #fff;
+  background-image: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol li {
+  padding: 0;
+  padding-top: 1px;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol li button, {
+  background-color: rgba(0,0,0,0.1);
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol {
+  background-color: rgba(0,0,0,0.1);
+}
+.xmodule_display.xmodule_CapaModule div.problem p {
+  font-size: 20px;
+  font-weight: bold;
+}
+.button-phone-menu {
+  display : none;
+  width: 100vw;
+  height: 30px;
+}
+#active_menu {
+  display: none;
+}
+.completed {
+ display: none;
+}
+@media(max-width:1440px) {
+  .container>div {
+    border: none;
+    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .wrapper-course-material {
+    width: 100%;
+  }
+}
+@media(max-width:768px) {
+  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+    width: calc(100vw - 20px);
+    padding: 10px;
+    clear: left;
+    display: block;
+  }
+  .button-phone-menu {
+    display: block;
+  }
+  #active_menu {
+    display: block;
+  }
+  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+    box-sizing: content-box;
+  }
+
+  .course-index {
+    width: calc(100vw);
+    margin: 0;
+    clear: left;
+    display: none;
+  }
+}

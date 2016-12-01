@@ -1,0 +1,138 @@
+@import "variable";
+
+
+.btn-neutral,.btn-neutral:hover {
+  border-style: none;
+  font-size: 18px;
+  font-family: $helvetica_light;
+  border: none;
+  background-color: $btn_neutral_background_color;
+  color: $btn_neutral_color;
+}
+.wrapper-course-material .course-material, .wrapper-preview-menu .preview-menu {
+  width: 1440px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 77px;
+}
+.sur_menu_courseware {
+  position: absolute;
+  bottom: -36px;
+  left: 108px;
+  width: 1332px;
+  background-color: $sur_menu_courseware_background_color;
+}
+.course-tabs{
+  text-align: left;
+  background-color: $course_tab_background_color;
+  margin: 0 auto;
+  max-width: 1180px;
+  padding-left: 22px;
+  padding-right: 130px;
+  width: 100%;
+  line-height: 30px;
+  min-height: 42px;
+  max-height: 126px;
+  vertical-align: middle;
+}
+.baniere_courseware {
+  width: 1440px;
+  height: 350px;
+  font-size: 50px;
+  font-family: $ogthamrounded_bold;
+  text-transform: uppercase;
+  line-height: 350px;
+  vertical-align: middle;
+  text-align: center;
+  color: $baniere_courseware_color;
+  background-color: $baniere_courseware_background_color;
+  background-image: url('/static/themes/phileastheming/images/img_index_desktop.png');
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+}
+.baniere_courseware p {
+  color: $baniere_courseware_p_color;
+  display:inline-block;
+  text-align:center;
+  margin: 0;
+  padding: 0;
+  font-size: 50px;
+  font-family: $ogthamrounded_bold;
+  text-transform: uppercase;
+}
+@media(min-width:1440px) {
+  .home .courses-container .courses .courses-listing .courses-listing-item {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .home .courses-container .courses .courses-listing .courses-listing-item:first-child {
+    margin-left: 6px;
+    margin-right: 14px;
+  }
+  .home .courses-container .courses .courses-listing .courses-listing-item:last-child {
+    margin-left: 14px;
+    margin-right: 6px;
+  }
+}
+@media(max-width:1440px) {
+  .baniere_courseware,.wrapper-course-material .course-material, .wrapper-preview-menu .preview-menu  {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sur_menu_courseware {
+    width: 92.5%;
+    margin-left: 7.5%;
+    left: 0;
+    right: 0;
+  }
+  .course-tabs {
+    margin-left: 22px;
+    width: calc(100% - 22px);
+  }
+}
+@media(max-width:860px) {
+  .sur_menu_courseware {
+    width: 100%;
+    margin-left: 0;
+    left: 0;
+    right: 0;
+    bottom:-72px;
+    text-align: center;
+  }
+  .course-tabs {
+    text-align: center;
+  }
+}
+@media(max-width:817px) {
+  .baniere_courseware {
+    line-height: 175px;
+  }
+}
+@media(max-width: 775px) {
+  .baniere_courseware {
+    font-size: 30px;
+  }
+}
+@media(max-width:586px) {
+  .baniere_courseware {
+    line-height: 87.5px;
+  }
+}
+@media(max-width:500px) {
+  .baniere_courseware p{
+    font-size: 40px;
+  }
+}
+@media(max-width:361px) {
+  .baniere_courseware p{
+    font-size: 35px;
+  }
+}
+@media(max-width:325px) {
+  .baniere_courseware p{
+    font-size: 30px;
+  }
+}

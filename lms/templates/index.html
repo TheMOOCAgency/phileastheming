@@ -18,13 +18,6 @@ countuser = len(list(countuser))
 from openedx.core.djangoapps.models.course_details import CourseDetails
 countcourses = CourseDetails
 
-from django.db.models import Count
-from django.contrib.auth.models import User
-
-all_active_user = User.objects.filter(is_active = 1,).count()
-
-all_active_user = UserProfile.objects.all().count()
-
 %>
 <!--
 <LINK href="/static/css/index.css"   rel="stylesheet" type="text/css">
@@ -33,7 +26,10 @@ all_active_user = UserProfile.objects.all().count()
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/index.css')}">
 </%block>
-
+  <script>
+  var all_user_inside_platform = '${all_active_user}+';
+  var all_the_news = '${_("all the news")}';
+  </script>
   <section class="home">
     <div class="baniere">
   <!--
@@ -77,360 +73,10 @@ all_active_user = UserProfile.objects.all().count()
 
     </header>
   -->
-  <style>
-  #bouton-decouverte {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    clear: left;
-  }
-  .section3_down {
-    cursor: pointer;
-    margin-top: 25px;
-    margin-bottom: 25px;
-  }
-  .text_section3_down_up {
-    width: 70%;
-  }
-  .pic-front-head {
-    top: 500px;
-  }
-  .picto_section3_down{
-   float: left;
-  }
 
-  .heading-group h1 {
-    min-height: 130px;
-  }
-  .courses-container {
-    height: 480px;
-  }
-  .img-post-actu img:first-child {
-    margin-top: 0;
-  }
-  .img-post-actu a img:first-child {
-    margin-top: 10px;
-    margin-bottom: 5px;
-  }
-  .img-post-actu .r-a-s img:first-child {
-    margin-top: 45px;
-  }
-  .section1-marge {
-    min-height: 154px;
-    height: auto;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    margin-top: 20px;
 
-    background-image:url('/static/themes/phileastheming/images/PatternFondActivite.svg');
-    background-size: 50px 29px;
-    fill: #3D4857;
-  }
-  .section1 {
-    height: auto;
-  }
-  .text_section1_down_up {
-    text-align: left;
-    height: auto;
-    line-height: 23px;
-  }
-  .text_section1_down_down {
-    text-align: left;
-  }
-  .section2_down {
-    width: 154px;
-    height: 151px;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    border-radius:50%;
-    background-color: #08A2E1;
-    position: relative;
-    font-family: 'gothamrounded-medium';
-    color: #fff;
-  }
-  .section2_down h4 {
-    position: absolute;
-    top: 28%;
-    width: 100%;
-    text-align: center;
-    font-size: 40px;
-    font-family: 'gothamrounded-medium';
-    color: #fff;
-  }
-  .section2_down p {
-    position: absolute;
-    top: 60%;
-    font-size: 17px;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    font-family: 'gothamrounded-medium';
-  }
-  .titre_section3 {
-    margin-left: 0;
-  }
-  #rond-2 {
-    display: none;
-  }
-  .section-premier {
-    margin-bottom: 10px;
-    margin-left:3.5%;
-    padding-top: 70px;
-    width:96.5%;
-  }
-  .section1 {
-    padding-top: 20px;
-    padding-bottom: 30px;
-  }
-  @media(max-width:1440px) {
-    .section-premier {
-      margin-left:0.5%;
-    }
-  }
-  @media(max-width:1280px) {
-    .text_section3_down_up {
-      font-size: 19px;
-    }
-  }
-  @media(max-width: 1000px) {
-    .titre_section3 {
-      margin-top: 55px;
-    }
-    .index-actualite {
-      height: 750px;
-    }
-  }
-  @media(max-width: 768px) {
-    .h1-span {
-      width: 100%;
-      display: block;
-      height: auto;
-    }
-    .section1-up {
-      height: auto;
-    }
-    .heading-group h1 {
-      margin-bottom: 0px;
-    }
-    .section3_down {
-      margin-top: 30px;
-      margin-bottom: 30px;
-    }
-    .text_section3_down_up,.text_section3_down_down {
-      width: 70%;
-      padding-left: 4%;
-      padding-right: 4%;
-    }
-    .baniere-img {
-      padding-bottom: 90px;
-      padding-top: 0;
-    }
-    .home .courses-container .courses .courses-listing .courses-listing-item:nth-child(2n+1) {
-      clear: none;
-    }
-    .img-post-actu {
-      width: 100%;
-      clear: left;
-    }
-
-    .index-actualite {
-      height: 1250px;
-    }
-    .section3:last-child {
-      clear: none;
-    }
-
-    .section3 {
-      width: 99%;
-      margin-top: 0;
-      min-height: 710px;
-    }
-    .section3:last-child {
-      width: 99%;
-      min-height: 10px;
-    }
-    .section3:last-child img {
-      display: block;
-      width: 350px;
-      height: auto;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-
-    .section2_down img {
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .section1-marge {
-      background-color: #fff;
-    }
-  }
-  @media(max-width:768px) and (min-width:768px) {
-    .heading-group {
-      margin-top: 15px;
-    }
-    .baniere-img {
-      height: 250px;
-    }
-    .pic-front-head {
-      display:block;
-      top: 430px;
-    }
-    .h1-span {
-      padding-top: 15px;
-      font-size: 34px;
-    }
-    .index-actualite {
-      height: 850px;
-    }
-    .section3 {
-      width: 49%;
-    }
-    .section3:last-child {
-      clear: none;
-      margin-top: 140px;
-      width: 44%;
-    }
-    .text_section3_down_up {
-      width: 75%;
-    }
-    .text_section3_down_down {
-      width: 90%;
-    }
-    .section3_down {
-      padding-top: 25px;
-      padding-bottom: 25px;
-    }
-  }
-  @media(max-width:630px) {
-    .text_section3_down_up {
-      font-size: 17px;
-    }
-  }
-  @media(max-width:587px) {
-    .text_section1_down_up {
-      height: auto;
-    }
-  }
-  @media(max-width:577px) {
-    .text_section3_down {
-      padding-top: 25px;
-    }
-    .text_section3_down_up {
-      height: 120px;
-      line-height: 120px;;
-      vertical-align: middle;
-    }
-  }
-  @media(max-width:554px) {
-    .heading-group a:last-child {
-      margin-top: 5px;
-    }
-    #rond-2 {
-      margin-top: 50px;
-    }
-    .section2_down {
-      margin: 0;
-    }
-  }
-  @media(max-width:486px) {
-    .courses {
-        height: 1500px;
-    }
-    .courses-container {
-      height: 1450px;
-    }
-  }
-  @media(max-width: 415px) {
-    .baniere-img {
-      background-image: url('/static/themes/phileastheming/images/img_index_mobile.png');
-      padding: 0;
-      height: 400px;
-    }
-    .heading-group h1 {
-      height: auto;
-    }
-    .heading-group:first-child {
-      height: auto;
-    }
-    .title {
-      max-height: 430px;
-    }
-    .h1-span {
-      font-size: 30px;
-      line-height: 35px;
-    }
-    .baniere {
-      height:430px;
-    }
-    .pic-front-head {
-      display:block;
-    }
-    #rond-2 {
-      display: block;
-    }
-    #rond-1 {
-      display: none;
-    }
-    .picto_section1_down {
-      margin-bottom: 0px;
-    }
-    .titre_section1 {
-      height: auto;
-      margin-bottom: 30px;
-    }
-    .section1_down {
-      height: auto;
-    }
-    .act-in {
-      display: none;
-    }
-    .section1_down {
-      width: 95%;
-      margin-left: 2.5%;
-      margin-right: 2.5%;
-    }
-    .picto_section1_down {
-      width: 51px;
-      margin-left: 4px;
-      margin-right: 4px;
-      float:left;
-    }
-    .text_section1_down {
-      width: calc(100% - 62px);
-      margin: 0px;
-      padding: 0px;
-      float:left;
-    }
-    .section1-up,.section1,.text_section1_down_down,.text_section1_down_up,.text_section1_down {
-      height: auto;
-    }
-    .section1-up {
-      margin-top: 25px;
-    }
-    .section1-up,.color-grey {
-      height: auto;
-    }
-    #bouton-decouverte a,#toute-les-actualite a{
-      width: 230px;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: 18px;
-    }
-    .text_section3_down_up {
-      width: 90%;
-      margin-left: 5%;
-      margin-right: 5%;
-    }
+    <style>
     % if user.is_authenticated():
-    .heading-group:first-child {
-      padding-top: 35px;
-    }
-    .heading-group a {
-      font-size: 15px;
-      width: 280px;
-    }
     #toute-les-actualite a {
       margin-top: 0;
     }
@@ -444,361 +90,29 @@ all_active_user = UserProfile.objects.all().count()
     .color-grey {
       height: auto;
     }
+    .heading-group a {
+      width: 280px;
+    }
     % else:
     #bouton-decouverte {
       margin-top: 0;
-    }
-    .heading-group {
-      padding-top: 35px;
     }
     .picto-low-res {
       width: 18px;
       float: right;
       margin-right: 5px;
     }
-    header.global h1.logo {
-      width: calc(100% - 51px);
-    }
-    .section3:last-child {
-      display: none;
-    }
     .index-actualite {
-      height: 950px;
-    }
-    .heading-group a {
-      font-size: 20px;
-      width: 160px;
-    }
-    % endif
-    .heading-group h1 {
-      min-height: 90px;
-    }
-    .baniere-img {
-      padding-bottom: 170px;
-      padding-top: 0;
-    }
-    .heading-group a {
-      margin-top: 10px;
-    }
-    .titre_section3 {
-      margin: 0;
-      padding: 0;
-      padding-top: 90px;
-      height: 90px;
-      text-align: center;
-      width: 100%;
-    }
-    .logo a img {
-      width: 200px;
-    }
-    #menu-table button {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    #menu-table {
-      margin-left: 5px;
-      margin-right: 5px;
-      padding: 0;
-      height: 99px;
-      width: 18px;
-    }
-    #menu-table li {
-      margin: 0;
-      padding: 0;
-    }
-
-    .section3:last-child img {
-      display: block;
-      width: 99%;
-      height: auto;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 20px;
-      margin-bottom: 20px;
-    }
-    .section3_down {
-      padding-top: 30px;
-      padding-bottom: 30px;
-      width:98%;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .text_section3_down {
-      padding-top: 0;
-    }*
-    .text_section3_down_up {
-      width: 98%;
-      padding: 0px;
-      padding-left: 1%;
-      padding-right: 1%;
-    }
-
-    .act-in {
-       margin-top: 20px;
-       margin-bottom: 20px;
-     }
-    .color-grey {
-      padding-top: 15px;
-    }
-    .heading-group:first-child{
-      padding-top: 50px;
-  }
-   .index-actualite {
-     margin-top: 0px;
-   }
-   /*
-   .titre_section3 {
-     padding-top: 50px;
-   }
-   */
-   .section3_down:first-child {
-     margin-top: 0px;
-     padding-top: 0px;
-   }
-   .courses-container {
-     height: 1150px;
-   }
-  } style=""
-  @media(max-width: 360px) {
-    .index-actualite {
-      height: 800px;
-    }
-    .color-grey {
       height: auto;
     }
-    .pic-front-head {
-      top: 500px;
+    @media(max-width:670px){
+      .index-actualite{
+        height: 1200px;
+      }
     }
-  }
-  @media(max-width: 425px) {
-    .section1-up {
-      padding-top: 35px;
-      clear: left;
-    }
-  }
-  .picto_section3_down  {
-    width: 154px;
-    height: 120px;
-  }
-  /*
-    CSS SPECIAL LANGUE
-    css a appliquer
-    en traduction
-     en:hide-picture-english => fr:r-a-s
-     en:hide-picture-french => fr:cacher-images-francais
-  */
-  .hide-picture-english {
-    display: none;
-  }
-  .cacher-images-francais {
-    display: none;
-  }
+  % endif
   </style>
-  <script>
-  function callNews() {
-    var News = '';
-    var nombreNews = '';
-    var This = $('.index-actualite-sous-section-1');
-    var Links = '<style>@media(max-width:320px){#toute-les-actualite a{ margin-top: 0px;}}</style><div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite"><a href="/news/" style="color:#914d8e;">${_("all the news")}</a></div>';
-    $.ajax({
-      type: "GET",
-      url: '/api/news/',
-      data:{
-        n: '3',
-        user_defined_order: '0',
-        async: false,
-      },
-      dataType: 'json',
-      success: function(data) {
-        News = data.news;
-        nombreNews = News.length;
-        if(nombreNews == 0) {
-          This.append(Links);
-        }else if(nombreNews == 1){
-          This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"style="background-image:url('+News[0].jacket+')"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; background-size: cover; "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');
-          This.append(Links);
-        }else if(nombreNews == 2) {
-          This.append('<style>@media(max-width:320px){#first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; background-size: cover "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id=""><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; background-size: cover "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append(Links);
-        }else if(nombreNews == 3) {
-          This.append('<style>@media(max-width:320px){#item_news_3{margin-bottom: 0px;} #first_item{padding-top:0;margin-top:0}}</style><div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" id="first_item"><div class="picto_section3_down" data-ordre="1" data-url="/news/detail/'+News[0].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[0].jacket+');background-position: center; background-size: cover "></div></div><div class="text_section3_down" style="width: calc(100% - 154px);height: 100%;float: left;"><div class="text_section3_down_up">'+News[0].title+'</div><div class="text_section3_down_down">'+News[0].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6"><div class="picto_section3_down" data-ordre="2" data-url="/news/detail/'+News[1].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[1].jacket+');background-position: center; background-size: cover "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[1].title+'</div><div class="text_section3_down_down">'+News[1].summary+'</div></div></div>');This.append('<div class="section3_down col-xs-6 col-md-6 col-sm-6 col-lg-6" style="margin-top: 20px;" id="item_news_3"><div class="picto_section3_down" data-ordre="3" data-url="/news/detail/'+News[2].news+'/"><div style="display: block;width: 154px;height: 120px;background:url('+News[2].jacket+');background-position: center; background-size: cover "></div></div><div class="text_section3_down"><div class="text_section3_down_up">'+News[2].title+'</div><div class="text_section3_down_down">'+News[2].summary+'</div></div></div>');
-          This.append(Links);
-          function ActuFloats() {
-           $('.picto_section3_down').each(function(){
-             var text = $(this).parent().find('.text_section3_down_down').text();
-             var long = parseInt(text.length);
-             var i = 0;
-             var n = 0;
-             var longueur = 0;
-             for(i;i<long;i++) {
-               var hauteur = $(this).parent().find('.text_section3_down').height();
-               hauteur = parseInt(hauteur);
-               var height = parseInt($(this).height());
-               var texts = $(this).parent().find('.text_section3_down_down').text();
-               var longs = parseInt(texts.length);
-               if(hauteur > 120) {
-                 n = n + 3;
-                 longueur = longs - n;
-                 str = text.slice(longueur, -1);
-                 text = text.replace(str,' ..');
-                 $(this).parent().find('.text_section3_down_down').html(text);
-                 i++
-               }else{
-                 i = long + 1;
-               }
-             }
-            if($(this).data('ordre') == '2') {
-             $(this).css('float','right');
-             $(this).parent().find('.text_section3_down_up').css('text-align','right');
-             $(this).parent().find('.text_section3_down_up').css('margin-left','26%');
-             $(this).parent().find('.text_section3_down_up').css('padding-left','2%');
-             $(this).parent().find('.text_section3_down_up').css('padding-right','2%');
-             $(this).parent().find('.text_section3_down_down').css('text-align','right');
-             $(this).parent().find('.text_section3_down_down').css('margin-left','26%');
-             $(this).parent().find('.text_section3_down_down').css('padding-left','2%');
-             $(this).parent().find('.text_section3_down_down').css('padding-right','2%');
 
-             if(parseInt($(document).width()) < 425) {
-               $(this).parent().find('.text_section3_down_up').css('margin-left','0');
-               $(this).parent().find('.text_section3_down_up').css('margin-right','5%');
-             }
-            }else{
-             $(this).css('float','left');
-            }
-           });
-          }
-          function aligneTitresNews() {
-            $('.text_section3_down_up').each(function(){
-              var doc = $(document).width();
-              var This = $(this);
-              var Attr = This.attr('style');
-              var Height = This.height();
-              if(parseInt(doc) <= 425) {
-                marginTop = ((120 - parseInt(Height))/2);
-                This.css('margin-top',marginTop+'px');
-              }else{
-                This.attr('style',Attr);
-              }
-            })
-          }
-          $(window).resize(function(){
-            aligneTitresNews();
-            ActuFloats();
-          })
-          //intNews();
-          ActuFloats();
-          marginNewsTitle();
-          aligneTitresNews();
-        }
-        $('.section3_down').click(function(){
-          var url = $(this).find('.picto_section3_down').data('url');
-          window.location.href = url;
-        })
-      }
-    });
-  }
-
-  function alignerPicto() {
-    var Largeur = $('#rond-2').width();
-    $('.picto_section1_down').each(function(){
-      var This = $(this);
-      var parentHeight = $(this).parent().height();
-      var pictoHeight = $(this).height();
-      if(parseInt(Largeur) <= 425) {
-        var margintop = (parseInt(parentHeight) - parseInt(pictoHeight)) /2 ;
-        This.css('margin-top',margintop+'px');
-      }else{
-        This.attr('style','');
-      }
-    })
-  }
-  function AnglaisFrancais() {
-    var doc = parseInt($(document).width());
-    var langue = "${_('hide-picture-english')}";
-    if(doc < 768) {
-      if(langue == 'hide-picture-english') {
-        $('.index-actualite').css('height','1050px');
-      }
-    }else{
-        $('.index-actualite').attr('style','');
-    }
-  }
-  function marginNewsTitle() {
-    $('.text_section3_down_up').each(function(){
-      var Height = $(this).height();
-      if(Height <= 30) {
-        $(this).css('margin-top','25px');
-      }else{
-        $(this).css('margin-top','0px');
-      }
-    })
-  }
-  /* call ajax recuperation nombre de cours */
-  /* resize decouvrez phileas */
-  function philDec(){
-    var hauteur = parseInt($('.section1').height()) - 140;
-    $('#bouton-decouverte').css('margin-top',hauteur+'px');
-  }
-  /* optimiser taille */
-  function policeOpti(){
-    $('.text_section1_down_up').each(function(){
-      var height = parseInt($(this).height());
-      var font = $(this).css('font-size');
-      font = font.replace('px','');
-      font = parseInt(font);
-      var i = 0;
-      for(i; i<=font;i++) {
-        if(height > 230) {
-          font = font - 1;
-          $('.text_section1_down_up').css('font-size',font+'px');
-        }else{
-          i = font;
-        }
-      }
-    })
-  }
-  function hauteurcours() {
-    var plug = 0;
-    if($(window).width() < 486 ){
-      var long = $('.courses-listing-item').length;
-      var height = parseInt($('.courses-listing-item').height());
-      console.log('longueur : '+long)
-      if(long == undefined ) {
-        console.log('test');
-        $('.color-greys').hide();
-      }else if(parseInt(long) == 1) {
-        plug = 120;
-      }else if(parseInt(long) == 2){
-        plug = 230;
-      }else{
-        plug = 300;
-      }
-      var longs = (long * height)+plug;
-      console.log('longueur '+long );
-      $('.courses-container').css('height',longs+'px');
-    }else{
-      plug = 100;
-      var height = parseInt($('.courses-listing-item').height());
-      var longs = height+100;
-      console.log('longueur '+long );
-      $('.courses-container').css('height',longs+'px');
-    }
-  }
-  $(document).ready(function(){
-   marginNewsTitle();
-   AnglaisFrancais();
-   alignerPicto();
-   callNews();
-   policeOpti();
-   hauteurcours();
-  })
-  $(window).resize(function(){
-   marginNewsTitle();
-   AnglaisFrancais();
-   alignerPicto();
-   policeOpti();
-   hauteurcours();
-  })
-  </script>
   <style>
   .text_section3_down_up {
     line-height: 25px;
@@ -853,7 +167,7 @@ all_active_user = UserProfile.objects.all().count()
               </div>
             <%include file="${courses_list}" />
               <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="toute-les-actualite">
-                <a href="courses" style="margin-left:auto; margin-right: auto; display: block; max-width: 300px; color: #914d8e;height:auto;">${_("Discover More Courses")}</a>
+                <a href="courses">${_("Discover More Courses")}</a>
               </div>
             </div>
           % else:
@@ -929,7 +243,7 @@ all_active_user = UserProfile.objects.all().count()
                     </div>
                   </div>
                   <div class="col-xs-12 col-md-12 col-sm-12 col-lg-12 bouton_decouverte" id="bouton-decouverte">
-                    <a href="/faq" style="color: #914d8e;">${_("discover")} philéas</a>
+                    <a href="/faq">${_("discover")} philéas</a>
                   </div>
                 </div>
               </div>
@@ -991,6 +305,7 @@ all_active_user = UserProfile.objects.all().count()
                 display: block;
               }
               @media (max-width: 768px) and (min-width: 768px){
+                /*
                 .section3 {
                   clear: left;
                   width: 100%;
@@ -1001,8 +316,9 @@ all_active_user = UserProfile.objects.all().count()
                   margin-top: 0px;
                   width: 100%;
                 }
+                */
                 .index-actualite {
-                    height: 1440px;
+                  height: 830px;
                 }
               }
               </style>
@@ -1141,25 +457,6 @@ all_active_user = UserProfile.objects.all().count()
   $(window).load(function() {$('#signup_action').trigger("click");});
 </script>
 % endif
-<script>
-$(document).ready(function(){
-  $.ajax({
-    type: "POST",
-    url: '/search/course_discovery/',
-    data:{
-      coin: 'coin',
-    },
-    dataType: 'json',
-    success: function(data) {
-      var total = data.total;
-      var time = parseInt(total) * 3;
-      $('.nombre_apprenant_ajax').find('h4').html('${all_active_user}+');
-      $('.nombre_cours_ajax').find('h4').html(total+'+');
-      $('.nombre_heure_ajax').find('h4').html(time+'+');
-    }
-  })
-})
-</script>
 % if not user.is_authenticated():
 <script>
 function iframeHeight(){
@@ -1174,7 +471,7 @@ function marginTitleIframe() {
   var margin = parseInt(iframe.css('margin-left'));
   var width = parseInt(title.width());
   width = width - margin;
-  title.css('width',width+'px');
+  title.css('width',(width/2)+'px');
   title.css('margin-left',margin+'px');
 }
 $(document).ready(function() {
@@ -1187,3 +484,4 @@ $(document).resize(function(){
 })
 </script>
 % endif
+<script src="${static.url('js/index.js')}"></script>
