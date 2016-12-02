@@ -1,0 +1,310 @@
+/* police/fonts */
+
+$helvetica_light: 'helveticaneue-light';
+$helvetica_bold : 'helveticaneue-bold';
+$helvetica : 'helveticaneue';
+$helvetica_medium : 'helveticaneue-medium';
+$gotham_med : 'gothamrounded-medium';
+$gothamrounded_book : 'gothamrounded-book';
+$ogthamrounded_bold: 'gothamrounded-bold';
+$ogthamrounded_might: 'gothamrounded-light';
+$arial : 'arial';
+
+/* police/fonts */
+
+/* -------------------------------------------------------- */
+
+/* navigateur */
+
+/* couleur bouton 'MENU' */
+$menu_nav_color: #6E747E;
+/* background-color menu deroulant 'My account' */
+$background_color_my_acount_drop_down_menu: #fff;
+/* color cellules menu deroulant 'My account' */
+$cells_color_my_acount_dropdown_menu: #3D4857;
+/* backgroundcolor cellules menu deroulant 'My account' */
+$cells_background_color_my_acount_dropdown_menu: #eeeff1;
+/* border-color cellules menu deroulant 'My account' */
+$cells_border_color_my_acount_dropdown_menu: #fefefe;
+/* color bouton logout */
+$color_logout: #fff;
+/* backgroundcolor logout */
+$background_color_logout: #d04041;
+/* background_color's header */
+$nav_header_background_color: #F5F6F8;
+/* bande logo/nav background color*/
+$background_color_bande_nav: #F5F6F8;
+/* background-color balise select language */
+$nav_lang_background_color: #EEEFF1;
+/* backgroundcolor balise option select language */
+$lang_option_background_color: #EEEFF1;
+/* font color balise option select language */
+$lang_option_font_color: #3D4857;
+/* form submit search background color */
+$form_nav_background_color: #fff;
+/* input submit search background color */
+$submit_nav_background_color: #fff;
+/* li a nav font color */
+$nav_hd_ean_font_color: #3D4857;
+/* nav SD EAN background_color*/
+$nav_sd_ean_background_color: #D8D8D8;
+/* nav SD EAN font_color*/
+$nav_sd_ean_font_color: #000;
+/* sous menu table background-color */
+$nav_sous_menu_background_color: #eeeff1;
+/* sous menu table font-color */
+$nav_sous_menu_font_color: #686f78;
+/* sous menu table border-color */
+$nav_sous_menu_border_color: #fefefe;
+/*nav index all font size color */
+$nav_index_all_font_color: #3D4857;
+/* nav_courseware_hover_background_color */
+$background_color_hover_nav_couseware: #fff;
+
+/* navigateur */
+
+/* -------------------------------------------------------- */
+
+/* login */
+
+/* main color #fff */
+$main_color_login: #fff;
+$secondary_color_login: #914d8e;
+$background_color_login: grey;
+/* login */
+
+/* -------------------------------------------------------- */
+
+/* index */
+
+/* titre H1 index */
+$h1_index_color : #fff;
+/* couleur bouton baniere index*/
+$bouton_baniere : #fff;
+/* background-color baniere index */
+$background_color_baniere_index : #272530;
+/* backgroundcolor index section cours à la une */
+$courses_list_backgroundcolor: #F5F6F8;
+/* background color index reste */
+$background_color_index_central: #fff;
+/*couleur boutons page acceuil*/
+$bouton_index : #914d8e;
+/* couleur sous-titre index */
+$sous_titre_index : #914d8e;
+/* couleur cercle compteur index */
+$circle_color : #08A2E1;
+/* couleur police cercle compteur index */
+$circle_font_color : #fff;
+/* couleur background cercle compteur index */
+$circle_background_color: #fff;
+
+/* index */
+
+/* -------------------------------------------------------- */
+
+/* courses */
+
+/* course's page background color */
+$course_background_color: #F5F6F8;
+/* bande de recherche */
+$bande_search_background_color: #8A4185;
+$bande_search_font_color: #fff;
+/* course header */
+$course_header_background_color: #fff;
+/* course title color */
+$course_title_font_color: #8A4185;
+/* search icon background color */
+$search_icon_background_color: #fff;
+/* link font color */
+$link_font_color: #fff;
+/* h2 color */
+$course_h2_color: #8A4185;
+/* picto color */
+$course_picto_color: #fff;
+
+/* courses */
+
+/* -------------------------------------------------------- */
+
+/* course */
+
+/* course title */
+$course_title_font_color: #555d68;
+/* bouton show more */
+$show_more_font_color: #fff;
+$show_more_background_color: #009de0;
+
+/* course */
+
+/* -------------------------------------------------------- */
+
+/* course_list */
+
+/* vodeclic img background color */
+$course_list_vodclic_img_background_color: #fff;
+/* course_contenair_background_color */
+$course_list_contenair_background_color: #fff;
+
+/* course_list */
+
+/* -------------------------------------------------------- */
+
+/* dashboard */
+
+/* profile sidebar background color */
+$dashboard_profile_sidebar_background_color: #09a0e0;
+/* profile sidebar background color */
+$dashboard_profile_sidebar_font_color: #fff;
+/* profile sidebar li border color */
+$dashboard_profile_li_border_color: #6bc4ec;
+/* dashboard h2 font color */
+$dashboard_h2_font_color: #8A4185;
+/* profile sidebard a color */
+$dashboard_sidebar_a_font_color: #fff;
+/* profile sidebard a border color */
+$dashboard_sidebar_a_border_color: #fff;
+/* dashboard contnair background color */
+$dashboard_contenair_background_color: #F5F6F8;
+/* course background-color */
+$dashboard_course_background_color: #fff;
+/* empty dashboard message color*/
+$dashboard_empty_course_font_color: #fff;
+/* empty dashboard message color*/
+$dashboard_empty_course_background_color: #09a0e0;
+/* dashboard profile border color */
+$dashboard_profile_border_color: #fff;
+
+/* dashboard */
+
+/* -------------------------------------------------------- */
+
+/* dashboard course listing */
+
+/*link action item*/
+$dashboard_course_listing_font_color: #445561;
+/* dashboard course title font color */
+$dashboard_course_title_font_color: #363F4D;
+/* dashboard course link font color */
+$dashboard_course_link_font_color: #fff;
+/* dashboard background color course link */
+$dashboard_course_link_background_color: #09a0e0;
+/* dashboard vodeclic img background color */
+$dashboard_vodeclic_background_color: #fff;
+/* trame vodeclic */
+$dashboard_trame_vodeclic_un: transparent;
+$dashboard_trame_vodeclic_deux: rgba(105,105,105,0.2);
+/* unenrollment title font color */
+$dashboard_unenrollment_title_font_color: #8a4186;
+/*unenrollment title border color */
+$dashboard_border_unenrollment_color: transparent;
+/* dashboard input submit font color */
+$dashboard_submit_font_color: #8a4186;
+/* dashboard input submit border color */
+$dashboard_submit_border_color: #8a4186;
+/* vignette lang background color */
+$vignette_lang_background_color: grey;
+/* vignette lang font color */
+$vignette_lang_font_color: #fff;
+/* button action font color */
+$button_action_font_color: #000;
+/* button color background_color */
+$button_background_color: transparent;
+
+/* dashboard course listing */
+
+/* -------------------------------------------------------- */
+
+/* course_cards */
+
+/* input submit course cards */
+$course_cards_submit_font_color: rgb(255, 255, 255);
+$course_cards_submit_background_color_color: rgb(0, 157, 224);
+/* other input submit course_cards */
+$other_course_cards_submit_background_color: transparent;
+/* course name */
+$course_cards_course_name_font_color: #555d68;
+/* message none font color */
+$message_none_font_color: #8A4185;
+/* message none link font color */
+$message_none_font_color: #363F4E;
+
+/* course_cards */
+
+/* -------------------------------------------------------- */
+
+/*course about*/
+$up_dashboard_color: #445561;
+$titre-page_color: #8A4185;
+$grey_background_color:#F5F5F5;
+$course_summary_background_color: #fff;
+$course_summary_button_and_cie_background_color: #009DE0;
+$course_summary_button_and_cie_color:#fff;
+$details_h2_and_co_color:#445561;
+$course-info_and_detail_p_color:#445561;
+$picto-list-ol_background_color:#fff;
+$picto-list-ol_a_background_color: transparent;
+$faq_color: #fff;
+$faq_background_color: #009de0;
+$response_color: #fff;
+$course_info_detail_and_co_colors_p_li:#fff;
+$white_background_color: #fff;
+$note_color:#8A4185;
+$avis_color:#8A4185;
+$liens_border_color: #8A4185;
+$liens_color:#8A4185;
+$note_big_and_nombre_avis_color: #8A4185;
+$header_div_color_disabled: #fff;
+$header_div_background_color_disabled: #818181;
+$course-info_background_color_media_768: #fff;
+$register_color_media_768: #fff;
+$register_background_color_media_768: #009DE0;
+$course_summary_ol_li_border_color_media_768: #445561;
+$popup_background_color: #fff;
+$popup_link_border: #8a4186;
+$popup_link_color: #8a4186;
+$popup_h2_color: #8a4186;
+$close_popup_background_color: transparent;
+/*course about*/
+
+/* -------------------------------------------------------- */
+
+/* course navigation */
+$btn_neutral_background_color:#fff;
+$btn_neutral_color:#0079bc;
+$sur_menu_courseware_background_color:#fff;
+$course_tab_background_color: #fff;
+$baniere_courseware_color:#fff;
+$baniere_courseware_background_color: grey;
+$baniere_courseware_p_color:#fff;
+/* course navigation */
+
+/* -------------------------------------------------------- */
+
+/* cpf */
+
+$title_background_color: transparent;
+$title_color:#914d8e;
+$ariane_color:#3D4857;
+$baniere_img_background_color:#272530;
+$ariane_news_color: #fff;
+$separation_color: #fff;
+$h1_span_color: #fff;
+$titre_cpf_h1_color:#914d8e;
+$menu_top_background_color: #009DE0;
+$menu_top_color: #fff;
+$menu_down_color: #445561;
+
+
+/* cpf */
+
+/* -------------------------------------------------------- */
+
+/* footer */
+
+/* footer background color */
+$footer_background_color: #363F4E;
+/* footer font color */
+$footer_font_color: #fff;
+/* wrapper footer color */
+$wrapper_footer_color: #FAFAFA;
+/* footer */

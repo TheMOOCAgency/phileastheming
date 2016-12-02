@@ -49,155 +49,16 @@ site_status_msg = get_site_status_msg(course_id)
 </div>
 % endif
 <style>
-  button {
-    border: none;
-    box-shadow: none;
-  }
-  #text-menu {
-    color: #6E747E;
-  }
+
 </style>
-<script>
-function rightMenuUser() {
-  var widthCorp = $('#nav-up-up').css('width');
-  var largeurEcran = $(window).width();
-  //var marginCorp = parseInt(parseInt(largeurEcran) - parseInt(widthCorp)) / 2;
-  var marginCorp = parseInt($('#nav-up-up').css('margin-right'));
-  var url = window.location.href;
-  var Right = marginCorp - 2;
-  if(parseInt(largeurEcran) > 1440) {
-    $('.menu-for-user').css('right',Right+'px');
-  }else {
-    $('.menu-for-user').css('right','0');
-  }
-}
-function languages() {
-  $('#show_languages').click(function(){
-    $('.language-selector').toggle();
-  })
-}
-function navAllIndex() {
-  $('#menu-top-off,#button-menu-low-rez').click(function(){
-    $('.menu-for-user').toggle();
-  });
-  $('#menu-table').click(function(){
-    var navHeight = parseInt($('#nav-up-up').height());
-    var navWidth = parseInt($('#nav-up-up').width());
-    var globalNav = parseInt($('#global-navigation').height());
-    var navSubHeight = parseInt($('#sous-menu-table').height());
-    $('#sous-menu-table').toggle();
-  })
-}
-function inputSearchDisaplay() {
-  var width = $(window).width();
-  if(width > 557 || width < 768) {
-    $('.picto-low-res').find('a').click(function(){
-      $('#search_ipad').toggle();
-    })
-  }else{
-    $('#search_ipad').attr('style','');
-  }
-}
-  $(document).ready(function(){
-    navAllIndex();
-    languages();
-    rightMenuUser();
-    $('#input_search_nav').css('height','24px');
-    $('#input_search_nav').css('width','258px');
-    $('#input_search_nav').css('padding-left','10px');
-    $('#input_search_nav').css('margin-top','5px');
-    inputSearchDisaplay();
-  })
-  $(window).resize(function(){
-    rightMenuUser();
-    inputSearchDisaplay();
-    if(parseInt($('#nav-up-up').width()) > 981)
-    {
-      $('#sous-menu-table').hide();
-      if(parseInt($('#nav-up-up').width()) > 555)
-      {
-        $('#nav-up-up').css('height','104px');
-        $('#global-navigation').css('height','135px');
-        $('#menu-table').css('color','#000');
-        $('#menu-table').css('background-color','#F5F6F8');
-      }else{
-        $('#nav-up-up').css('height','104px');
-        $('#global-navigation').css('height','104px');
-        $('#menu-table').css('color','#000');
-        $('#menu-table').css('background-color','#F5F6F8');
-      }
-    }
-  })
-</script>
+<script src="${static.url('js/navigation.js')}"></script>
 </%block>
 
 <%namespace name='static' file='static_content.html'/>
 <%block name="headextra">
   <link rel="stylesheet" type="text/css" href="${static.url('css/navigation.css')}">
 </%block>
-<style>
-#search-right {
-  margin-right: -7px;
-}
-.nav-index-all li, .nav-index-all2 li {
-  margin-right: 25px;
-  float: none;
-  display: inline-block;
-}
-.nav-index-all, .nav-index-all2 {
-  width: calc(100% - 268px);
-  margin-left: 0px;
-  text-align: right;
-  padding: 0;
-}
-li input[type="text"] {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  height: 24px;
-  width: 250px;
-  border: 1px solid transparent;
-  border-radius: 0px;
-  outline:none;
-}
-li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
-  line-height: 14px;
-  font-size: 16px;
-  vertical-align: middle;
-}
 
-.nav-index-all2 li input[type="submit"],.nav-index-all2 li input[type="submit"]:hover:not(:disabled),.nav-index-all2 li input[type="submit"]:focus:not(:disabled) {
-  height: 23px;
-  width: 23px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-  border: none;
-  padding: 0px;
-  border-radius: 0px;
-  background-image: url('/static/themes/phileastheming/images/icon_search.png');
-  background-color: #fff;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  box-shadow: none;
-  outline:none;
-  display: inline-block;
-}
-.nav-courseware-01 form {
-  display: inline-block;
-  background-color: #fff;
-  height: 34px;
-}
-.nav-index-all2 li {
-  height: 34px;
-  line-height: 34px;
-  margin-top: 25px;
-}
-.nav-index-all li a, .nav-index-all2 li a,.nav-index-all li a:hover, .nav-index-all2 li a:hover,.nav-index-all li a:focus, .nav-index-all2 li a:focus {
- color:#3D4857;
-}
-</style>
-<script>
-</script>
 <!--
 <LINK href="/static/css/navigation.css" rel="stylesheet" type="text/css">
 -->
@@ -243,120 +104,6 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
   <header id="global-navigation" class="global ${"slim" if course else ""}">
     <div class="head-nav">
       <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
-      <style>
-      .logo {
-        margin-bottom: 0;
-      }
-      #menu-top-off {
-        background-color: #D8D8D8;
-        background-image: none;
-        color: #000;
-        border: none;
-        padding: 0px;
-        text-shadow: none;
-        border-radius: 0px;
-        box-shadow: none;
-        width: 180px;
-        height: 31px;
-        line-height: 31px;
-        vertical-align: middle;
-        text-align: center;
-        font-family: 'helveticaneue';
-        text-transform: none;
-      }
-      #menu-top-off span {
-        display: inline-block;
-        height: 15px;
-        line-height: 15px;
-        vertical-align: middle;
-        width: 90px;
-        font-size: 15px;
-        font-family: 'helveticaneue';
-      }
-      .picto-low-res {
-        float: right;
-        width: auto;
-      }
-      #button-menu-tablette {
-        padding-left: 0px;
-        padding: 0;
-      }
-      #search_ipad {
-        display: none;
-        margin-left: 0;
-        margin-right: 0;
-        float: right;
-        width:calc(100% - 382px);
-      }
-      .nav-courseware-01 input[type="text"] {
-        margin-top: 0;
-        height: 100%;
-      }
-      @media(max-width:768px) {
-        #search_ipad {
-          display: block;
-        }
-      }
-      @media(max-width:768px and min-width:558px) {
-        .nav-index-all2 li {
-          margin-right: -14px;
-        }
-      }
-      @media(max-width:557px) {
-        .logo {
-          width: 237px;
-        }
-        .logo a img{
-          height: auto;
-          width: 200px;
-        }
-        #menu-table {
-          margin-right: 5px;
-        }
-        #search_ipad {
-          display: none;
-          position: absolute;
-          top: 0;
-          right: 0;
-          width: 250px;
-        }
-      }
-      @media(max-width: 487px){
-        #search_ipad input[type="text"] {
-          width: 200px;
-        }
-      }
-      @media(max-width: 330px) {
-        #menu-table {
-          width: auto;
-        }
-      }
-      </style>
-      <script>
-      /*
-      function centrerLogo() {
-        var docWidth = parseInt($(document).width());
-        var gauche = parseInt($('#button-menu-tablette').width());
-        var droite = parseInt($('.picto-low-res').width());
-        var centre = parseInt($('.logo').width());
-        var logo = $('.logo');
-        if(docWidth < 558) {
-          marginLeft = (docWidth / 2) - (gauche + (centre / 2));
-          marginRight = (docWidth / 2) - (droite + (centre / 2));
-          logo.css('margin-left',marginLeft+'px');
-          logo.css('margin-right',marginRight+'px');
-        }else{
-          logo.attr('style','');
-        }
-      }
-      $(document).ready(function(){
-        centrerLogo();
-      })
-      $(window).resize(function(){
-        centrerLogo();
-      })
-      */
-      </script>
           <li>
                 <button id="menu-top-off">
                   <img src="/static/themes/phileastheming/images/picto_new.png"/>
@@ -379,38 +126,8 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
     <header id="global-navigation" class="global ${"slim" if course else ""}">
       <div class="head-nav">
         <ol class="right nav-courseware ol-css-style" style="margin-top:0px;">
-            <style>
-            #menu-top-off-a,#menu-top-off-a:hover {
-              background-color: #D8D8D8;
-              background-image: none;
-              color: #000;
-              border: none;
-              padding: 0px;
-              text-shadow: none;
-              border-radius: 0px;
-              box-shadow: none;
-              width: 180px;
-              height: 31px;
-              line-height: 31px;
-              vertical-align: middle;
-              text-align: center;
-              font-family: 'helveticaneue';
-              text-transform: none;
-              text-decoration: none;
-              display: inline-block;
-            }
-            #menu-top-off-a span {
-              display: inline-block;
-              height: 15px;
-              line-height: 15px;
-              vertical-align: middle;
-              width: 90px;
-              font-size: 15px;
-              font-family: 'helveticaneue';
-            }
-            </style>
             <li>
-                  <a href="https://www.phileasamundi.com/login" id="menu-top-off-a" style="display: inline-block; color:#000;">
+                  <a href="https://www.phileasamundi.com/login" id="menu-top-off-a" style="display: inline-block;">
                     <img src="/static/themes/phileastheming/images/picto_new.png"/>
                     <span>${_("My account")}</span>
                     <img src="/static/themes/phileastheming/images/arrow.png"/>
@@ -443,8 +160,7 @@ li input[type="text"]:-ms-input-placeholder { /* IE10–11 */
     </div>
 <ol class="right nav-courseware nav-index-all2" id="menu_connect_hd">
         <li class="nav-courseware-01">
-              <a href="/courses" style="
-    color: #3D4857;font-size: 18px; font-face:helvetica;">${_("Explore")}</a>
+              <a href="/courses">${_("Explore")}</a>
         </li>
         <li class="nav-courseware-01">
               <a href="/faq">${_("About")}</a>
