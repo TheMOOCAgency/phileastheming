@@ -1,4 +1,8 @@
-
+<style>
+a:hover, a:focus, a:visited:hover, a:visited:focus {
+color: #fff; 
+}
+</style>
 <%
 if(org == 'Vodeclic') {
       lienvodeclick = href_sso+'&vodeclic_id='+content.number;

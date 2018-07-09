@@ -218,3 +218,21 @@ button {
   display:none;
  }
 </style>
+<script>
+function link_studio() {
+  var url = window.location.href;
+  console.log('url: '+url);
+  if(url.indexOf('/about') != -1) {
+    $('.instructor-info-action').each(function(){
+      var This = $(this);
+      var a = This.attr('href');
+      console.log(a);
+      a = a.replace('//studio.http://ec2-52-211-205-171.eu-west-1.compute.amazonaws.com/','http://studio-preprod9-phileas.themoocagency.com');
+      This.attr('href',a);
+    })
+  }
+}
+$(document).ready(function(){
+  link_studio();
+})
+</script>

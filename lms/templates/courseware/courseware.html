@@ -85,7 +85,6 @@ ${static.get_page_title_breadcrumbs(course_name())}
   <%static:require_module module_name="js/courseware/courseware_factory" class_name="CoursewareFactory">
     CoursewareFactory();
   </%static:require_module>
-
   <%include file="../discussion/_js_body_dependencies.html" />
   % if staff_access:
     <%include file="xqa_interface.html"/>
@@ -233,7 +232,10 @@ ${HTML(fragment.foot_html())}
     var mCourseId = "${course.id}";
 
     $(".vert .xblock-student_view-html").each(function(){
-      mUsageIds.push($(this).attr('data-usage-id'));
+      //MODIF HERE - ADDED THE CASE WE WANT A SELF TRACKED ITEM
+      if($(this).html().indexOf('<!--DO_NOT_TRACK_COMPLETION__SELF_COMPLETION_TRACKED_ITEM-->')==-1){
+         mUsageIds.push($(this).attr('data-usage-id'));
+      }
     });
 
     if(mUsageIds.length > 0){
@@ -413,3 +415,10 @@ callForAllUser = function(){
 </script>
 <link rel="stylesheet" type="text/css" href="${static.url('css/courseware.css')}" />
 <script src="${static.url('js/courseware.js')}"></script>
+
+<!-- DYNAMIC COURSE TEMPLATE -->
+<style>
+.xmodule_display.xmodule_SequenceModule .sequence-nav{
+  display: block;
+}
+</style>

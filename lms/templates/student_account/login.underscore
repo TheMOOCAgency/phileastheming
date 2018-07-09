@@ -44,9 +44,11 @@
   #login-anchor,.content-wrapper {
   background-color: transparent;
   }
+  
   .wrapper-footer,#register-anchor,#password-reset-anchor,#institution_login-anchor,#hinted-login-anchor {
   display: none;
   }
+  
   .content-wrapper {
   height: 100vh;
   }
@@ -90,10 +92,12 @@
     #login-anchor {
       height: 200px;
     }
-  }  
+  }
+  /*  
   .login-register .form-field {display:none;}
   .login-register .action-primary{display:none;}
   .login-register .section-title.lines span {display:none;}
+  */
   .login-register .section_title.lines h2 span {display:block;}
  </style> <div class="status already-authenticated-msg hidden">
     <% if (context.currentProvider) { %>

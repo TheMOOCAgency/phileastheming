@@ -12,6 +12,7 @@ from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_
 from django.db import connection
 from django.db import models
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
+from student.models import UserProfile
 %>
 
 <%
@@ -61,6 +62,9 @@ j = 0
 
 <!-- GEOFFREY -->
 <%
+#hashlib
+import hashlib
+#other
 language = LANGUAGE_CODE
 vodeclic_stat = ''
 if 'fr' in language:
@@ -500,3 +504,99 @@ $(document).ready(function(){
 })
 </script>
 % endif
+<script>
+$('.course-container').find('a').click(function(e){
+  var This = $(this);
+  var data = This.data('course-key');
+  if(data == "course-v1:Amundi+123+1") {
+    e.preventDefault();
+    $('#submit_session').click();
+  }else if(data == 'course-v1:tma+apoc_tma_01+01') {
+    e.preventDefault();
+    $('#submit_session_apoc').click();
+  }else if(data == 'course-v1:Amundi+007+2017-007-T2') {
+    e.preventDefault();
+    $('#submit_session_reality').click();
+  }else if(data == 'course-v1:Amundi+008+2017-008-T2') {
+    e.preventDefault();
+    $('#submit_session_reality_en').click();
+  }
+})
+$('.noImageVodeclick').click(function(e){
+  var This = $(this);
+  var data = This.data('course-key');
+  if(data == "course-v1:Amundi+123+1") {
+    e.preventDefault();
+    $('#submit_session').click();
+  }else if(data == 'course-v1:tma+apoc_tma_01+01') {
+    e.preventDefault();
+    $('#submit_session_apoc').click();
+  }else if(data == 'course-v1:Amundi+007+2017-007-T2') {
+    e.preventDefault();
+    $('#submit_session_reality').click();
+  }else if(data == 'course-v1:Amundi+008+2017-008-T2') {
+    e.preventDefault();
+    $('#form_session_an_fr').click();
+  }
+})
+</script>
+<form id="form_session" method="post" action ="https://www.7speaking.com/7sautolog.cfm" style="display:none;" target="_blank">
+
+<input type="hidden" name="email" value='${user.email}'>
+<input type="hidden" name="nom" value='${user.last_name}'>
+<input type="hidden" name="prenom" value='${user.first_name}'>
+<input type="hidden" name="groupe" value='AMUNDI'>
+<input type="hidden" name="key" value='39D02FA5A62B2A62CEA0551EC69E80FA'>
+<input type="hidden" name="LE" value='ENG'>
+  % if LANGUAGE_CODE == 'fr':
+    <input type="hidden" name="LI" value='FRE'>
+  % else:
+    <input type="hidden" name="LI" value='ENG'>
+  % endif
+  <input type="submit" name="submit" value="submit" id="submit_session">
+</form>
+<form id="form_session_apoc" method="post" action ="https://apoc.themoocagency.com/autologreg" style="display:none;" target="_blank">
+  <input type="hidden" name="email" value='${user.email}'>
+  <input type="hidden" name="lastname" value='${user.last_name}'>
+  <input type="hidden" name="firstname" value='${user.first_name}'>
+  <input type="hidden" name="PID" value='${UserProfile.objects.get(user_id=user.id).rpid}'>
+  <input type="submit" name="submit" value="submit" id="submit_session_apoc">
+</form>
+<%
+private_key_api = '6+F.R2z_@69D+5WbLbps'
+fundId = str(2)
+locale = 'fr'
+pre_hash = user.email+locale+fundId+locale+user.email+private_key_api
+hash_key = hashlib.sha512(pre_hash).hexdigest()
+%>
+<form id="form_session_an_fr" method="post" action ="https://amundireality.com/fr/api/directaccess/fund" style="display:none;" target="_blank">
+  <input type="hidden" name="email" value='${user.email}'>
+  <input type="hidden" name="fundId" value='${fundId}'>
+  <!--
+  <input type="hidden" name="privateKeyApi" value='${private_key_api}'>
+-->
+  <input type="hidden" name="signature" value='${hash_key}'>
+  <!--
+  <input type="hidden" name="locale" value='${locale}'>
+-->
+  <input type="submit" name="submit" value="submit" id="submit_session_reality">
+</form>
+<%
+private_key_api = '6+F.R2z_@69D+5WbLbps'
+fundId = str(2)
+locale = 'en'
+pre_hash = user.email+locale+fundId+locale+user.email+private_key_api
+hash_key = hashlib.sha512(pre_hash).hexdigest()
+%>
+<form id="form_session_am_en" method="post" action ="https://amundireality.com/en/api/directaccess/fund" style="display:none;" target="_blank">
+  <input type="hidden" name="email" value='${user.email}'>
+  <input type="hidden" name="fundId" value='${fundId}'>
+  <!--
+  <input type="hidden" name="privateKeyApi" value='${private_key_api}'>
+-->
+  <input type="hidden" name="signature" value='${hash_key}'>
+  <!--
+  <input type="hidden" name="locale" value='${locale}'>
+-->
+  <input type="submit" name="submit" value="submit" id="submit_session_reality_en">
+</form>

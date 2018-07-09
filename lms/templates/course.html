@@ -85,6 +85,12 @@ function grille() {
 <!--
 <LINK href="/static/css/course.css" rel="stylesheet" type="text/css">
 -->
+<style>
+.highlighted-courses .courses .course a:hover, .highlighted-courses .courses .course a:focus, .highlighted-courses .courses .course a:visited:hover, .highlighted-courses .courses .course a:visited:focus {
+color: #fff;
+}
+</style>
+
   <article class="course" id="${course.id}" role="region" aria-label="${course.display_name_with_default}" data-link="${reverse('about_course', args=[course.id.to_deprecated_string()])}" data-number="${course.display_number_with_default}" data-org="${course.display_org_with_default}">
       <header class="course-image" data-org="${course.display_org_with_default}">
         <div class="cover-images
