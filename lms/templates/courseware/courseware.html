@@ -140,7 +140,7 @@ ${HTML(fragment.foot_html())}
           % endif
 
       </div>
-
+<!--
       <div class="accordion">
         <nav class="course-navigation" aria-label="${_('Course')}">
           % if accordion.strip():
@@ -150,7 +150,7 @@ ${HTML(fragment.foot_html())}
           % endif
         </nav>
       </div>
-
+-->
     </div>
 % endif
     <section class="course-content" id="course-content">
@@ -224,6 +224,7 @@ ${HTML(fragment.foot_html())}
     <%include file="/calculator/toggle_calculator.html" />
   % endif
 </nav>
+
 
 <%include file="../modal/accessible_confirm.html" />
 <script type="text/javascript">
@@ -412,13 +413,271 @@ callForAllUser = function(){
 
   });
 
-</script>
-<link rel="stylesheet" type="text/css" href="${static.url('css/courseware.css')}" />
-<script src="${static.url('js/courseware.js')}"></script>
+// ------------------- DYNAMIC QUIZ -------------------------
 
-<!-- DYNAMIC COURSE TEMPLATE -->
-<style>
-.xmodule_display.xmodule_SequenceModule .sequence-nav{
-  display: block;
+function activate_unit(tab_id, same_chapter, chapter_id){
+  if(same_chapter){
+    $(document).scrollTo($("#"+chapter_id).offset().top-20+"px",800);
+  }
+  if(!same_chapter){
+    $('#seq_content').hide();
+  }
+  $('#tma_'+tab_id).after($('#seq_content'));
+  $('#'+tab_id).find('i').addClass('active-chevron');
+  $('.seq_content_next').each(function(){
+    $(this).css('display','none');
+  })
+  next_tab_number=parseInt(tab_id.replace('tab_',''))+1;
+  $("#seq_content_next_"+next_tab_number).css('display','block');
+
+  if(!same_chapter){
+    $('#seq_content').show();
+    $(document).scrollTo($("#"+chapter_id).offset().top-20+"px",800);
+  }
 }
-</style>
+
+function close_unit(tab_id){
+  $('#seq_content').hide();
+  $('#main').after($('#seq_content'));
+  toggle_chevrons();
+  $('#'+tab_id).removeClass('active');
+  next_tab_number=parseInt(tab_id.replace('tab_',''))+1;
+  $("#seq_content_next_"+next_tab_number).css('display','none');
+}
+
+function toggle_chevrons(){
+  $('.unit-title').each(function(){
+    $(this).find('i').removeClass('active-chevron');
+  })
+}
+
+//Move seq content under right unit title
+$(document).ready( function(){
+  // First place seq_content under last unit visited title
+  current_tab_id=$('#seq_content').attr('aria-labelledby');
+  current_unit_chapter=$('#tma_'+current_tab_id).attr('data-seq');
+  same_chapter=true;
+  toggle_chevrons();
+  activate_unit(current_tab_id,same_chapter, current_unit_chapter);
+
+  //On click move seq_content at the right place
+  $('.sequence-nav').live('click', function(){
+      same_chapter=false;
+      current_unit_chapter=$('#seq_content').prev().attr('data-seq');
+      unit_id=$(this).find('button').attr('id');
+      unit_chapter=$(this).attr('data-seq');
+      if(current_unit_chapter==unit_chapter){
+        same_chapter=true;
+      }
+      // unit is already open close it
+      if($(this).next('#seq_content').length>0){
+        close_unit(unit_id);
+      }
+      //unit is not open yet open it
+      else{
+        toggle_chevrons();
+        activate_unit(unit_id, same_chapter, unit_chapter);
+      }
+  });
+
+});
+
+/* -------------------------- DYNAMIC QUIZ QUESTIONS ---------------*/
+$(document).ready( function(){
+  //For answered questions add check or cross / disable questions
+function prepare_questions(){
+  i=0;
+  $('.problems-wrapper').each(function(){
+    indicator_container=$(this).find('.indicator-container span');
+    wrong_choice=$(this).find('.choicegroup_incorrect');
+    good_choice=$(this).find('.choicegroup_correct');
+    problem_title=$(this).find('.problem-header');
+    question_id=$(this).attr('id');
+    url_show_pb=$(this).attr('data-url')+"/problem_show"
+
+    if(indicator_container.hasClass('incorrect') || wrong_choice.length>0){
+      $(this).addClass('failed_quiz').addClass('closed_unit');
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:red;" class="fa fa-times"></i>');
+      }
+      $(this).find('.action .check').hide();
+      ajax_problem_show(url_show_pb, question_id);
+    }
+    else if(indicator_container.hasClass('correct')  || good_choice.length>0){
+      $(this).addClass('success_quiz').addClass('closed_unit');
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:green" class="fa fa-check"></i>');
+      }
+      $(this).find('.action .check').hide();
+      ajax_problem_show(url_show_pb, question_id);
+    }
+    else{
+      if(!i==0){
+        $(this).addClass('disabled_question_tma');
+      }
+      else{
+        i+=1;
+      }
+    }
+    // Customize radio btn and checkboxes
+    $(this).find('label').each(function(){
+      $(this).append('<span class="checkmark"></span>');
+    })
+  })
+}
+
+//initialize quiz on page load
+prepare_questions();
+//reload quiz on click on unit title
+$('.seq_problem').live('click', function(){
+  prepare_questions();
+});
+$('.action .check').live('click', function(){
+  $(this).parents('.vert').next('.vert').find('.problems-wrapper').removeClass('disabled_question_tma');
+  $(this).parents('.vert').prev('.vert').find('.problems-wrapper').addClass('closed_unit');
+  $(this).parents('.problems-wrapper').addClass('answered_tma');
+})
+$('.problem-header').live('click', function(){
+  $(this).parents('.problems-wrapper').toggleClass('closed_unit');
+})
+});
+
+
+// Reset all questions
+course_id="${course.course_id}";
+function get_all_questions(){
+  problem_xblock_list=[];
+  $('div.vert').each(function(){
+    problem_xblock_list.push($(this).attr('data-id'));
+  })
+  return problem_xblock_list;
+};
+
+function reset_all_problems() {
+  var i=0;
+  problem_xblock_list=get_all_questions();
+  problem_xblock_list.forEach(function(xblock_id) {
+   $.ajax({
+    url:'/courses/'+course_id+'/xblock/'+xblock_id+'/handler/xmodule_handler/problem_reset',
+    type:'POST',
+    dataType:'json',
+    data: {
+        'id': xblock_id
+    },
+    success: function(result){
+      i+=1;
+      if(i>=problem_xblock_list.length){
+        window.location.reload(true);
+      }
+    }
+   });
+  });
+};
+
+
+
+// Display Answers on submit
+$(document).ajaxSuccess(function(event, request, settings){
+  if(settings.url.endsWith('problem_check') ) {
+    // Adapt quiz status
+    question_id="problem_"+settings.url.split('block@')[1].split('/');
+    problem_title=$('#'+question_id).find('.problem-header');
+    var data = JSON.parse(request.responseText);
+    //problem check
+    var url_show_pb=settings.url.replace('/problem_check','')+'/problem_show';
+
+    if(data['success']=="incorrect"){
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:red;" class="fa fa-times"></i>').addClass('failed_quiz');
+      }
+      ajax_problem_show(url_show_pb, question_id);
+    }
+    else{
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:green;" class="fa fa-check"></i>').addClass('success_quiz');
+      }
+      ajax_problem_show(url_show_pb, question_id);
+    }
+    $("#"+question_id).find('label').each(function(){
+      $(this).append('<span class="checkmark"></span>');
+    })
+
+  }
+});
+function ajax_problem_show(url_show_pb, question_id){
+  $.ajax({
+      url:url_show_pb,
+      type:'POST',
+      dataType:'json',
+      success:function(data){
+        //prepare answers
+        answers=data['answers'];
+         $.each(answers, function(key, value) {
+           if ($.isArray(value)) {
+             for (i = 0, len = value.length; i < len; i++) {
+               $('#'+question_id).find('input[value='+value[i]+']').parent('label').addClass('choicegroup_correct');
+             }
+           }
+           else{
+             if(key.indexOf('solution')>0){
+               $('#'+question_id).find('.problem').after(value);
+             }
+           }
+         });
+         //All other answers are false
+         $('#'+question_id).find('label').each(function(){
+           if(!$(this).hasClass('choicegroup_correct') && $(this).find('input').is(':checked')){
+             $(this).addClass('choicegroup_incorrect');
+           }
+         })
+
+      }
+    });
+}
+
+
+// Get user grade
+function get_user_grade(){
+  $.ajax({
+      url:"/final_grades/"+course_id+'/',
+      type:'GET',
+      dataType:'json',
+      success:function(data){
+        grade=data['Grade'];
+        grade_hundread=(grade*100)+"%";
+        pass="${course.__dict__['_grading_policy']['GRADE_CUTOFFS']['Pass']}";
+        pass_hundread=(pass*100)+'%';
+        if(grade>pass){
+          $('#result_content').html('<div class="success_sequence sequence_total"><div>Félicitations!</div><div>Vous avez obtenu la note de '+grade_hundread+'</div><div onclick="reset_all_problems()"><a class="reset-btn" >${_("Start again")}</a></div></div>');
+        }
+        else{
+          $('#result_content').html('<div class="fail_sequence sequence_total"><div>Aïe votre score n\'est pas suffisant</div><div>Vous avez obtenu la note de '+grade_hundread+'. Le minimum requis pour ce quiz est de '+pass_hundread+'</div><div onclick="reset_all_problems()"><a class="reset-btn" >${_("Start again")}</a></div></div>');
+        }
+      }
+    });
+}
+
+
+$(document).ready(function(){
+  all_answered=true;
+  $('.problems-wrapper').each(function(){
+    if(!$(this).hasClass('failed_quiz') && !$(this).hasClass('success_quiz')){
+      all_answered=false;
+    }
+  });
+  if(all_answered){
+    get_user_grade();
+  }
+
+  url_last_question=$('.problems-wrapper').last().attr('data-url');
+  $(document).ajaxSuccess(function(event, xhr, settings) {
+      if (settings.url.indexOf(url_last_question) > -1) {
+        get_user_grade();
+      }
+  });
+})
+
+</script>
+<!--<link rel="stylesheet" type="text/css" href="${static.url('css/courseware.css')}" />-->
+<link rel="stylesheet" href="/media/csswork/courseware.css">
+<script src="${static.url('js/courseware.js')}"></script>
