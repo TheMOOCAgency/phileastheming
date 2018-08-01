@@ -1,3 +1,6 @@
+.sequence-nav{
+  display:none;
+}
 .path {
   display: none;
 }
@@ -9,6 +12,7 @@ body.view-in-course .wrapper-footer {
 }
 .xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct {
   border: 2px solid transparent;
+  font-size: 18px;
 }
 .xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect:hover {
   border: 2px solid transparent;
@@ -21,6 +25,11 @@ body.view-in-course .wrapper-footer {
 }
 .xmodule_display.xmodule_CapaModule div.problem .choicegroup label, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label {
   border: 2px solid transparent;
+  font-size: 18px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 3px;
+  color: rgb(0, 0, 0);
+  border-color: transparent;
 }
 .xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct:hover{
   border: 2px solid transparent;
@@ -30,6 +39,12 @@ body.view-in-course .wrapper-footer {
   padding-right: 25px;
   padding-left: 25px;
   background-color: #F5F6F8;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.tma_choice_selected{
+  background-color: rgb(162, 193, 38)!important;
+  margin-bottom: 3px!important;
+  color: rgb(255, 255, 255)!important;
+  border-color: rgb(162, 193, 38)!important;
 }
 .container>div {
   background-color: #F5F6F8;
@@ -157,6 +172,231 @@ body.view-in-course .container {
 .completed {
  display: none;
 }
+
+
+
+/*DYNAMIC QUIZ*/
+.xmodule_display.xmodule_CapaModule div.problem-progress{
+  padding-left: 0px;
+}
+.status.unanswered{
+  display: none!important;
+}
+.action{
+  text-align: center;
+}
+/* Custom Checkbox */
+.problems-wrapper form label{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.problems-wrapper form label input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+  top: 5px;
+  left: -35px;
+  height: 30px;
+  width: 30px;
+  background-color: #eee;
+  border-radius: 30px;
+}
+
+.problems-wrapper form label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.problems-wrapper form label input:checked ~ .checkmark {
+  background-color: #934084;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkfail{
+  background-color:red!important;
+  display: none;
+  border-color: red!important;
+  position: absolute;
+  top: 5px;
+  left: -35px;
+  height: 30px;
+  width: 30px;
+  background-color: #eee;
+  border-radius: 30px;
+}
+.checkfail:after{
+  content:"\f00d";
+  font-family: FontAwesome;
+  color: white!important;
+  transform:rotate(45deg);
+  content: "\f00d";
+  font-family: FontAwesome;
+  color: white!important;
+  transform: rotate(45deg);
+  position: relative;
+  top: 2px;
+  left: 8px;
+}
+.choicegroup_incorrect .checkfail{
+  display: block;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+label .checkmark:after {
+  left: 11px;
+  top: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+label.choicegroup_incorrect::after{
+  display: none!important;
+}
+.xmodule_display.xmodule_CapaModule div.problem .indicator-container .status.incorrect{
+  display: none;
+}
+
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup fieldset{
+  margin-left: 30px;
+}
+
+.action .save{
+  display: none!important;
+}
+.choicegroup_correct:after{
+  display: none!important;
+}
+.choicegroup_correct{
+  background-color: green!important;
+  color: white!important;
+}
+.incorrect_answer{
+  color: red;
+  font-weight: bold;
+}
+.detailed-solution{
+  padding: 10px;
+  font-weight: bold;
+  border-radius:2px;
+  background-color: white;
+  font-size: 18px;
+  display: none;
+}
+.show-detailed .detailed-solution{
+  display: block!important;
+}
+.detailed-solution p{
+  font-size: 18px!important;
+}
+.detailed-solution p:first-child{
+  text-transform: uppercase;
+  color: gray;
+}
+.feedback-hint-correct .hint-label, .feedback-hint-incorrect .hint-label{
+  display: none!important;
+}
+.action .show{
+  display: none;
+}
+.selected_tma{
+  background-color: rgb(162, 193, 38);
+  margin-bottom: 3px;
+  color: rgb(255, 255, 255);
+  border-color: rgb(162, 193, 38)
+}
+
+.sequence-bottom{
+  display: none;
+}
+
+.tma_basic_choice{
+  background-color: rgb(255, 255, 255)!important;
+  margin-bottom: 3px!important;
+  color: rgb(0, 0, 0)!important;
+  border-color: transparent!important;
+}
+
+.attempts_tma{
+  display: inline-block;
+  color:#5e5e5e;
+  text-transform: lowercase;
+}
+.failed_quiz .problem div:first-child, .success_quiz .problem div:first-child{
+  pointer-events:none!important;
+}
+.action .submission_feedback{
+  display: none!important;
+}
+
+.failed_quiz .action .submission_feedback{
+  display: block!important;
+  color: red!important;
+}
+
+.bad_answer_tma{
+  font-size: 18px;
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+.failed_quiz .bad_answer_tma{
+  display: block!important;
+}
+
+.success_message_tma{
+  padding: 10px;
+  border: 3px solid green;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.fail_message_tma{
+  padding: 10px;
+  border: 3px solid red;
+  margin-top: 20px;
+  background-color: white;
+}
+.fail_message_tma p, .success_message_tma p{
+  text-align: center;
+  font-size: 20px;
+  margin: 2px!important;
+}
+.fail_message_tma p.tma_message_title, .success_message_tma p.tma_message_title{
+  margin-top: 10px!important;
+  margin-bottom: 20px!important;
+}
+
+.feedback-hint-correct, .feedback-hint-incorrect{
+  display: none!important;
+}
+.show-detailed .feedback-hint-correct, .show-detailed .feedback-hint-incorrect{
+  display: block!important;
+}
+
 @media(max-width:1440px) {
   .container>div {
     border: none;

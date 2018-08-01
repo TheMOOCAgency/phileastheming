@@ -85,6 +85,7 @@ ${static.get_page_title_breadcrumbs(course_name())}
   <%static:require_module module_name="js/courseware/courseware_factory" class_name="CoursewareFactory">
     CoursewareFactory();
   </%static:require_module>
+
   <%include file="../discussion/_js_body_dependencies.html" />
   % if staff_access:
     <%include file="xqa_interface.html"/>
@@ -140,7 +141,7 @@ ${HTML(fragment.foot_html())}
           % endif
 
       </div>
-<!--
+
       <div class="accordion">
         <nav class="course-navigation" aria-label="${_('Course')}">
           % if accordion.strip():
@@ -150,7 +151,7 @@ ${HTML(fragment.foot_html())}
           % endif
         </nav>
       </div>
--->
+
     </div>
 % endif
     <section class="course-content" id="course-content">
@@ -225,22 +226,15 @@ ${HTML(fragment.foot_html())}
   % endif
 </nav>
 
-
 <%include file="../modal/accessible_confirm.html" />
 <script type="text/javascript">
   mPrepareTrackAjax = function(){
     var mUsageIds = [];
     var mCourseId = "${course.id}";
-
     $(".vert .xblock-student_view-html").each(function(){
-      //MODIF HERE - ADDED THE CASE WE WANT A SELF TRACKED ITEM
-      if($(this).html().indexOf('<!--DO_NOT_TRACK_COMPLETION__SELF_COMPLETION_TRACKED_ITEM-->')==-1){
-         mUsageIds.push($(this).attr('data-usage-id'));
-      }
+      mUsageIds.push($(this).attr('data-usage-id'));
     });
-
     if(mUsageIds.length > 0){
-
       $.post({
         url: "/track_html_component/",
         data: {
@@ -248,15 +242,12 @@ ${HTML(fragment.foot_html())}
           'course_id': mCourseId
         }
       }); // post
-
     } // if
   }
-
   getCompletionStatus = function(){
     var mCourseId = "${course.id}";
     var circleGreen = '<div class="completed green"></div>';
     var circleGray = '<div class="completed gray"></div>';
-
     $.get({
       url: "/completion_status/",
       data: {
@@ -277,7 +268,6 @@ ${HTML(fragment.foot_html())}
             $(this).children().children(".accordion-display-name").append(circleGreen);
           });
         } // for 1
-
         var sectionsCompleted = data['completion_status']['sections_completed']
         for (var sectionIndex in sectionsCompleted) {
           var sectionName = sectionsCompleted[sectionIndex];
@@ -287,14 +277,10 @@ ${HTML(fragment.foot_html())}
           $("a.accordion-nav[href*='"+sectionName+"']").children().find(".completed").remove();
           $("a.accordion-nav[href*='"+sectionName+"']").find(".accordion-display-name").append(circleGreen);
         } // for 2
-
       }
     }); // get
-
   }
-
 floatingButton = function(){
-
     var floating_button = $('#floating_button')
     var discussion_block = $('*[data-block-type=discussion]')
     if (discussion_block.length > 0)
@@ -307,7 +293,6 @@ floatingButton = function(){
     course_id = "${course.id}";
     section_id = path_array[5];
     $.get({
-
     url: "/pass_fail/"+course_id+"/"+section_id,
     dataType: "json",
     success: function(data) {
@@ -329,7 +314,6 @@ floatingButton = function(){
     floating_button.css('display','none');
   }
 }
-
 // Add by chintan to get the tutor mark in the discussion
 callForAllUser = function(){
     var course_id = "${course.id.to_deprecated_string()}";
@@ -342,9 +326,7 @@ callForAllUser = function(){
         user_list.push(users[i].text)
     }
     unique_users_list = $.unique(user_list)
-
     $.get({
-
         url: "/tutor_tag/"+course_id+"/"+discussion_id,
         data: {'users':unique_users_list},
         success: function(data) {
@@ -365,7 +347,6 @@ callForAllUser = function(){
                     });
                 }
             };
-
         },
         failure: function(data) {
             console.log(data)
@@ -373,7 +354,6 @@ callForAllUser = function(){
     })
 }
 // End of Tutor Mark
-
   $(document).ready(function(){
     mPrepareTrackAjax();
     % if settings.FEATURES.get('TMA_ENABLE_COMPLETION_TRACKING'):
@@ -410,173 +390,11 @@ callForAllUser = function(){
             callForAllUser();
         }
     % endif
-
   });
 
-// ------------------- DYNAMIC QUIZ -------------------------
 
-function activate_unit(tab_id, same_chapter, chapter_id){
-  if(same_chapter){
-    $(document).scrollTo($("#"+chapter_id).offset().top-20+"px",800);
-  }
-  if(!same_chapter){
-    $('#seq_content').hide();
-  }
-  $('#tma_'+tab_id).after($('#seq_content'));
-  $('#'+tab_id).find('i').addClass('active-chevron');
-  $('.seq_content_next').each(function(){
-    $(this).css('display','none');
-  })
-  next_tab_number=parseInt(tab_id.replace('tab_',''))+1;
-  $("#seq_content_next_"+next_tab_number).css('display','block');
-
-  if(!same_chapter){
-    $('#seq_content').show();
-    $(document).scrollTo($("#"+chapter_id).offset().top-20+"px",800);
-  }
-}
-
-function close_unit(tab_id){
-  $('#seq_content').hide();
-  $('#main').after($('#seq_content'));
-  toggle_chevrons();
-  $('#'+tab_id).removeClass('active');
-  next_tab_number=parseInt(tab_id.replace('tab_',''))+1;
-  $("#seq_content_next_"+next_tab_number).css('display','none');
-}
-
-function toggle_chevrons(){
-  $('.unit-title').each(function(){
-    $(this).find('i').removeClass('active-chevron');
-  })
-}
-
-//Move seq content under right unit title
-$(document).ready( function(){
-  // First place seq_content under last unit visited title
-  current_tab_id=$('#seq_content').attr('aria-labelledby');
-  current_unit_chapter=$('#tma_'+current_tab_id).attr('data-seq');
-  same_chapter=true;
-  toggle_chevrons();
-  activate_unit(current_tab_id,same_chapter, current_unit_chapter);
-
-  //On click move seq_content at the right place
-  $('.sequence-nav').live('click', function(){
-      same_chapter=false;
-      current_unit_chapter=$('#seq_content').prev().attr('data-seq');
-      unit_id=$(this).find('button').attr('id');
-      unit_chapter=$(this).attr('data-seq');
-      if(current_unit_chapter==unit_chapter){
-        same_chapter=true;
-      }
-      // unit is already open close it
-      if($(this).next('#seq_content').length>0){
-        close_unit(unit_id);
-      }
-      //unit is not open yet open it
-      else{
-        toggle_chevrons();
-        activate_unit(unit_id, same_chapter, unit_chapter);
-      }
-  });
-
-});
-
-/* -------------------------- DYNAMIC QUIZ QUESTIONS ---------------*/
-$(document).ready( function(){
-  //For answered questions add check or cross / disable questions
-function prepare_questions(){
-  i=0;
-  $('.problems-wrapper').each(function(){
-    indicator_container=$(this).find('.indicator-container span');
-    wrong_choice=$(this).find('.choicegroup_incorrect');
-    good_choice=$(this).find('.choicegroup_correct');
-    problem_title=$(this).find('.problem-header');
-    question_id=$(this).attr('id');
-    url_show_pb=$(this).attr('data-url')+"/problem_show"
-
-    if(indicator_container.hasClass('incorrect') || wrong_choice.length>0){
-      $(this).addClass('failed_quiz').addClass('closed_unit');
-      if(problem_title.html().indexOf('<i')<0){
-        problem_title.html(problem_title.html()+' <i style="color:red;" class="fa fa-times"></i>');
-      }
-      $(this).find('.action .check').hide();
-      ajax_problem_show(url_show_pb, question_id);
-    }
-    else if(indicator_container.hasClass('correct')  || good_choice.length>0){
-      $(this).addClass('success_quiz').addClass('closed_unit');
-      if(problem_title.html().indexOf('<i')<0){
-        problem_title.html(problem_title.html()+' <i style="color:green" class="fa fa-check"></i>');
-      }
-      $(this).find('.action .check').hide();
-      ajax_problem_show(url_show_pb, question_id);
-    }
-    else{
-      if(!i==0){
-        $(this).addClass('disabled_question_tma');
-      }
-      else{
-        i+=1;
-      }
-    }
-    // Customize radio btn and checkboxes
-    $(this).find('label').each(function(){
-      $(this).append('<span class="checkmark"></span>');
-    })
-  })
-}
-
-//initialize quiz on page load
-prepare_questions();
-//reload quiz on click on unit title
-$('.seq_problem').live('click', function(){
-  prepare_questions();
-});
-$('.action .check').live('click', function(){
-  $(this).parents('.vert').next('.vert').find('.problems-wrapper').removeClass('disabled_question_tma');
-  $(this).parents('.vert').prev('.vert').find('.problems-wrapper').addClass('closed_unit');
-  $(this).parents('.problems-wrapper').addClass('answered_tma');
-})
-$('.problem-header').live('click', function(){
-  $(this).parents('.problems-wrapper').toggleClass('closed_unit');
-})
-});
-
-
-// Reset all questions
-course_id="${course.course_id}";
-function get_all_questions(){
-  problem_xblock_list=[];
-  $('div.vert').each(function(){
-    problem_xblock_list.push($(this).attr('data-id'));
-  })
-  return problem_xblock_list;
-};
-
-function reset_all_problems() {
-  var i=0;
-  problem_xblock_list=get_all_questions();
-  problem_xblock_list.forEach(function(xblock_id) {
-   $.ajax({
-    url:'/courses/'+course_id+'/xblock/'+xblock_id+'/handler/xmodule_handler/problem_reset',
-    type:'POST',
-    dataType:'json',
-    data: {
-        'id': xblock_id
-    },
-    success: function(result){
-      i+=1;
-      if(i>=problem_xblock_list.length){
-        window.location.reload(true);
-      }
-    }
-   });
-  });
-};
-
-
-
-// Display Answers on submit
+  /*------------------------- DYNAMIC QUIZ--------------------------------------------*/
+  // Display Answers on submit
 $(document).ajaxSuccess(function(event, request, settings){
   if(settings.url.endsWith('problem_check') ) {
     // Adapt quiz status
@@ -585,25 +403,36 @@ $(document).ajaxSuccess(function(event, request, settings){
     var data = JSON.parse(request.responseText);
     //problem check
     var url_show_pb=settings.url.replace('/problem_check','')+'/problem_show';
-
     if(data['success']=="incorrect"){
       if(problem_title.html().indexOf('<i')<0){
         problem_title.html(problem_title.html()+' <i style="color:red;" class="fa fa-times"></i>').addClass('failed_quiz');
+        $('#'+question_id).addClass('failed_quiz').addClass('answered_tma');
       }
-      ajax_problem_show(url_show_pb, question_id);
+      if($('#'+question_id).find('.attempts_tma').attr('data-remainingattp')<=0){
+        ajax_problem_show(url_show_pb, question_id);
+      }
     }
     else{
       if(problem_title.html().indexOf('<i')<0){
         problem_title.html(problem_title.html()+' <i style="color:green;" class="fa fa-check"></i>').addClass('success_quiz');
+        $('#'+question_id).addClass('success_quiz').addClass('answered_tma');
       }
       ajax_problem_show(url_show_pb, question_id);
+      //$("#"+question_id).find('.action .check').hide();
     }
+    //Update progress to get points
+    $('#'+question_id).attr('data-progress_detail', data['progress_detail']);
+    //Disable submit button
+    $('#'+question_id).find('.action .check').addClass('is-disabled');
+    //Add custom checkmark
     $("#"+question_id).find('label').each(function(){
       $(this).append('<span class="checkmark"></span>');
+      $(this).append('<span class="checkfail hide"></span>');
     })
 
   }
 });
+
 function ajax_problem_show(url_show_pb, question_id){
   $.ajax({
       url:url_show_pb,
@@ -630,54 +459,195 @@ function ajax_problem_show(url_show_pb, question_id){
              $(this).addClass('choicegroup_incorrect');
            }
          })
-
+         //Disable submit button
+         $('#'+question_id).find('.action .check').addClass('is-disabled');
+         //Display detailed solution if last attempt
+         if($("#"+question_id).find('.attempts_tma').attr('data-remainingattp')<=0){
+           $("#"+question_id).addClass('show-detailed');
+         }
       }
     });
 }
 
+// in case of reset readd customized checkboxes
+$(document).ajaxSuccess(function(event, request, settings){
+  if(settings.url.endsWith('problem_reset') || settings.url.endsWith('problem_get') ) {
+    problem_id=settings.url.split('block@')[1].split('/handler')[0]
+    $('#problem_'+problem_id).find('label').each(function(){
+      $(this).append('<span class="checkmark"></span>');
+    })
+    $('#problem_'+problem_id).find('.action .check').addClass('is-disabled');
+    $('#problem_'+problem_id).removeClass('failed_quiz').removeClass('success_quiz');
+  }
+});
+
+// Color highlight of questions choices
+$('.checkmark').live('click', function(){
+  $(this).parents('.problem').find('label').each(function(){
+    $(this).removeClass('selected_tma');
+  });
+  $(this).parent('label').addClass('selected_tma');
+})
+$('label').live('click', function(){
+  $(this).parents('.problem').find('label').each(function(){
+    $(this).removeClass('selected_tma');
+  });
+  $(this).addClass('selected_tma');
+})
+
+//prepare question already answered
+function prepare_questions(){
+  i=0;
+  $('.problems-wrapper').each(function(){
+    indicator_container=$(this).find('.indicator-container span');
+    wrong_choice=$(this).find('.choicegroup_incorrect');
+    good_choice=$(this).find('.choicegroup_correct');
+    problem_title=$(this).find('.problem-header');
+    question_id=$(this).attr('id');
+    url_show_pb=$(this).attr('data-url')+"/problem_show"
+    if(indicator_container.hasClass('incorrect') || wrong_choice.length>0){
+      $(this).addClass('failed_quiz').addClass('answered_tma');
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:red;" class="fa fa-times"></i>');
+      }
+      $(this).find('.action .check').hide();
+      //for failed quiz only show answers on last attempts
+      if($(this).find('.attempts_tma').attr('data-remainingattp')<=0){
+        ajax_problem_show(url_show_pb, question_id);
+      }
+    }
+    else if(indicator_container.hasClass('correct')  || good_choice.length>0){
+      $(this).addClass('success_quiz').addClass('answered_tma');
+      //$("#"+question_id).find('.action .check').hide();
+      if(problem_title.html().indexOf('<i')<0){
+        problem_title.html(problem_title.html()+' <i style="color:green" class="fa fa-check"></i>');
+      }
+      //$(this).find('.action .check').hide();
+      ajax_problem_show(url_show_pb, question_id);
+    }
+    // Customize radio btn and checkboxes
+    $(this).find('label').each(function(){
+      $(this).append('<span class="checkmark"></span>');
+      $(this).append('<span class="checkfail hide"></span>');
+    })
+  })
+}
+$(document).ready(function(){
+  prepare_questions();
+  // Hide bookmark on pages with QUIZ
+  if($('.problems-wrapper').length>0){
+    $('.bookmark-button-wrapper').hide();
+    $('.course-content').css('padding-top','0px')
+  }
+  //Display of points and attempts
+  $('.problem-progress').each(function(){
+    $(this).html($(this).html().replace('(','').replace(')',' - '));
+  });
+  setInterval(function(){
+    $('.problem-progress').each(function(){
+      $(this).html($(this).html().replace('(','').replace(')',' - '));
+    });
+  }, 200);
+});
+
+// On checkbox click removeClass selected
+$( ":checkbox" ).live('click', function(){
+  $(this).parent('label').toggleClass('tma_choice_selected');
+  if($(this).parent('label').hasClass('tma_choice_selected')){
+    $(this).parent('label').removeClass('tma_basic_choice');
+  }
+  else{
+    $(this).parent('label').addClass('tma_basic_choice');
+    $(this).parent('label').removeClass('selected_tma');
+  }
+})
+
+$( ":radio" ).live('click', function(){
+  $(this).parents('fieldset').find('label').each(function(){
+    $(this).removeClass('tma_choice_selected');
+    $(this).addClass('tma_basic_choice');
+  });
+  $(this).parent('label').toggleClass('tma_choice_selected');
+});
+
+
+
+/////////////////////// USER GRADE FEEDBACK ///////////////////////////////////////////////
+course_id = "${course.id | n, js_escaped_string}";
+function display_success(score_obtenu, score_max, score_pourcent){
+  var message_success="<div class='success_message_tma'><p class='tma_message_title'>Félicitations</p> <p>Vous avez obtenu score_obtenu / score_max soit score_pourcent%.</p></div>";
+  message_success=message_success.replace('score_obtenu',score_obtenu).replace('score_max',score_max).replace('score_pourcent',score_pourcent);
+    $('#tma_message').html(message_success);
+}
+
+function display_fail(score_pourcent, score_minimum){
+  var message_fail="<div class='fail_message_tma'><p class='tma_message_title'>Aïe, votre score n'est pas suffisant!</p> <p>Vous avez obtenu score_pourcent% de bonnes réponses.</p> <p>Le minimum requis pour ce quiz est de score_minimum%.</p></div>";
+  message_fail=message_fail.replace('score_minimum',score_minimum).replace('score_pourcent',score_pourcent);
+  $('#tma_message').html(message_fail);
+}
 
 // Get user grade
-function get_user_grade(){
+function get_user_grade(score_total,score_student){
   $.ajax({
       url:"/final_grades/"+course_id+'/',
       type:'GET',
       dataType:'json',
       success:function(data){
         grade=data['Grade'];
-        grade_hundread=(grade*100)+"%";
         pass="${course.__dict__['_grading_policy']['GRADE_CUTOFFS']['Pass']}";
-        pass_hundread=(pass*100)+'%';
-        if(grade>pass){
-          $('#result_content').html('<div class="success_sequence sequence_total"><div>Félicitations!</div><div>Vous avez obtenu la note de '+grade_hundread+'</div><div onclick="reset_all_problems()"><a class="reset-btn" >${_("Start again")}</a></div></div>');
+        if(grade>=pass){
+          display_success(score_student, score_total, Math.round(grade*100));
         }
         else{
-          $('#result_content').html('<div class="fail_sequence sequence_total"><div>Aïe votre score n\'est pas suffisant</div><div>Vous avez obtenu la note de '+grade_hundread+'. Le minimum requis pour ce quiz est de '+pass_hundread+'</div><div onclick="reset_all_problems()"><a class="reset-btn" >${_("Start again")}</a></div></div>');
+          display_fail(Math.round(grade*100), Math.round(pass*100));
         }
       }
     });
 }
 
-
-$(document).ready(function(){
-  all_answered=true;
+function display_results(){
+  var all_answered=true;
+  score_student=0;
+  score_total=0;
   $('.problems-wrapper').each(function(){
-    if(!$(this).hasClass('failed_quiz') && !$(this).hasClass('success_quiz')){
+    if(!$(this).hasClass('answered_tma')){
       all_answered=false;
+    }
+    else{
+      //count points
+      points=$(this).attr('data-progress_detail');
+      score_total+= parseInt(points.split('/')[1]);
+      score_student+= parseInt(points.split('/')[0]);
     }
   });
   if(all_answered){
-    get_user_grade();
+    get_user_grade(score_total,score_student);
+    return true;
   }
-
-  url_last_question=$('.problems-wrapper').last().attr('data-url');
-  $(document).ajaxSuccess(function(event, xhr, settings) {
-      if (settings.url.indexOf(url_last_question) > -1) {
-        get_user_grade();
-      }
-  });
+  else{
+    return false;
+  }
+}
+$('.action .reset').live('click', function(){
+  $('#tma_message').html('');
+  $(this).parents('.problems-wrapper').removeClass('answered_tma')
 })
 
+/*
+$(document).ready(function(){
+  display_results();
+});
+
+$(document).ajaxSuccess(function(event, request, settings){
+  if(settings.url.endsWith('problem_check') ) {
+    finished_test=display_results();
+    if(finished_test){
+      $("html, body").animate({ scrollTop: $('#tma_message').offset().top }, 1000);
+    }
+  }
+});*/
+
 </script>
-<!--<link rel="stylesheet" type="text/css" href="${static.url('css/courseware.css')}" />-->
-<link rel="stylesheet" href="/media/csswork/courseware.css">
+<link rel="stylesheet" type="text/css" href="${static.url('css/courseware.css')}" />
+<!--<link rel="stylesheet" href="/media/csswork/courseware.css">-->
 <script src="${static.url('js/courseware.js')}"></script>
