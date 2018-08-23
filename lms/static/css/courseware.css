@@ -1,0 +1,449 @@
+.sequence-nav{
+  display:none;
+}
+.path {
+  display: none;
+}
+input[type="radio"] {
+  display: none;
+}
+body.view-in-course .wrapper-footer {
+  padding: 0;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct {
+  border: 2px solid transparent;
+  font-size: 18px;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect:hover {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_incorrect, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_incorrect {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label:hover {
+  border: 2px solid transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label {
+  border: 2px solid transparent;
+  font-size: 18px;
+  background-color: rgb(255, 255, 255);
+  margin-bottom: 3px;
+  color: rgb(0, 0, 0);
+  border-color: transparent;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicegroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup label.choicetextgroup_correct:hover, .xmodule_display.xmodule_CapaModule div.problem .choicetextgroup section.choicetextgroup_correct:hover{
+  border: 2px solid transparent;
+}
+.content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+  width: calc(68% - 50px);
+  padding-right: 25px;
+  padding-left: 25px;
+  background-color: #F5F6F8;
+}
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup label.tma_choice_selected{
+  background-color: rgb(162, 193, 38)!important;
+  margin-bottom: 3px!important;
+  color: rgb(255, 255, 255)!important;
+  border-color: rgb(162, 193, 38)!important;
+}
+.container>div {
+  background-color: #F5F6F8;
+}
+body, h1, h2, h3, h4, h5, h6, p, label,.xmodule_display.xmodule_HtmlModule p {
+  color: #363F4D;
+  font-size: 16px;
+  font-family: 'helveticaneue';
+}
+.action button,.action button:hover, .action button:focus {
+  background-color: #fff;
+  background-image: none;
+  color: #8a4185;
+  border: 2px solid #8a4185;
+  box-shadow: none;
+}
+.xblock .xblock h3,.xmodule_display.xmodule_HtmlModule h2 {
+  color: #8a4185;
+  font-family: 'gothamrounded-bold';
+}
+.xmodule_display.xmodule_HtmlModule h2 {
+  font-size: 30px;
+}
+.wrapper-course-material {
+  width: 1440px;
+  background-color: #F5F6F8;
+}
+body.view-in-course .wrapper-course-material .course-material .course-tabs {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.container>div {
+  border: none;
+  width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+body.view-in-course .container {
+  padding: 0;
+}
+.course-index {
+  border: none;
+  width: 32%;
+}
+.wrapper-course-modes {
+  display: none;
+}
+.group-heading {
+  padding: 0;
+  background-color: #009DE0;
+  color: #fff;
+}
+.course-index .accordion .course-navigation .button-chapter.active .group-heading {
+  color: #fff;
+  font-size: 18px;
+  font-family: 'helveticaneue-medium';
+  font-weight: normal;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button:hover {
+  width: 40px;
+  height: 46px;
+  box-shadow: none;
+}
+
+.course-index .accordion .course-navigation .chapter-content-container .chapter-menu .menu-item.active a p{
+  height: 20px;
+  line-height: 20px;
+  vertical-align: middle;
+}
+
+.menu-item {
+  padding-bottom: 0;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-next,.xmodule_display.xmodule_SequenceModule .sequence-nav-button.button-previous,#active_menu {
+  border-radius: 0px;
+  background-color: #009DE0;
+  background-image: none;
+  color: #fff;
+}
+#active_menu {
+  width: calc(100%);
+  height: 42px;
+  padding: 0;
+  padding-left: 15px;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  line-height: 42px;
+  vertical-align: middle;
+  text-align: left;
+  font-size: 18px;
+  font-family: 'helveticaneue-medium';
+  font-weight: normal;
+  text-shadow: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav .sequence-list-wrapper {
+  border: 1px solid #009DE0;
+  background-color: #fff;
+  background-image: none;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol li {
+  padding: 0;
+  padding-top: 1px;
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol li button, {
+  background-color: rgba(0,0,0,0.1);
+}
+.xmodule_display.xmodule_SequenceModule .sequence-nav ol {
+  background-color: rgba(0,0,0,0.1);
+}
+.xmodule_display.xmodule_CapaModule div.problem p {
+  font-size: 20px;
+  font-weight: bold;
+}
+.button-phone-menu {
+  display : none;
+  width: 100vw;
+  height: 30px;
+}
+#active_menu {
+  display: none;
+}
+.completed {
+ display: none;
+}
+
+
+
+/*DYNAMIC QUIZ*/
+.xmodule_display.xmodule_CapaModule div.problem-progress{
+  padding-left: 0px;
+}
+.status.unanswered{
+  display: none!important;
+}
+.action{
+  text-align: center;
+}
+/* Custom Checkbox */
+.problems-wrapper form label{
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.problems-wrapper form label input{
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+.checkmark {
+  position: absolute;
+  top: 5px;
+  left: -35px;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+}
+
+.tma_choice_selected .checkmark svg circle{
+  stroke:#934084;
+  fill :#934084;
+}
+
+.problems-wrapper form label:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+.problems-wrapper form label input:checked ~ .checkmark {
+  background-color: #934084;
+}
+.problems-wrapper form label input:checked ~ .checkmark svg circle{
+  fill : #934084;
+  stroke: #934084;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkfail{
+  display: none;
+  position: absolute;
+  top: 5px;
+  left: -35px;
+  height: 30px;
+  width: 30px;
+  border-radius: 30px;
+  background-color: white;
+}
+.choicegroup_incorrect .checkfail{
+  display: block;
+}
+.choicegroup_incorrect .checkmark{
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+label .checkmark:after {
+  left: 11px;
+  top: 7px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+label.choicegroup_incorrect::after{
+  display: none!important;
+}
+.xmodule_display.xmodule_CapaModule div.problem .indicator-container .status.incorrect{
+  display: none;
+}
+
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup fieldset{
+  margin-left: 30px;
+}
+
+.action .save{
+  display: none!important;
+}
+.choicegroup_correct:after{
+  display: none!important;
+}
+.choicegroup_correct{
+  background-color: green!important;
+  color: white!important;
+}
+.incorrect_answer{
+  color: red;
+  font-weight: bold;
+}
+.detailed-solution{
+  padding: 10px;
+  font-weight: bold;
+  border-radius:2px;
+  background-color: white;
+  font-size: 18px;
+  display: none;
+}
+.show-detailed .detailed-solution{
+  display: block!important;
+}
+.detailed-solution p{
+  font-size: 18px!important;
+}
+.detailed-solution p:first-child{
+  text-transform: uppercase;
+  color: gray;
+}
+.feedback-hint-correct .hint-label, .feedback-hint-incorrect .hint-label{
+  display: none!important;
+}
+.action .show{
+  display: none;
+}
+.selected_tma{
+  background-color: rgb(162, 193, 38);
+  margin-bottom: 3px;
+  color: rgb(255, 255, 255);
+  border-color: rgb(162, 193, 38)
+}
+
+.sequence-bottom{
+  display: none;
+}
+
+.tma_basic_choice{
+  background-color: rgb(255, 255, 255)!important;
+  margin-bottom: 3px!important;
+  color: rgb(0, 0, 0)!important;
+  border-color: transparent!important;
+}
+
+.attempts_tma{
+  display: inline-block;
+  color:#5e5e5e;
+  text-transform: lowercase;
+}
+.failed_quiz .problem div:first-child, .success_quiz .problem div:first-child{
+  pointer-events:none!important;
+}
+.action .submission_feedback{
+  display: none!important;
+}
+.xmodule_display.xmodule_CapaModule div.problem .action .submission_feedback{
+  margin: 0!important;
+}
+
+.detailed-solution{
+  margin-top: 30px;
+}
+.failed_quiz .action .submission_feedback{
+  display: block!important;
+  color: red!important;
+}
+
+.bad_answer_tma{
+  font-size: 18px;
+  color: red;
+  text-align: center;
+  display: none;
+}
+
+.failed_quiz .bad_answer_tma{
+  display: block!important;
+}
+
+.success_message_tma{
+  padding: 10px;
+  border: 3px solid green;
+  margin-top: 20px;
+  background-color: white;
+}
+
+.fail_message_tma{
+  padding: 10px;
+  border: 3px solid red;
+  margin-top: 20px;
+  background-color: white;
+}
+.fail_message_tma p, .success_message_tma p{
+  text-align: center;
+  font-size: 20px;
+  margin: 2px!important;
+}
+.fail_message_tma p.tma_message_title, .success_message_tma p.tma_message_title{
+  margin-top: 10px!important;
+  margin-bottom: 20px!important;
+}
+
+.feedback-hint-correct, .feedback-hint-incorrect{
+  display: none!important;
+}
+.show-detailed .feedback-hint-correct, .show-detailed .feedback-hint-incorrect{
+  display: block!important;
+}
+
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup .indicator-container{
+  display: none;
+}
+.problems-wrapper select{
+  width: calc(100% - 40px);
+  height: 50px;
+  margin-bottom: 3px;
+  padding: 10px 10px;
+  font-family: 'helveticaneue';
+  font-size: 18px;
+  background-color: white;
+}
+
+@media(max-width:1440px) {
+  .container>div {
+    border: none;
+    width: 100vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .wrapper-course-material {
+    width: 100%;
+  }
+}
+@media(max-width:768px) {
+  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+    width: calc(100vw - 20px);
+    padding: 10px;
+    clear: left;
+    display: block;
+  }
+  .button-phone-menu {
+    display: block;
+  }
+  #active_menu {
+    display: block;
+  }
+  .content, .course-wrapper .course-content, .course-wrapper .courseware-results-wrapper, div.info-wrapper section.updates, div.book-wrapper .book, .profile-wrapper .course-info, div.gradebook-wrapper section.gradebook-content, .view-student-notes .wrapper-student-notes .student-notes, .instructor-dashboard-content-2 {
+    box-sizing: content-box;
+  }
+
+  .course-index {
+    width: calc(100vw);
+    margin: 0;
+    clear: left;
+    display: none;
+  }
+}

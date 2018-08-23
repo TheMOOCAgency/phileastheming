@@ -7,6 +7,11 @@ from courseware.courses import get_course_about_section
 from django.conf import settings
 from edxmako.shortcuts import marketing_link
 from openedx.core.lib.courses import course_image_url
+#APOC
+from student.models import UserProfile
+from openedx.core.djangoapps.user_api.accounts.image_helpers import get_profile_image_urls_for_user
+#hashlib
+import hashlib
 %>
 
 <%inherit file="../main.html" />
@@ -27,11 +32,56 @@ from openedx.core.lib.courses import course_image_url
   % endif
   <script type="text/javascript">
   (function() {
+    % if (course.display_name_with_default == "Language Learning") or (course.display_name_with_default == "Formation langues") or ("s de la gestion financi" in course.display_name_with_default):
+        $('.course-summary').find('header').find('a').click(function(e){
+         e.preventDefault();
+         $('#submit_session').click();
+        })
+    % endif
     $(".register").click(function(event) {
-      $("#class_enroll_form").submit();
-      event.preventDefault();
+    % if (course.display_name_with_default == "Language Learning") or (course.display_name_with_default == "Formation langues") or("s de la gestion financi" in course.display_name_with_default):
+	$.ajax({
+	  url:"${reverse('change_enrollment')}",
+	  type: "POST",
+	  data: {
+	   course_id:'${course.id | h}',
+	   enrollment_action:'enroll'
+	  },
+	  dataType: 'json',
+          success: function(data) {
+	   $('#submit_session').click();
+	   function redirect() {
+	    window.open('/dashboard','_self');
+	   }
+	   setTimeout(redirect, 2000);
+	  }
+	})
+    % elif 'Amundi Reality #1 : Amundi Funds Protect 90' in course.display_name_with_default or 'Amundi Reality #1 : Amundi Funds Protect 90' in course.display_name_with_default or 'AMUNDI REALITY #2 : GLOBAL DISRUPTIVE OPPORTUNITIES' in course.display_name_with_default or 'Amundi Reality #2 : Global Disruptive Opportunities' in course.display_name_with_default: 
+        $.ajax({
+          url:"${reverse('change_enrollment')}",
+          type: "POST",
+          data: {
+           course_id:'${course.id | h}',
+           enrollment_action:'enroll'
+          },
+          dataType: 'json',
+          success: function(data) {
+           $('#submit_session_reality').click();
+           function redirect() {
+            window.open('/dashboard','_self');
+           }
+           setTimeout(redirect, 2000);
+          }
+        })
+    % else:
+	% if not user.is_authenticated():
+  	 window.open('/login?course_id=${course.id}&enrollment_action=enroll','_self');
+	% else:
+	$("#class_enroll_form").submit();
+	event.preventDefault();
+	% endif
+    % endif
     });
-
     % if can_add_course_to_cart:
       add_course_complete_handler = function(jqXHR, textStatus) {
         if (jqXHR.status == 200) {
@@ -185,7 +235,7 @@ from openedx.core.lib.courses import course_image_url
   }
   $(document).ready(function(){
     //equilibre_div();
-    $('.course-staff').children('h2').html('LES FORMATEURS');
+    //$('.course-staff').children('h2').html('LES FORMATEURS');
     $('.faq').css('margin-bottom','50px');
     upWhiteUp();
     confirmSubscribe();
@@ -550,6 +600,16 @@ from openedx.core.lib.courses import course_image_url
   font-size: 14px;
   vertical-align: bottom;
   line-height: 44px;
+}
+header div .disabled {
+ display: block;
+ width: 100%;
+ height: 60px;
+ line-height: 60px;
+ color: #fff;
+ text-transform: uppercase;
+ font-family: 'helveticaneue-medium';
+ background-color:#818181;
 }
 @media(min-width:1440px) {
   .avis-formation {
@@ -1117,8 +1177,12 @@ $(window).resize(function(){
   <div class="button-close">
     <button id="close-popup"><img src="/static/themes/phileastheming/images/icon_close.png" /></button>
   </div>
-  <h2>${_("Your enroll in")} ${_  ("{course_name}").format(course_name=course.display_name_with_default) | h} ${_("is subject to validation")}</h2>
-  <div class="link">
+  % if enrollment_workflow == 'nre':
+  <h2>${_("Enroll in")} ${_ ("{course_name}").format(course_name=course.display_name_with_default) | h} ?</h2>
+   % elif enrollment_workflow == 'estv':
+  <h2>${_("Your enroll in")} ${_ ("{course_name}").format(course_name=course.display_name_with_default) | h} ${_("is subject to validation")}</h2>
+  % endif
+    <div class="link">
     <a href="#" class="register">
       ${_("Enroll")}
     </a>
@@ -1556,8 +1620,18 @@ function getEmail() {
     }
   })
 }
+function disableLog(){
+ $('.disabled').each(function(){
+  % if 'fr' in LANGUAGE_CODE:
+  $(this).text('Formation soumise à validation RH');
+  % else:
+  $(this).text('Training subject to validation RH');
+  % endif
+ })
+}
 $(document).ready(function(){
   //formateur();
+  disableLog();
   mailTo();
   getEmail();
   $('.course-staff').append('<article style="clear:left;"></article>');
@@ -1596,4 +1670,58 @@ $(document).ready(function(){
   translateDate();
 })
 </script>
+% endif
+% if user.is_authenticated():
+	% if (course.display_name_with_default == "Language Learning") or (course.display_name_with_default == "Formation langues"):
+		<form id="form_session" method="post" action ="https://www.7speaking.com/7sautolog.cfm" style="display:none;" target="_blank">
+
+			<input type="hidden" name="email" value='${user.email}'>
+			<input type="hidden" name="nom" value='${user.last_name}'>
+			<input type="hidden" name="prenom" value='${user.first_name}'>
+			<input type="hidden" name="groupe" value='AMUNDI'>
+			<input type="hidden" name="key" value='39D02FA5A62B2A62CEA0551EC69E80FA'>
+			<input type="hidden" name="LE" value='ENG'>
+		% if LANGUAGE_CODE == 'fr':
+    			<input type="hidden" name="LI" value='FRE'>
+		% else:
+    			<input type="hidden" name="LI" value='ENG'>
+		% endif
+  			<input type="submit" name="submit" value="submit" id="submit_session">
+		</form>
+
+	% endif
+	% if "s de la gestion financi" in course.display_name_with_default:
+		<form id="form_session" method="post" action ="https://apoc.themoocagency.com/autologreg" style="display:none;" target="_blank">
+                        <input type="hidden" name="email" value='${user.email}'>
+                        <input type="hidden" name="lastname" value='${user.last_name}'>
+                        <input type="hidden" name="firstname" value='${user.first_name}'>
+			<input type="hidden" name="PID" value="${UserProfile.objects.get(user_id=user.id).rpid}" >
+			<input type="hidden" name="avatar" value="${get_profile_image_urls_for_user(user)['medium']}" >
+			 <input type="submit" name="submit" value="submit" id="submit_session">
+		</form>
+	% endif
+% endif
+% if 'Amundi Reality #1 : Amundi Funds Protect 90' in course.display_name_with_default or 'Amundi Reality #1 : Amundi Funds Protect 90' in course.display_name_with_default:
+<script>
+$(document).ready(function(){
+ $('.course-summary').find('header').find('a').click(function(e){
+  e.preventDefault();
+  $('#submit_session_reality').click();
+ })
+})
+
+</script>
+    <%
+    private_key_api = '6+F.R2z_@69D+5WbLbps'
+    fundId = str(2)
+    locale = course_details.language
+    pre_hash = user.email+locale+fundId+locale+user.email+private_key_api
+    hash_key = hashlib.sha512(pre_hash).hexdigest()
+    %>
+<form id="form_session" method="post" action="https://amundireality.com/${locale}/api/directaccess/fund" style="display:none;" target="_blank">
+<input type="hidden" name="email" value="${user.email}" >
+<input type="hidden" name="fundId" value="${fundId}" >
+<input type="hidden" name="signature" value="${hash_key}" >
+<input type="submit" name="submit" value="submit" id="submit_session_reality" >
+</form>
 % endif

@@ -154,6 +154,8 @@ $(document).ready(function(){
         var org = $(this).data('org');
        if(org == 'Vodeclic') {
         var Urls = Url+num;
+        $(this).parent().parent().find('.course-title').children('a').attr('href', Urls);
+        $(this).parent().parent().find('.course-title').children('a').attr('target', '_blank');
         $(this).find('.dash-img').attr('href', Urls);
         $(this).find('a').attr('target', '_blank');
         /*
@@ -372,7 +374,13 @@ $(document).ready(function(){
         <h3 class="course-title">
           % if show_courseware_link:
             % if not is_course_blocked:
-              <a data-course-key="${enrollment.course_id}" href="${course_target}">${course_overview.display_name_with_default}</a>
+              <a data-course-key="${enrollment.course_id}" href="${course_target}"
+            % if course_org == 'Vodeclic':
+              class="imageVodeclick"
+            % else:
+              class="noImageVodeclick"
+            % endif
+              >${course_overview.display_name_with_default}</a>
             % else:
               <a class="disable-look" data-course-key="${enrollment.course_id}">${course_overview.display_name_with_default}</a>
             % endif
@@ -394,7 +402,11 @@ $(document).ready(function(){
           </span>
         </div>
         <p id="text-compl">
-          <span>${course_overview.display_org_with_default}</span>
+            % if not 'Vodeclic' in course_overview.display_org_with_default:
+  <span>${course_overview.display_org_with_default}</span>
+  % else:
+  <span>${_("Softwares")}</span>
+  % endif
         </p>
       <!--
         <p class="button-option"><button class="button-option-action">options</button></p>
@@ -626,7 +638,10 @@ $(document).ready(function(){
   </section>
   <footer class="wrapper-messages-primary">
     <ul class="messages-list">
-      % if course_overview.may_certify() and cert_status:
+      <%
+	tampon_tma = 'tampon_tma'
+      %>
+      % if course_overview.may_certify() and cert_status and tampon_tma == 'tma_phileas': 
         <%include file='_dashboard_certificate_information.html' args='cert_status=cert_status,course_overview=course_overview, enrollment=enrollment'/>
       % endif
 
