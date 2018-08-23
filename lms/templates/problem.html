@@ -11,7 +11,9 @@ from openedx.core.djangolib.markup import HTML
 
 <div class="problem-progress"></div>
 % if attempts_allowed :
-  % if attempts_allowed>1 :
+  % if attempts_allowed>1 and attempts_used<=1:
+  <div class="attempts_tma" data-remainingattp="${attempts_allowed-attempts_used}">${attempts_used} ${_('Submission used')} / ${attempts_allowed} ${_('Submissions allowed')}</div>
+  % elif attempts_allowed>1 and attempts_used>1:
   <div class="attempts_tma" data-remainingattp="${attempts_allowed-attempts_used}">${attempts_used} ${_('Submissions used')} / ${attempts_allowed} ${_('Submissions allowed')}</div>
   % elif attempts_allowed==1:
   <div class="attempts_tma" data-remainingattp="${attempts_allowed-attempts_used}">${attempts_used} ${_('Submission used')} / ${attempts_allowed} ${_('Submission allowed')}</div>

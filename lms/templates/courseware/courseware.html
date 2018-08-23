@@ -107,6 +107,12 @@ ${HTML(fragment.foot_html())}
   <%include file="/courseware/course_navigation.html" args="active_page='courseware'" />
 % endif
 
+<style>
+  body.view-in-course .course-wrapper{
+    max-width: 1440px;
+  }
+</style>
+
 <div class="container">
   <div class="button-phone-menu">
     <button id="active_menu"><span class="icon fa fa-caret-right" aria-hidden="true"></span>${_(' course content')}</button>
@@ -362,18 +368,18 @@ callForAllUser = function(){
     floatingButton();
   });
   $(document).ajaxSuccess(function(event, xhr, settings){
-    if( settings.url.endsWith('goto_position') ) {
+    if( settings.url.indexOf('goto_position')>=0 ) {
       mPrepareTrackAjax();
       floatingButton();
     } else {
       % if settings.FEATURES.get('TMA_ENABLE_COMPLETION_TRACKING'):
-        var seen_video = settings.url.endsWith('save_user_state');
-        var attended_problem = settings.url.endsWith('problem_check');
-        var seen_hint = settings.url.endsWith('hint_button');
-        var graded_lti_v2 = settings.url.endsWith('lti_2_0_result_rest_handler');
-        var got_grade = settings.url.endsWith('grade_handler');
-        var rendered_grade = settings.url.endsWith('render_grade');
-        var seen_html = settings.url.endsWith('track_html_component');
+        var seen_video = settings.url.indexOf('save_user_state')>=0;
+        var attended_problem = settings.url.indexOf('problem_check')>=0;
+        var seen_hint = settings.url.indexOf('hint_button')>=0;
+        var graded_lti_v2 = settings.url.indexOf('lti_2_0_result_rest_handler')>=0;
+        var got_grade = settings.url.indexOf('grade_handler')>=0;
+        var rendered_grade = settings.url.indexOf('render_grade')>=0;
+        var seen_html = settings.url.indexOf('track_html_component')>=0;
         if (seen_video || attended_problem || seen_hint || graded_lti_v2 || got_grade || rendered_grade || seen_html) {
           getCompletionStatus();
           floatingButton();
@@ -381,10 +387,10 @@ callForAllUser = function(){
       % endif
     }
     % if settings.FEATURES.get('TMA_TUTOR_FLAG'):
-      var resp_limit = settings.url.endsWith('resp_limit=25')
-      var reply = settings.url.endsWith('reply?ajax=1')
-      var inline = settings.url.endsWith('inline?page=1&ajax=1')
-      var create = settings.url.endsWith('create?ajax=1')
+      var resp_limit = settings.url.indexOf('resp_limit=25')>=0
+      var reply = settings.url.indexOf('reply?ajax=1')>=0
+      var inline = settings.url.indexOf('inline?page=1&ajax=1')>=0
+      var create = settings.url.indexOf('create?ajax=1')>=0
       if ( resp_limit || reply || inline || create )
         {
             callForAllUser();
@@ -396,7 +402,7 @@ callForAllUser = function(){
   /*------------------------- DYNAMIC QUIZ--------------------------------------------*/
   // Display Answers on submit
 $(document).ajaxSuccess(function(event, request, settings){
-  if(settings.url.endsWith('problem_check') ) {
+  if(settings.url.indexOf('problem_check')>=0 ) {
     // Adapt quiz status
     question_id="problem_"+settings.url.split('block@')[1].split('/');
     problem_title=$('#'+question_id).find('.problem-header');
@@ -426,8 +432,8 @@ $(document).ajaxSuccess(function(event, request, settings){
     $('#'+question_id).find('.action .check').addClass('is-disabled');
     //Add custom checkmark
     $("#"+question_id).find('label').each(function(){
-      $(this).append('<span class="checkmark"></span>');
-      $(this).append('<span class="checkfail hide"></span>');
+      $(this).append('<span class="checkmark"><svg height="30" width="30"><circle cx="15" cy="15" r="14" shape-rendering="crispEdges" stroke="#eee" stroke-width="1" fill="#eee" /></svg></span>');
+      $(this).append("<span class='checkfail hide'><img src='${static.url('images/failquestion.png')}' alt='fail_question'/></span>");
     })
 
   }
@@ -471,10 +477,10 @@ function ajax_problem_show(url_show_pb, question_id){
 
 // in case of reset readd customized checkboxes
 $(document).ajaxSuccess(function(event, request, settings){
-  if(settings.url.endsWith('problem_reset') || settings.url.endsWith('problem_get') ) {
+  if(settings.url.indexOf('problem_reset')>=0 || settings.url.indexOf('problem_get')>=0 ) {
     problem_id=settings.url.split('block@')[1].split('/handler')[0]
     $('#problem_'+problem_id).find('label').each(function(){
-      $(this).append('<span class="checkmark"></span>');
+      $(this).append('<span class="checkmark"><svg height="30" width="30"><circle cx="15" cy="15" r="14" stroke="#eee" shape-rendering="crispEdges" stroke-width="1" fill="#eee" /></svg></span>');
     })
     $('#problem_'+problem_id).find('.action .check').addClass('is-disabled');
     $('#problem_'+problem_id).removeClass('failed_quiz').removeClass('success_quiz');
@@ -527,8 +533,8 @@ function prepare_questions(){
     }
     // Customize radio btn and checkboxes
     $(this).find('label').each(function(){
-      $(this).append('<span class="checkmark"></span>');
-      $(this).append('<span class="checkfail hide"></span>');
+      $(this).append('<span class="checkmark"><svg height="30" width="30"><circle cx="15" cy="15" r="14" stroke="#eee" shape-rendering="crispEdges" stroke-width="1" fill="#eee" /></svg></span>');
+      $(this).append("<span class='checkfail hide'><img src='${static.url('images/failquestion.png')}' alt='fail_question'/></span>");
     })
   })
 }
@@ -575,7 +581,7 @@ $( ":radio" ).live('click', function(){
 /////////////////////// USER GRADE FEEDBACK ///////////////////////////////////////////////
 course_id = "${course.id | n, js_escaped_string}";
 function display_success(score_obtenu, score_max, score_pourcent){
-  var message_success="<div class='success_message_tma'><p class='tma_message_title'>Félicitations</p> <p>Vous avez obtenu score_obtenu / score_max soit score_pourcent%.</p></div>";
+  var message_success="<div class='success_message_tma'><p class='tma_message_title'>Félicitations</p> <p>Vous avez obtenu score_obtenu / score_max bonne(s) réponse(s) soit score_pourcent%.</p></div>";
   message_success=message_success.replace('score_obtenu',score_obtenu).replace('score_max',score_max).replace('score_pourcent',score_pourcent);
     $('#tma_message').html(message_success);
 }
@@ -639,7 +645,7 @@ $(document).ready(function(){
 });
 
 $(document).ajaxSuccess(function(event, request, settings){
-  if(settings.url.endsWith('problem_check') ) {
+  if(settings.url.indexOf('problem_check')>=0 ) {
     finished_test=display_results();
     if(finished_test){
       $("html, body").animate({ scrollTop: $('#tma_message').offset().top }, 1000);

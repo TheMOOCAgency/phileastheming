@@ -209,8 +209,12 @@ body.view-in-course .container {
   left: -35px;
   height: 30px;
   width: 30px;
-  background-color: #eee;
   border-radius: 30px;
+}
+
+.tma_choice_selected .checkmark svg circle{
+  stroke:#934084;
+  fill :#934084;
 }
 
 .problems-wrapper form label:hover input ~ .checkmark {
@@ -218,6 +222,10 @@ body.view-in-course .container {
 }
 .problems-wrapper form label input:checked ~ .checkmark {
   background-color: #934084;
+}
+.problems-wrapper form label input:checked ~ .checkmark svg circle{
+  fill : #934084;
+  stroke: #934084;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
@@ -227,32 +235,20 @@ body.view-in-course .container {
 }
 
 .checkfail{
-  background-color:red!important;
   display: none;
-  border-color: red!important;
   position: absolute;
   top: 5px;
   left: -35px;
   height: 30px;
   width: 30px;
-  background-color: #eee;
   border-radius: 30px;
-}
-.checkfail:after{
-  content:"\f00d";
-  font-family: FontAwesome;
-  color: white!important;
-  transform:rotate(45deg);
-  content: "\f00d";
-  font-family: FontAwesome;
-  color: white!important;
-  transform: rotate(45deg);
-  position: relative;
-  top: 2px;
-  left: 8px;
+  background-color: white;
 }
 .choicegroup_incorrect .checkfail{
   display: block;
+}
+.choicegroup_incorrect .checkmark{
+  display: none;
 }
 
 /* Show the checkmark when checked */
@@ -350,7 +346,13 @@ label.choicegroup_incorrect::after{
 .action .submission_feedback{
   display: none!important;
 }
+.xmodule_display.xmodule_CapaModule div.problem .action .submission_feedback{
+  margin: 0!important;
+}
 
+.detailed-solution{
+  margin-top: 30px;
+}
 .failed_quiz .action .submission_feedback{
   display: block!important;
   color: red!important;
@@ -395,6 +397,19 @@ label.choicegroup_incorrect::after{
 }
 .show-detailed .feedback-hint-correct, .show-detailed .feedback-hint-incorrect{
   display: block!important;
+}
+
+.xmodule_display.xmodule_CapaModule div.problem .choicegroup .indicator-container{
+  display: none;
+}
+.problems-wrapper select{
+  width: calc(100% - 40px);
+  height: 50px;
+  margin-bottom: 3px;
+  padding: 10px 10px;
+  font-family: 'helveticaneue';
+  font-size: 18px;
+  background-color: white;
 }
 
 @media(max-width:1440px) {
