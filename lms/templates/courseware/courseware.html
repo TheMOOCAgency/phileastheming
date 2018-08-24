@@ -689,3 +689,40 @@ body.view-in-course .container {
   }
 }
 </style>
+% if 'course-v1:Amundi+2016-0010+2016-0010-T4' in str(course.id) or 'course-v1:Amundi+2016-0011+2016-0011-T4' in str(course.id) or 'course-v1:Amundi+2018-005+2018-005-T2' in str(course.id):
+<style>
+.xmodule_display.xmodule_CapaModule div.problem .action .check {
+  display: none;
+}
+.accordion,.course-index {
+  display: none;
+}
+iframe {
+  width: 100%;
+  height: 730px;
+}
+</style>
+<script>
+    function checkCheck() {
+      //$('button').hasClass('check').hide();
+      var doc_colab = 'https://www.phileasamundi.com/scorm/edufactory_entretien_collab/index_lms_html5.html';
+      var doc_manag = 'https://www.phileasamundi.com/scorm/edufactory_entretien_manager/index_lms_html5.html';
+      var item = $('iframe').attr('src');
+      var check = '';
+      localStorage.setItem('resultat', 'false');   
+      localStorage.setItem('score', 'false');
+      if(item.indexOf(doc_colab) != -1 || item.indexOf(doc_manag) != -1) {
+        var interval = setInterval(function(){
+          check = $('iframe').contents().find('#checkcheckcheck').val();
+          if(check == 'true') {
+            clearInterval(interval);
+            $('.action').find('.check').trigger('click');
+          }
+        },100)
+      }
+    }
+    $(document).ready(function(){
+      checkCheck();
+    })
+</script>
+% endif

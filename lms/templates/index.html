@@ -21,7 +21,6 @@ countcourses = CourseDetails
 from django.db.models import Count
 from django.contrib.auth.models import User
 
-all_active_user = User.objects.filter(is_active = 1,).count()
 
 %>
 <!--
@@ -179,6 +178,7 @@ all_active_user = User.objects.filter(is_active = 1,).count()
     padding-top: 20px;
     padding-bottom: 30px;
   }
+  .img-post-actu .r-a-s img:first-child {cursor:pointer;}
   @media(max-width:1440px) {
     .section-premier {
       margin-left:0.5%;
@@ -961,9 +961,9 @@ all_active_user = User.objects.filter(is_active = 1,).count()
             % if user.is_authenticated():
               % if LANGUAGE_CODE == 'fr':
               <div class="section3 img-post-actu">
-	      <a href="https://www.e-exercises.com/mylevel/" class="r-a-s">
-                <img src="/static/themes/phileastheming/images/anglais.jpg" />
-	      </a>
+	      <span class="r-a-s" id="seven_session" data-href="https://www.7speaking.com/7sautolog.cfm">
+                <img src="/static/themes/phileastheming/images/languefr.jpg" />
+	      </span>
               <a href="/courses?Vodeclic">
                 <img src="/static/themes/phileastheming/images/software.jpg" />
               </a>
@@ -973,7 +973,10 @@ all_active_user = User.objects.filter(is_active = 1,).count()
               </div>
               % elif LANGUAGE_CODE == 'en':
               <div class="section3 img-post-actu">
-	      <a href="http://amundi.elearning.ca-ifcam.fr" class="r-a-s" target="_blank">
+    	      <span class="r-a-s" id="seven_session" data-href="https://www.7speaking.com/7sautolog.cfm">
+            	<img src="/static/themes/phileastheming/images/ElearningLangues-gris.jpg" />
+    	     </span>
+	      <a href="http://amundi.elearning.ca-ifcam.fr" target="_blank">
                 <img src="/static/themes/phileastheming/images/BlocRebondRegulatoryENGris.jpg" />
 	      </a>
               <a href="/courses?Vodeclic">
@@ -1185,3 +1188,78 @@ $(document).resize(function(){
 })
 </script>
 % endif
+<!-- AVANT fin de page -->
+% if user.is_authenticated():
+<script>
+/*
+var id_interne = '${user.email}';
+var email = '${user.email}';
+var nom = '${user.last_name}';
+var prenom = '${user.first_name}';
+*/
+</script>
+<form id="form_session" method="post" action ="https://www.7speaking.com/7sautolog.cfm" style="display:none;" target="_blank">
+
+<input type="hidden" name="email" value='${user.email}'>
+<input type="hidden" name="nom" value='${user.last_name}'>
+<input type="hidden" name="prenom" value='${user.first_name}'>
+<input type="hidden" name="groupe" value='AMUNDI'>
+<input type="hidden" name="key" value='39D02FA5A62B2A62CEA0551EC69E80FA'>
+<input type="hidden" name="LE" value='ENG'>
+  % if LANGUAGE_CODE == 'fr':
+    <input type="hidden" name="LI" value='FRE'>
+  % else:
+    <input type="hidden" name="LI" value='ENG'>
+  % endif
+  <input type="submit" name="submit" value="submit" id="submit_session">
+</form>
+% endif
+% if LANGUAGE_CODE == 'fr':
+<script>
+var seven_lang = 'FRA';
+</script>
+% else:
+<script>
+var seven_lang = 'ENG';
+</script>
+% endif
+<!-- FIN DE PAGE -->
+  <script>
+  $(document).ready(function(){
+
+    // using jQuery
+  function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = jQuery.trim(cookies[i]);
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+              }
+          }
+      }
+      return cookieValue;
+  }
+
+  var csrftoken = getCookie('csrftoken');
+  console.log('crsf:'+csrftoken);
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+  })
+  function sevensession() {
+    $('#seven_session').click(function(e){
+      e.preventDefault();
+      console.log('submit');
+      $('#submit_session').trigger('click');
+    })
+  }
+  $(document).ready(function() {
+    sevensession();
+  })
+  </script>

@@ -2,6 +2,12 @@
 <%
 if(facet != 'id' && facet != 'modes') {
 %>
+<%
+if(name == 'Vodeclic')
+{
+  name = softwares;
+}
+%>
 <li>
     <button data-facet="<%- facet %>" data-value="<%- term %>" data-text="<%- name %>" class="facet-option discovery-button <%- selected ? 'selected' : '' %>">
         <%- name %>
